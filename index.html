@@ -1418,9 +1418,9 @@
         border: 1px solid rgba(0, 212, 255, 0.2);
         border-radius: 24px;
         width: 100%;
-        max-width: 520px;
+        max-width: 900px;
         position: relative;
-        overflow: hidden;
+        overflow: visible;
         transform: translateY(30px) scale(0.97);
         transition: transform 0.35s cubic-bezier(0.34, 1.4, 0.64, 1);
         box-shadow:
@@ -1676,6 +1676,49 @@
         .modal-module-name {
           font-size: 22px;
         }
+      }
+      /* ── MODAL TABS ── */
+      .modal-tabs {
+        display: flex;
+        gap: 4px;
+        padding: 0 32px;
+        border-bottom: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.02);
+        position: relative;
+        z-index: 1;
+      }
+      .modal-tab {
+        padding: 12px 18px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--muted);
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+        transition:
+          color 0.2s ease,
+          border-color 0.2s ease;
+        white-space: nowrap;
+      }
+      .modal-tab.active {
+        color: var(--accent);
+        border-bottom-color: var(--accent);
+      }
+      .modal-tab-panel {
+        display: none;
+      }
+      .modal-tab-panel.active {
+        display: block;
+      }
+      .modal-ref-iframe {
+        width: 100%;
+        height: 80vh;
+        border: none;
+        border-radius: 0 0 24px 24px;
+        background: #0d1117;
+        display: block;
+        overflow: auto;
       }
     </style>
   </head>
@@ -2089,55 +2132,75 @@
         <div class="modal-glow-top"></div>
         <button class="modal-close" onclick="closeModalDirect()">✕</button>
 
-        <div class="modal-header">
-          <div class="modal-icon-row">
-            <div class="modal-icon" id="m-icon">📊</div>
-            <div>
-              <div class="modal-module-name" id="m-name">
-                SAP Analytics Cloud
-              </div>
-              <div class="modal-module-tag" id="m-tag">EPM · Analytics</div>
-            </div>
+        <!-- TABS -->
+        <div class="modal-tabs">
+          <div class="modal-tab active" onclick="switchTab('overview')">
+            📋 Overview
           </div>
-          <div class="modal-desc" id="m-desc">Module description here.</div>
+          <div class="modal-tab" onclick="switchTab('reference')">
+            📖 Quick Reference
+          </div>
         </div>
 
-        <div class="modal-body">
-          <!-- Stats -->
-          <div class="modal-info-grid">
-            <div class="modal-info-card">
-              <span class="modal-info-val">30</span>
-              <span class="modal-info-lbl">Day Program</span>
-            </div>
-            <div class="modal-info-card">
-              <span class="modal-info-val">60–90</span>
-              <span class="modal-info-lbl">Mins / Day</span>
-            </div>
-            <div class="modal-info-card">
-              <span class="modal-info-val" id="m-sessions">30</span>
-              <span class="modal-info-lbl">Sessions</span>
-            </div>
-          </div>
-
-          <!-- Topics -->
-          <div class="modal-topics">
-            <div class="modal-topics-title">// What You Will Cover</div>
-            <div class="modal-topic-list" id="m-topics"></div>
-          </div>
-
-          <!-- Pricing -->
-          <div class="modal-pricing">
-            <div class="modal-pricing-left">
-              <div class="modal-pricing-label">Session Pricing</div>
-              <div class="modal-pricing-range">₹750 – ₹1500</div>
-              <div class="modal-pricing-note">
-                Per session · Final price decided on enquiry
+        <!-- OVERVIEW PANEL -->
+        <div class="modal-tab-panel active" id="tab-overview">
+          <div class="modal-header">
+            <div class="modal-icon-row">
+              <div class="modal-icon" id="m-icon">📊</div>
+              <div>
+                <div class="modal-module-name" id="m-name">
+                  SAP Analytics Cloud
+                </div>
+                <div class="modal-module-tag" id="m-tag">EPM · Analytics</div>
               </div>
             </div>
-            <button class="modal-enquire-btn" onclick="scrollToEnquiry()">
-              Enquire Now →
-            </button>
+            <div class="modal-desc" id="m-desc">Module description here.</div>
           </div>
+
+          <div class="modal-body">
+            <div class="modal-info-grid">
+              <div class="modal-info-card">
+                <span class="modal-info-val">30</span>
+                <span class="modal-info-lbl">Day Program</span>
+              </div>
+              <div class="modal-info-card">
+                <span class="modal-info-val">60–90</span>
+                <span class="modal-info-lbl">Mins / Day</span>
+              </div>
+              <div class="modal-info-card">
+                <span class="modal-info-val" id="m-sessions">30</span>
+                <span class="modal-info-lbl">Sessions</span>
+              </div>
+            </div>
+
+            <div class="modal-topics">
+              <div class="modal-topics-title">// What You Will Cover</div>
+              <div class="modal-topic-list" id="m-topics"></div>
+            </div>
+
+            <div class="modal-pricing">
+              <div class="modal-pricing-left">
+                <div class="modal-pricing-label">Session Pricing</div>
+                <div class="modal-pricing-range">₹750 – ₹1500</div>
+                <div class="modal-pricing-note">
+                  Per session · Final price decided on enquiry
+                </div>
+              </div>
+              <button class="modal-enquire-btn" onclick="scrollToEnquiry()">
+                Enquire Now →
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- REFERENCE PANEL -->
+        <div class="modal-tab-panel" id="tab-reference">
+          <iframe
+            class="modal-ref-iframe"
+            id="m-ref-iframe"
+            src=""
+            loading="lazy"
+          ></iframe>
         </div>
       </div>
     </div>
@@ -2421,6 +2484,7 @@
         "SAP Analytics Cloud": {
           icon: "📊",
           tag: "EPM · Analytics · Planning",
+          RefUrl: "Refs/sac_reference.html",
           desc: "SAP Analytics Cloud (SAC) is the modern cloud-based platform for business intelligence, planning, and predictive analytics. You will learn to build stories, planning models, and integrate with S/4HANA and Datasphere.",
           sessions: 30,
           topics: [
@@ -2439,6 +2503,7 @@
         "SAP BPC": {
           icon: "📋",
           tag: "Planning · Consolidation",
+          RefUrl: "Refs/bpc_reference.html",
           desc: "SAP BPC (Business Planning & Consolidation) is the industry-standard tool for financial planning and consolidation. Covers BPC Standard and Embedded, including migration strategy to SAC.",
           sessions: 30,
           topics: [
@@ -2457,6 +2522,7 @@
         "SAP Datasphere": {
           icon: "🌐",
           tag: "Data Warehousing · Integration",
+          RefUrl: "Refs/datasphere_reference.html",
           desc: "SAP Datasphere is the next-generation data warehouse cloud platform. Learn to build analytical models, manage data flows, and integrate with SAC for seamless planning and reporting.",
           sessions: 30,
           topics: [
@@ -2475,6 +2541,7 @@
         "SAP BDC": {
           icon: "🔗",
           tag: "Data Cloud · Architecture",
+          RefUrl: "Refs/sap_business_data_cloud_reference.html",
           desc: "SAP Business Data Cloud (BDC) is SAP's unified data fabric connecting all SAP and non-SAP data sources. Learn the architecture, integration patterns, and how it sits above Datasphere and SAC.",
           sessions: 25,
           topics: [
@@ -2493,6 +2560,7 @@
         "SAP BW / BW4HANA": {
           icon: "🏗️",
           tag: "Data Warehousing · BW",
+          RefUrl: "Refs/bw4hana_reference.html",
           desc: "SAP BW and BW/4HANA are the backbone of enterprise data warehousing in SAP landscapes. Learn InfoObjects, InfoProviders, data flows, and how to migrate legacy BW to BW/4HANA.",
           sessions: 30,
           topics: [
@@ -2511,6 +2579,7 @@
         "SAP S/4HANA": {
           icon: "⚡",
           tag: "ERP · Finance · Integration",
+          RefUrl: "Refs/s4hana_reference.html",
           desc: "SAP S/4HANA is the intelligent ERP suite. Learn core financial processes, CDS View architecture, OData services, and how S/4HANA data flows into SAC and Datasphere for planning.",
           sessions: 25,
           topics: [
@@ -2547,10 +2616,26 @@
           topicList.appendChild(item);
         });
 
+        document.getElementById("m-ref-iframe").src = data.RefUrl;
+        switchTab("overview");
         document.getElementById("moduleModal").classList.add("open");
         document.body.style.overflow = "hidden";
       }
 
+      function switchTab(tab) {
+        document.querySelectorAll(".modal-tab").forEach(function (t, i) {
+          t.classList.toggle(
+            "active",
+            (i === 0 && tab === "overview") || (i === 1 && tab === "reference"),
+          );
+        });
+        document
+          .getElementById("tab-overview")
+          .classList.toggle("active", tab === "overview");
+        document
+          .getElementById("tab-reference")
+          .classList.toggle("active", tab === "reference");
+      }
       function closeModalDirect() {
         document.getElementById("moduleModal").classList.remove("open");
         document.body.style.overflow = "";
