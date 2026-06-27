@@ -3154,47 +3154,57 @@
                   <button type="button" class="sub-back" onclick="fDurReset()">
                     ← Change Duration
                   </button>
-                  <div class="sub-price-card">
-                    <div class="sub-price-row">
-                      <span class="spl">Module</span
-                      ><span class="spv" id="sp-mod">—</span>
-                    </div>
-                    <div class="sub-price-row">
-                      <span class="spl">Duration</span
-                      ><span class="spv" id="sp-days">—</span>
-                    </div>
-                    <div class="sub-price-row">
-                      <span class="spl">Base (₹1,500/day)</span
-                      ><span class="spv strike" id="sp-base">—</span>
-                    </div>
-                    <div class="sub-price-row">
-                      <span class="spl" id="sp-disc-lbl">Discount</span
-                      ><span class="spv green" id="sp-disc">—</span>
-                    </div>
-                    <div class="sub-price-row">
-                      <span class="spl">Total Fee</span
-                      ><span class="spv" id="sp-total">—</span>
-                    </div>
-                    <div class="sub-price-row total">
-                      <span class="spl">Advance (25%)</span
-                      ><span class="spv big" id="sp-advance">—</span>
-                    </div>
+                  <div class="pay-lock-notice" id="train-lock-notice">
+                    <span class="lock-icon">🔒</span> Fill all details above and
+                    click <strong>&nbsp;Next&nbsp;</strong> to unlock payment
                   </div>
-                  <p class="sub-pay-note">
-                    Pay <strong id="sp-note-amt">₹0</strong> now to confirm your
-                    slot. Remaining 75% due on completion.
-                  </p>
-                  <button
-                    type="button"
-                    class="sub-pay-btn"
-                    id="fPayBtn"
-                    onclick="fInitiatePayment()"
-                  >
-                    💳 Pay Advance via UPI →
-                  </button>
-                  <div class="sub-qr-wrap" id="fQrWrap">
-                    <img id="fQrImg" src="" alt="UPI QR" />
-                    <div class="sub-qr-hint">Scan with any UPI app</div>
+                  <div class="pay-unlocked-badge" id="train-unlock-badge">
+                    <span>✅</span> Details saved! Complete your payment below
+                    to confirm the slot.
+                  </div>
+                  <div class="pay-section-locked" id="train-pay-body">
+                    <div class="sub-price-card">
+                      <div class="sub-price-row">
+                        <span class="spl">Module</span
+                        ><span class="spv" id="sp-mod">—</span>
+                      </div>
+                      <div class="sub-price-row">
+                        <span class="spl">Duration</span
+                        ><span class="spv" id="sp-days">—</span>
+                      </div>
+                      <div class="sub-price-row">
+                        <span class="spl">Base (₹1,500/day)</span
+                        ><span class="spv strike" id="sp-base">—</span>
+                      </div>
+                      <div class="sub-price-row">
+                        <span class="spl" id="sp-disc-lbl">Discount</span
+                        ><span class="spv green" id="sp-disc">—</span>
+                      </div>
+                      <div class="sub-price-row">
+                        <span class="spl">Total Fee</span
+                        ><span class="spv" id="sp-total">—</span>
+                      </div>
+                      <div class="sub-price-row total">
+                        <span class="spl">Advance (25%)</span
+                        ><span class="spv big" id="sp-advance">—</span>
+                      </div>
+                    </div>
+                    <p class="sub-pay-note">
+                      Pay <strong id="sp-note-amt">₹0</strong> now to confirm
+                      your slot. Remaining 75% due on completion.
+                    </p>
+                    <button
+                      type="button"
+                      class="sub-pay-btn"
+                      id="fPayBtn"
+                      onclick="fInitiatePayment()"
+                    >
+                      💳 Pay Advance via UPI →
+                    </button>
+                    <div class="sub-qr-wrap" id="fQrWrap">
+                      <img id="fQrImg" src="" alt="UPI QR" />
+                      <div class="sub-qr-hint">Scan with any UPI app</div>
+                    </div>
                   </div>
                 </div>
                 <!-- Others: no payment -->
@@ -3343,40 +3353,54 @@
                   <div class="sub-label" id="int-dur-title">
                     ⏱ Session Duration
                   </div>
-                  <div class="sub-int-dur-grid">
-                    <button
-                      type="button"
-                      class="sub-int-dur"
-                      onclick="fIntPayment(500, 30)"
-                      id="int-30"
-                    >
-                      <div class="sub-dur-days" style="font-size: 24px">
-                        30 min
-                      </div>
-                      <div class="sub-dur-disc" style="margin-top: 6px">
-                        ₹500
-                      </div>
-                      <div class="sub-dur-rate">Full payment upfront</div>
-                    </button>
-                    <button
-                      type="button"
-                      class="sub-int-dur"
-                      onclick="fIntPayment(750, 60)"
-                      id="int-60"
-                    >
-                      <div class="sub-dur-days" style="font-size: 24px">
-                        1 hour
-                      </div>
-                      <div class="sub-dur-disc" style="margin-top: 6px">
-                        ₹750
-                      </div>
-                      <div class="sub-dur-rate">Full payment upfront</div>
-                    </button>
+                  <div class="pay-lock-notice" id="int-lock-notice">
+                    <span class="lock-icon">🔒</span> Fill all details above and
+                    click <strong>&nbsp;Next&nbsp;</strong> to unlock payment
                   </div>
-                  <div class="sub-qr-wrap" id="intQrWrap" style="display: none">
-                    <img id="intQrImg" src="" alt="UPI QR" />
-                    <div class="sub-qr-hint">
-                      Scan with any UPI app · or tap button above
+                  <div class="pay-unlocked-badge" id="int-unlock-badge">
+                    <span>✅</span> Details saved! Choose duration and pay to
+                    confirm.
+                  </div>
+                  <div class="pay-section-locked" id="int-pay-body">
+                    <div class="sub-int-dur-grid">
+                      <button
+                        type="button"
+                        class="sub-int-dur"
+                        onclick="fIntPayment(500, 30)"
+                        id="int-30"
+                      >
+                        <div class="sub-dur-days" style="font-size: 24px">
+                          30 min
+                        </div>
+                        <div class="sub-dur-disc" style="margin-top: 6px">
+                          ₹500
+                        </div>
+                        <div class="sub-dur-rate">Full payment upfront</div>
+                      </button>
+                      <button
+                        type="button"
+                        class="sub-int-dur"
+                        onclick="fIntPayment(750, 60)"
+                        id="int-60"
+                      >
+                        <div class="sub-dur-days" style="font-size: 24px">
+                          1 hour
+                        </div>
+                        <div class="sub-dur-disc" style="margin-top: 6px">
+                          ₹750
+                        </div>
+                        <div class="sub-dur-rate">Full payment upfront</div>
+                      </button>
+                    </div>
+                    <div
+                      class="sub-qr-wrap"
+                      id="intQrWrap"
+                      style="display: none"
+                    >
+                      <img id="intQrImg" src="" alt="UPI QR" />
+                      <div class="sub-qr-hint">
+                        Scan with any UPI app · or tap button above
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -4545,6 +4569,54 @@
         line-height: 1.7;
       }
 
+      /* ── PAYMENT LOCK NOTICE ── */
+      .pay-lock-notice {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: rgba(255, 209, 102, 0.06);
+        border: 1px dashed rgba(255, 209, 102, 0.3);
+        border-radius: 10px;
+        padding: 11px 16px;
+        margin-bottom: 14px;
+        font-size: 12px;
+        color: var(--gold);
+        font-family: "JetBrains Mono", monospace;
+        letter-spacing: 0.5px;
+      }
+      .pay-lock-notice .lock-icon {
+        font-size: 16px;
+        flex-shrink: 0;
+      }
+      .pay-section-locked {
+        opacity: 0.35;
+        pointer-events: none;
+        filter: blur(1px);
+        transition: all 0.4s ease;
+      }
+      .pay-section-locked.unlocked {
+        opacity: 1;
+        pointer-events: all;
+        filter: none;
+      }
+      .pay-unlocked-badge {
+        display: none;
+        align-items: center;
+        gap: 8px;
+        background: rgba(0, 229, 160, 0.08);
+        border: 1px solid rgba(0, 229, 160, 0.25);
+        border-radius: 10px;
+        padding: 10px 16px;
+        margin-bottom: 14px;
+        font-size: 12px;
+        color: var(--green);
+        font-family: "JetBrains Mono", monospace;
+        letter-spacing: 0.5px;
+      }
+      .pay-unlocked-badge.show {
+        display: flex;
+      }
+
       /* ── BOOKING MODAL OVERLAY ── */
       .bk-overlay {
         display: none;
@@ -5486,6 +5558,46 @@
           encodeURIComponent(upiUri);
         qrWrap.style.display = "block";
         window.location.href = upiUri;
+        // Log payment initiation to sheet
+        var name = document.getElementById("f-name").value.trim();
+        var email = document.getElementById("f-email").value.trim();
+        var mobile = document.getElementById("f-mobile").value.trim();
+        sendToSheet({
+          name: name,
+          email: email,
+          mobile: mobile,
+          enquiryType: "SAP Module Training – " + fState.module,
+          trainingDays: fState.days,
+          discountPct: fState.discPct,
+          amountPaid: advance,
+          paymentNote: "Training Advance (" + fState.days + " days)",
+          stage: "Payment Initiated",
+        });
+        // Show payment success screen after short delay (let UPI app open first)
+        setTimeout(function () {
+          var waMsg = encodeURIComponent(
+            "Hi Naresh! I just initiated payment of \u20b9" +
+              advance.toLocaleString("en-IN") +
+              " for SAP " +
+              fState.module +
+              " Training (" +
+              fState.days +
+              " days).\n" +
+              "Name: " +
+              name +
+              "\nEmail: " +
+              email +
+              "\nMobile: " +
+              mobile +
+              "\nPlease confirm my slot. [attaching payment screenshot]",
+          );
+          document.getElementById("paySuccessWA").href =
+            "https://wa.me/918871644954?text=" + waMsg;
+          document.getElementById("enquiryForm").style.display = "none";
+          var ps = document.getElementById("paySuccess");
+          ps.style.display = "flex";
+          ps.classList.add("show");
+        }, 1800);
       }
 
       // ── INTERVIEW SUB-PANEL ──
@@ -5528,6 +5640,45 @@
           encodeURIComponent(upiUri);
         qrWrap.style.display = "block";
         window.location.href = upiUri;
+        // Log payment initiation to sheet
+        var name = document.getElementById("f-name").value.trim();
+        var email = document.getElementById("f-email").value.trim();
+        var mobile = document.getElementById("f-mobile").value.trim();
+        sendToSheet({
+          name: name,
+          email: email,
+          mobile: mobile,
+          enquiryType: "Mock Interview \u2013 " + fIntModule,
+          sessionDuration: mins + " min",
+          amountPaid: amt,
+          paymentNote: "Mock Interview Full Payment (" + mins + " min)",
+          stage: "Payment Initiated",
+        });
+        // Show payment success screen after short delay (let UPI app open first)
+        setTimeout(function () {
+          var waMsg = encodeURIComponent(
+            "Hi Naresh! I just initiated payment of \u20b9" +
+              amt +
+              " for Mock Interview (" +
+              fIntModule +
+              ", " +
+              mins +
+              " min).\n" +
+              "Name: " +
+              name +
+              "\nEmail: " +
+              email +
+              "\nMobile: " +
+              mobile +
+              "\nPlease confirm my slot. [attaching payment screenshot]",
+          );
+          document.getElementById("paySuccessWA").href =
+            "https://wa.me/918871644954?text=" + waMsg;
+          document.getElementById("enquiryForm").style.display = "none";
+          var ps = document.getElementById("paySuccess");
+          ps.style.display = "flex";
+          ps.classList.add("show");
+        }, 1800);
       }
     </script>
   </body>
