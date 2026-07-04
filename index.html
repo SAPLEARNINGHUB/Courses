@@ -3487,6 +3487,14 @@
           <div class="modal-tab" onclick="switchTab('reference')">
             📖 Quick Reference
           </div>
+          <div
+            class="modal-tab"
+            id="tab-btn-intprep"
+            onclick="switchTab('intprep')"
+            style="display: none"
+          >
+            🎯 Interview Prep
+          </div>
         </div>
 
         <!-- OVERVIEW PANEL -->
@@ -3566,6 +3574,15 @@
           <iframe
             class="modal-ref-iframe"
             id="m-ref-iframe"
+            src=""
+            loading="lazy"
+          ></iframe>
+        </div>
+        <!-- INTERVIEW PREP PANEL -->
+        <div class="modal-tab-panel" id="tab-intprep">
+          <iframe
+            class="modal-ref-iframe"
+            id="m-intprep-iframe"
             src=""
             loading="lazy"
           ></iframe>
@@ -4067,6 +4084,7 @@
           icon: "🌐",
           tag: "Data Warehousing · Integration",
           RefUrl: "Refs/datasphere_reference.html",
+          intPrepUrl: "Refs/datasphere_interview_prep.html",
           desc: "SAP Datasphere is the next-generation data warehouse cloud platform. Learn to build analytical models, manage data flows, and integrate with SAC for seamless planning and reporting.",
           sessions: 30,
           topics: [
@@ -4161,24 +4179,39 @@
         });
 
         document.getElementById("m-ref-iframe").src = data.RefUrl;
+
+        // Interview Prep tab — only show if this module has one
+        var intTabBtn = document.getElementById("tab-btn-intprep");
+        if (data.intPrepUrl) {
+          intTabBtn.style.display = "block";
+          document.getElementById("m-intprep-iframe").src = data.intPrepUrl;
+        } else {
+          intTabBtn.style.display = "none";
+          document.getElementById("m-intprep-iframe").src = "";
+        }
+
         switchTab("overview");
         document.getElementById("moduleModal").classList.add("open");
         document.body.style.overflow = "hidden";
       }
 
       function switchTab(tab) {
-        document.querySelectorAll(".modal-tab").forEach(function (t, i) {
-          t.classList.toggle(
-            "active",
-            (i === 0 && tab === "overview") || (i === 1 && tab === "reference"),
-          );
+        document.querySelectorAll(".modal-tab").forEach(function (t) {
+          t.classList.remove("active");
         });
+        var map = { overview: 0, reference: 1, intprep: 2 };
+        var tabs = document.querySelectorAll(".modal-tab");
+        if (tabs[map[tab]]) tabs[map[tab]].classList.add("active");
+
         document
           .getElementById("tab-overview")
           .classList.toggle("active", tab === "overview");
         document
           .getElementById("tab-reference")
           .classList.toggle("active", tab === "reference");
+        document
+          .getElementById("tab-intprep")
+          .classList.toggle("active", tab === "intprep");
       }
       function closeModalDirect() {
         document.getElementById("moduleModal").classList.remove("open");
