@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SAP Datasphere — Interview Questions</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700&family=JetBrains+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0d1117;
+        --card: #0d1a2e;
+        --surface: #0f1c30;
+        --border: #162a44;
+        --accent: #00d4ff;
+        --accent2: #0057ff;
+        --green: #00e5a0;
+        --gold: #ffd166;
+        --text: #ddeeff;
+        --muted: #6a8fb0;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "DM Sans", sans-serif;
+        padding: 28px 24px 60px;
+        max-width: 880px;
+        margin: 0 auto;
+      }
+
+      .ref-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 6px;
+      }
+      .ref-icon {
+        width: 46px;
+        height: 46px;
+        border-radius: 12px;
+        background: linear-gradient(
+          135deg,
+          rgba(0, 87, 255, 0.2),
+          rgba(0, 212, 255, 0.1)
+        );
+        border: 1px solid rgba(0, 212, 255, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        flex-shrink: 0;
+      }
+      .ref-title {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 28px;
+        letter-spacing: 2px;
+        color: #fff;
+        line-height: 1;
+      }
+      .ref-tag {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 2.5px;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-top: 4px;
+      }
+      .ref-sub {
+        font-size: 13px;
+        color: var(--muted);
+        font-weight: 300;
+        line-height: 1.6;
+        margin: 14px 0 22px;
+        max-width: 640px;
+      }
+
+      .toolbar {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+      }
+      .toolbar button {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--border);
+        color: var(--muted);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10.5px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        padding: 8px 16px;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .toolbar button:hover {
+        border-color: rgba(0, 212, 255, 0.35);
+        color: var(--text);
+        background: rgba(0, 212, 255, 0.06);
+      }
+
+      .cat-block {
+        margin-bottom: 30px;
+      }
+      .cat-label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 12px;
+      }
+      .cat-label::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(90deg, var(--border), transparent);
+      }
+      .cat-count {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 9.5px;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 2px 9px;
+      }
+
+      details.qa {
+        background: linear-gradient(145deg, var(--card), var(--surface));
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        margin-bottom: 10px;
+        overflow: hidden;
+        transition: border-color 0.2s ease;
+      }
+      details.qa[open] {
+        border-color: rgba(0, 212, 255, 0.3);
+      }
+      details.qa summary {
+        list-style: none;
+        cursor: pointer;
+        padding: 15px 18px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--text);
+      }
+      details.qa summary::-webkit-details-marker {
+        display: none;
+      }
+      .qa-num {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        color: var(--accent);
+        flex-shrink: 0;
+        width: 26px;
+      }
+      .qa-chevron {
+        margin-left: auto;
+        color: var(--muted);
+        transition: transform 0.25s ease;
+        flex-shrink: 0;
+        font-size: 12px;
+      }
+      details.qa[open] .qa-chevron {
+        transform: rotate(180deg);
+        color: var(--accent);
+      }
+      .qa-answer {
+        padding: 0 18px 18px 56px;
+        font-size: 13.5px;
+        color: var(--muted);
+        font-weight: 300;
+        line-height: 1.75;
+      }
+      .qa-answer strong {
+        color: var(--text);
+        font-weight: 500;
+      }
+      .qa-answer code {
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 5px;
+        padding: 1px 6px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        color: var(--accent);
+      }
+      .qa-answer ul {
+        margin: 8px 0 0 18px;
+      }
+      .qa-answer li {
+        margin-bottom: 4px;
+      }
+
+      .diff {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 8.5px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        padding: 3px 8px;
+        border-radius: 20px;
+        flex-shrink: 0;
+      }
+      .diff.easy {
+        background: rgba(0, 229, 160, 0.1);
+        color: var(--green);
+        border: 1px solid rgba(0, 229, 160, 0.25);
+      }
+      .diff.med {
+        background: rgba(255, 209, 102, 0.1);
+        color: var(--gold);
+        border: 1px solid rgba(255, 209, 102, 0.25);
+      }
+      .diff.hard {
+        background: rgba(255, 107, 107, 0.1);
+        color: #ff8f8f;
+        border: 1px solid rgba(255, 107, 107, 0.25);
+      }
+
+      .ref-footer {
+        margin-top: 36px;
+        padding: 18px 20px;
+        background: rgba(0, 212, 255, 0.04);
+        border: 1px solid rgba(0, 212, 255, 0.12);
+        border-radius: 14px;
+        font-size: 12.5px;
+        color: var(--muted);
+        font-weight: 300;
+        line-height: 1.7;
+        text-align: center;
+      }
+      .ref-footer strong {
+        color: var(--accent);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="ref-header">
+      <div class="ref-icon">🌐</div>
+      <div>
+        <div class="ref-title">SAP Datasphere — Interview Questions</div>
+        <div class="ref-tag">Quick Reference · 28 Questions</div>
+      </div>
+    </div>
+    <p class="ref-sub">
+      A curated set of commonly asked SAP Datasphere interview questions,
+      ranging from fundamentals to architecture-level discussions — organized
+      by topic so you can revise section by section.
+    </p>
+
+    <div class="toolbar">
+      <button onclick="toggleAll(true)">Expand All</button>
+      <button onclick="toggleAll(false)">Collapse All</button>
+    </div>
+
+    <!-- FUNDAMENTALS -->
+    <div class="cat-block">
+      <div class="cat-label">// Fundamentals <span class="cat-count">5</span></div>
+
+      <details class="qa">
+        <summary><span class="qa-num">01</span>What is SAP Datasphere and how is it different from SAP BW/4HANA?<span class="diff easy">Easy</span><span class="qa-chevron">▾</span></summary>
+        <div class="qa-answer">
+          SAP Datasphere is a cloud-native <strong>data management and data warehousing</strong> platform built on SAP HANA Cloud. It provides data integration, cataloging, semantic modeling, and virtualized access across SAP and non-SAP sources without necessarily moving all data physically.
+          <br /><br />
+          Compared to <strong>BW/4HANA</strong>, which is a traditional, more rigid enterprise data warehouse focused on structured, governed InfoProviders and process chains, Datasphere is lighter-weight, cloud-first, favors virtualization over heavy staging, and integrates natively with SAP Analytics Cloud, S/4HANA, and non-SAP tools like Databricks.
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary><span class="qa-num">02</span>What was SAP Datasphere previously called?<span class="diff easy">Easy</span><span class="qa-chevron">▾</span></summary>
+        <div class="qa-answer">
+          It was originally launched as <strong>SAP Data Warehouse Cloud (DWC)</strong> and was rebranded to SAP Datasphere in 2023, alongside an expanded scope covering data cataloging, data marketplace, and open data ecosystem integration (e.g., Databricks partnership).
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary><span class="qa-num">03</span>What are the core building blocks of the Datasphere architecture?<span class="diff med">Medium</span><span class="qa-chevron">▾</span></summary>
+        <div class="qa-answer">
+          The main components are:
+          <ul>
+            <li><strong>Spaces</strong> — isolated tenants of storage, compute, and permissions</li>
+            <li><strong>Data Builder</strong> — for tables, views, and data flows</li>
+            <li><strong>Business Builder</strong> — for semantic, business-friendly models</li>
+            <li><strong>Connections</strong> — for source system connectivity</li>
+            <li><strong>Data Integration Monitor</strong> — for replication flow and task chain monitoring</li>
+            <li><strong>Catalog</strong> — for metadata governance and data discovery</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary><span class="qa-num">04</span>What is a "Space" in Datasphere?<span class="diff easy">Easy</span><span class="qa-chevron">▾</span></summary>
+        <div class="qa-answer">
+          A Space is a secure, logically isolated container within a Datasphere tenant that has its own storage allocation, compute resources, users, and connections. Spaces are typically used to separate teams, departments, or projects (e.g., Finance Space vs. Sales Space), and data sharing between spaces is explicit and controlled.
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary><span class="qa-num">05</span>What database technology underlies SAP Datasphere?<span class="diff easy">Easy</span><span class="qa-chevron">▾</span></summary>
+        <div class="qa-answer">
+          Datasphere runs on <strong>SAP HANA Cloud</strong>, giving it in-memory columnar processing, and it also supports federated access to open data lake formats via <strong>Data Lake</strong> and partner integrations such as Databricks.
+        </div>
+      </details>
+    </div>
+
+    <!-- DATA BUILDER -->
+    <div class="cat-block">
+      <div class="cat-label">// Data Builder <span class="cat-count">6</span></div>
+
+      <details class="qa">
+        <summary><span class="qa-num">06</span>What is the difference between a Graphical View and a SQL View in Data Builder?<span class="diff med">Medium</span><span class="qa-chevron">▾</span></summary>
+        <div class="qa-answer">
+          A <strong>Graphical View</strong> is built using a drag-and-drop canvas with nodes (join, union, aggregation, projection, etc.) — it's easier to maintain and self-documenting. A <strong>SQL View</strong> is written directly in SQL, offering more flexibility for complex logic (window functions, subqueries) but is harder to visualize and maintain for non-technical users.
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary><span class="qa-num">07</span>What is an Entity-Relationship (ER) Model used for?<span class="diff med">Medium</span><span class="qa-chevron">▾</span></summary>
+        <div class="qa-answer">
+          An ER Model lets you visually define relationships (associations) between multiple tables or views — similar to a data model diagram. It's primarily a design/documentation tool that helps you understand table cardinalities before building consumption or analytic models on top.
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary><span class="qa-num">08</span>What are the different types of tables you can create in Data Builder?<span class="diff easy">Easy</span><span class="qa-chevron">▾</span></summary>
+        <div class="qa-answer">
+          You can create <strong>Local Tables</strong> (native to Datasphere, editable and used for staging or manual entry) and <strong>Remote Tables</strong> (pointers to source-system tables via a connection, which can be either virtualized or replicated).
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary><span class="qa-num">09</span>What is a Replication Flow, and how is it different from a Data Flow?<span class="diff med">Medium</span><span class="qa-chevron">▾</span></summary>
+        <div class="qa-answer">
+          A <strong>Replication Flow</strong> moves data (often at scale, including delta/CDC changes) from a source connection into Datasphere with minimal transformation — think bulk load / sync. A <strong>Data Flow</strong> is used for more complex ETL-style transformations (joins, script nodes, cleansing) as data moves from source to target, typically at a smaller/more curated scale.
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary><span class="qa-num">10</span>What's the difference between "Remote Tables" accessed virtually vs. replicated?<span class="diff hard">Hard</span><span class="qa-chevron">▾</span></summary>
+        <div class="qa-answer">
+          <strong>Virtual access</strong> means Datasphere queries the source system live, in real time, with no data physically stored — good for freshness but dependent on source performance and network latency. <strong>Replication</strong> physically copies the data into Datasphere's storage (Snapshot or Real-Time with change data capture), improving query performance at the cost of storage and a refresh/sync cadence.
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary><span class="qa-num">11</span>What are Task Chains used for?<span class="diff easy">Easy</span><span class="qa-chevron">▾</span></summary>
+        <div class="qa-answer">
+          Task Chains orchestrate a sequence of operations — like triggering data flows, replication flows, view persistency refreshes, or even other task chains — in a defined order, optionally on a schedule. They're the Datasphere equivalent of BW process chains.
+        </div>
+      </details>
+    </div>
+
+    <!-- BUSINESS BUILDER -->
+    <div class="cat-block">
+      <div class="cat-label">// Business Builder <span class="cat-count">5</span></div>
+
+      <details class="qa">
+        <summary><span class="qa-num">12</span>What is the purpose of Business Builder compared to Data Builder?<span class="diff med">Medium</span><span class="qa-chevron">▾</span></summary>
+        <div class="qa-answer">
+          <strong>Data Builder</strong> is more technical — it deals with raw tables, joins, and transformations. <strong>Business Builder</strong> sits a layer above it and lets business users define semantically rich objects: Dimensions, Hierarchies, Fact Models, and Consumption Models — the layer that's exposed for reporting and planning in tools like SAP Analytics Cloud.
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary><span class="qa-num">13</span>What is a Fact Model in Datasphere?<span class="diff med">Medium</span><span class="qa-chevron">▾</span></summary>
+        <div class="qa-answer">
+          A Fact Model defines measures (e.g., Revenue, Quantity) and associates them with dimensions (e.g., Time, Product, Customer) — conceptually similar to a star schema's fact table, but modeled semantically rather than as a physical join.
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary><span class="qa-num">14</span>What is a Consumption Model, and why would you use one?<span class="diff med">Medium</span><span class="qa-chevron">▾</span></summary>
+        <div class="qa-answer">
+          A Consumption Model combines one or more Fact Models with associated dimensions into a single, reporting-ready model that's exposed to consuming tools (like SAC) as an OData or analytic service. It lets you control exactly which fields, measures, and hierarchies are surfaced to end users.
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary><span class="qa-num">15</span>What's the difference between a Dimension and a Hierarchy Dimension?<span class="diff med">Medium</span><span class="qa-chevron">▾</span></summary>
+        <div class="qa-answer">
+          A standard Dimension holds descriptive attributes for a business entity (e.g., Product ID, Product Name). A <strong>Hierarchy Dimension</strong> additionally defines parent-child or level-based relationships (e.g., Region → Country → City), enabling drill-down analysis in reporting tools.
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary><span class="qa-num">16</span>Can you reuse the same Dimension across multiple Fact Models?<span class="diff easy">Easy</span><span class="qa-chevron">▾</span></summary>
+        <div class="qa-answer">
+          Yes — this is one of the key benefits of Business Builder. Dimensions like "Time" or "Cost Center" can be built once and shared across many Fact Models and Consumption Models, ensuring consistency (a conformed-dimension approach).
+        </div>
+      </details>
+    </div>
+
+    <!-- INTEGRATION & CONNECTIVITY -->
+    <div class="cat-block">
+      <div class="cat-label">// Integration & Connectivity <span class="cat-count">6</span></div>
+
+      <details class="qa">
+        <summary><span class="qa-num">17</span>How does Datasphere connect to SAP S/4HANA?<span class="diff med">Medium</span><span class="qa-chevron">▾</span></summary>
+        <div class="qa-answer">
+          Typically via <strong>ABAP CDS Views</strong> exposed through an SAP-managed connection type, or via <strong>OData services</strong>. CDS Views (especially those with <code>@Analytics.dataCategory</code> annotations) can be consumed directly as remote tables, preserving associations and hierarchies where possible.
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary><span class="qa-num">18</span>What is ODP, and where does it come into play?<span class="diff hard">Hard</span><span class="qa-chevron">▾</span></summary>
+        <div class="qa-answer">
+          <strong>ODP (Operational Data Provisioning)</strong> is an SAP framework that provides delta-enabled extraction from ABAP-based sources (like extractors, CDS views). Datasphere replication flows can use ODP-based connections to pull both full loads and incremental/delta changes efficiently from S/4HANA or BW systems.
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary><span class="qa-num">19</span>How does SAP Analytics Cloud connect to Datasphere?<span class="diff med">Medium</span><span class="qa-chevron">▾</span></summary>
+        <div class="qa-answer">
+          SAC connects via a <strong>Live Data Connection</strong> for real-time query pass-through (no data duplication, good for large/live data) or an <strong>Import Connection</strong> that copies data into SAC's in-memory model (better performance for planning, but requires refresh). Datasphere's "SAC Model Import" and "Seamless Planning" features are also built on top of this integration.
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary><span class="qa-num">20</span>What is "Seamless Planning" in the SAC-Datasphere integration?<span class="diff hard">Hard</span><span class="qa-chevron">▾</span></summary>
+        <div class="qa-answer">
+          Seamless Planning lets SAC planning models write back private/planning-relevant data directly into a Datasphere space, keeping the "single source of truth" in Datasphere rather than duplicating actuals and plan data separately in SAC — reducing data replication and reconciliation effort.
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary><span class="qa-num">21</span>What connection types does Datasphere support beyond SAP systems?<span class="diff easy">Easy</span><span class="qa-chevron">▾</span></summary>
+        <div class="qa-answer">
+          Datasphere supports a broad connector catalog including generic <strong>OData</strong>, <strong>JDBC/ODBC</strong>, <strong>cloud storage</strong> (Amazon S3, Azure Data Lake, Google Cloud Storage), <strong>Databricks</strong>, and other databases (e.g., Snowflake, Google BigQuery via partner connectors) — supporting a genuinely open, multi-cloud data landscape.
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary><span class="qa-num">22</span>What is Data Marketplace / Data Sharing across spaces?<span class="diff med">Medium</span><span class="qa-chevron">▾</span></summary>
+        <div class="qa-answer">
+          <strong>Cross-space sharing</strong> lets one Space expose objects (tables/views) to another Space within the same tenant. <strong>Data Marketplace</strong> extends this concept further, allowing organizations to publish or consume curated third-party datasets directly into their Datasphere landscape.
+        </div>
+      </details>
+    </div>
+
+    <!-- SECURITY & GOVERNANCE -->
+    <div class="cat-block">
+      <div class="cat-label">// Security & Governance <span class="cat-count">3</span></div>
+
+      <details class="qa">
+        <summary><span class="qa-num">23</span>What is Data Access Control (DAC), and when would you use it?<span class="diff med">Medium</span><span class="qa-chevron">▾</span></summary>
+        <div class="qa-answer">
+          A Data Access Control is a reusable row-level security rule (e.g., restrict by Region or Cost Center) that can be applied across multiple views/models, so users only see data relevant to their role — without duplicating the logic in every model.
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary><span class="qa-num">24</span>How is user authorization typically managed in Datasphere?<span class="diff med">Medium</span><span class="qa-chevron">▾</span></summary>
+        <div class="qa-answer">
+          Through a combination of <strong>Space-level roles/permissions</strong> (who can access a Space and what they can do — model, view, admin) and <strong>object-level Data Access Controls</strong> for row-level restrictions, often integrated with an identity provider via SAML/SSO.
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary><span class="qa-num">25</span>What role does the Catalog play in governance?<span class="diff easy">Easy</span><span class="qa-chevron">▾</span></summary>
+        <div class="qa-answer">
+          The Catalog indexes metadata across spaces — glossary terms, data lineage, tags, and quality metrics — so users and admins can discover trustworthy data assets and understand where data originates and how it's transformed, supporting compliance and self-service.
+        </div>
+      </details>
+    </div>
+
+    <!-- ARCHITECTURE & SCENARIOS -->
+    <div class="cat-block">
+      <div class="cat-label">// Architecture & Scenario Questions <span class="cat-count">3</span></div>
+
+      <details class="qa">
+        <summary><span class="qa-num">26</span>How does SAP Datasphere relate to SAP Business Data Cloud (BDC)?<span class="diff hard">Hard</span><span class="qa-chevron">▾</span></summary>
+        <div class="qa-answer">
+          SAP BDC is positioned as a broader, unified data fabric layer that sits above and connects Datasphere, SAC, and other SAP/non-SAP data products — Datasphere remains the modeling and integration engine underneath, while BDC focuses on cross-application data products, harmonized business data, and AI (Joule) readiness at an enterprise-wide scale.
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary><span class="qa-num">27</span>Scenario: A source table has 500M rows updated hourly. Would you replicate or virtualize it?<span class="diff hard">Hard</span><span class="qa-chevron">▾</span></summary>
+        <div class="qa-answer">
+          Generally you'd favor <strong>replication with real-time/CDC</strong> here, since virtualizing a query against 500M rows hourly would put heavy repeated load on the source system and hurt query latency. Replication with delta capture keeps a performant local copy in Datasphere while still reflecting near-real-time changes. The trade-off is the extra storage cost and monitoring the replication flow's health.
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary><span class="qa-num">28</span>What is View Persistency, and why would you enable it on a graphical view?<span class="diff med">Medium</span><span class="qa-chevron">▾</span></summary>
+        <div class="qa-answer">
+          By default, views compute results on the fly when queried. <strong>View Persistency</strong> lets you materialize (snapshot) the view's output into storage on a schedule, which dramatically improves query performance for complex, frequently-accessed views at the cost of data freshness between refresh runs.
+        </div>
+      </details>
+    </div>
+
+    <div class="ref-footer">
+      Want to go deeper on any of these topics with real project examples?
+      <strong>Book a 1:1 mentoring session or a mock interview</strong> from
+      the main enquiry form to practice live.
+    </div>
+
+    <script>
+      function toggleAll(open) {
+        document.querySelectorAll("details.qa").forEach(function (d) {
+          d.open = open;
+        });
+      }
+    </script>
+  </body>
+</html>
