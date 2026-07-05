@@ -3279,6 +3279,12 @@
                     <span>💬 Other SAP Certification</span></label
                   >
                 </div>
+                <span
+                  class="form-error"
+                  id="cert-error"
+                  style="display: none; margin-top: 4px"
+                  >Please select which certification you're preparing for</span
+                >
                 <p class="sub-pay-note" style="margin-top: 12px">
                   No advance payment needed — submit this form and we'll reach
                   out with a tailored prep plan.
@@ -3489,8 +3495,8 @@
           </div>
           <div
             class="modal-tab"
-            id="tab-btn-intprep"
-            onclick="switchTab('intprep')"
+            id="tab-btn-interview"
+            onclick="switchTab('interview')"
             style="display: none"
           >
             🎯 Interview Prep
@@ -3578,11 +3584,12 @@
             loading="lazy"
           ></iframe>
         </div>
+
         <!-- INTERVIEW PREP PANEL -->
-        <div class="modal-tab-panel" id="tab-intprep">
+        <div class="modal-tab-panel" id="tab-interview">
           <iframe
             class="modal-ref-iframe"
-            id="m-intprep-iframe"
+            id="m-interview-iframe"
             src=""
             loading="lazy"
           ></iframe>
@@ -3903,6 +3910,7 @@
           document.getElementById(id).classList.remove("has-error");
         });
         document.getElementById("status-error").style.display = "none";
+        document.getElementById("cert-error").style.display = "none";
 
         if (!name.value.trim()) {
           document.getElementById("grp-name").classList.add("has-error");
@@ -3937,6 +3945,15 @@
           document.getElementById("grp-other").classList.add("has-error");
           document.getElementById("other-error").style.display = "block";
           valid = false;
+        }
+        if (desc.value === "SAP Certification Assist") {
+          var certPick = document.querySelector(
+            'input[name="cert-pick"]:checked',
+          );
+          if (!certPick) {
+            document.getElementById("cert-error").style.display = "block";
+            valid = false;
+          }
         }
         return valid;
       }
@@ -4021,6 +4038,13 @@
             ? "Other: " + document.getElementById("f-other").value.trim()
             : desc;
 
+        var certPick = document.querySelector(
+          'input[name="cert-pick"]:checked',
+        );
+        if (desc === "SAP Certification Assist" && certPick) {
+          enqType = "SAP Certification Assist – " + certPick.value;
+        }
+
         await sendToSheet({
           name: name,
           email: email,
@@ -4029,6 +4053,7 @@
           status: status,
           interest: document.getElementById("f-interest").value,
           enquiryType: enqType,
+          certification: certPick ? certPick.value : "",
           stage: "Enquiry",
         });
 
@@ -4084,7 +4109,7 @@
           icon: "🌐",
           tag: "Data Warehousing · Integration",
           RefUrl: "Refs/datasphere_reference.html",
-          intPrepUrl: "Refs/datasphere_interview_prep.html",
+          interviewUrl: "Refs/datasphere_interview_prep.html",
           desc: "SAP Datasphere is the next-generation data warehouse cloud platform. Learn to build analytical models, manage data flows, and integrate with SAC for seamless planning and reporting.",
           sessions: 30,
           topics: [
@@ -4180,14 +4205,15 @@
 
         document.getElementById("m-ref-iframe").src = data.RefUrl;
 
-        // Interview Prep tab — only show if this module has one
-        var intTabBtn = document.getElementById("tab-btn-intprep");
-        if (data.intPrepUrl) {
-          intTabBtn.style.display = "block";
-          document.getElementById("m-intprep-iframe").src = data.intPrepUrl;
+        // Interview Prep tab — only shown for modules that have one (e.g. Datasphere)
+        var interviewTabBtn = document.getElementById("tab-btn-interview");
+        var interviewIframe = document.getElementById("m-interview-iframe");
+        if (data.interviewUrl) {
+          interviewTabBtn.style.display = "";
+          interviewIframe.src = data.interviewUrl;
         } else {
-          intTabBtn.style.display = "none";
-          document.getElementById("m-intprep-iframe").src = "";
+          interviewTabBtn.style.display = "none";
+          interviewIframe.src = "";
         }
 
         switchTab("overview");
@@ -4196,13 +4222,14 @@
       }
 
       function switchTab(tab) {
-        document.querySelectorAll(".modal-tab").forEach(function (t) {
-          t.classList.remove("active");
+        document.querySelectorAll(".modal-tab").forEach(function (t, i) {
+          t.classList.toggle(
+            "active",
+            (i === 0 && tab === "overview") ||
+              (i === 1 && tab === "reference") ||
+              (i === 2 && tab === "interview"),
+          );
         });
-        var map = { overview: 0, reference: 1, intprep: 2 };
-        var tabs = document.querySelectorAll(".modal-tab");
-        if (tabs[map[tab]]) tabs[map[tab]].classList.add("active");
-
         document
           .getElementById("tab-overview")
           .classList.toggle("active", tab === "overview");
@@ -4210,8 +4237,8 @@
           .getElementById("tab-reference")
           .classList.toggle("active", tab === "reference");
         document
-          .getElementById("tab-intprep")
-          .classList.toggle("active", tab === "intprep");
+          .getElementById("tab-interview")
+          .classList.toggle("active", tab === "interview");
       }
       function closeModalDirect() {
         document.getElementById("moduleModal").classList.remove("open");
@@ -4257,6 +4284,12 @@
         document.getElementById("sub-training").style.display = "none";
         document.getElementById("sub-cert").style.display = "none";
         document.getElementById("sub-interview").style.display = "none";
+        document
+          .querySelectorAll('input[name="cert-pick"]')
+          .forEach(function (r) {
+            r.checked = false;
+          });
+        document.getElementById("cert-error").style.display = "none";
 
         if (v === "Other") {
           document.getElementById("grp-other").style.display = "flex";
