@@ -3043,6 +3043,21 @@
                 >
               </div>
 
+              <div class="form-group full" id="grp-notes" style="display: none">
+                <label class="form-label">Tell Us A Little More</label>
+                <textarea
+                  class="form-input"
+                  id="f-notes"
+                  rows="3"
+                  placeholder="Please describe a little about your enquiry so we can assist better..."
+                  style="resize: vertical; min-height: 90px; line-height: 1.6"
+                ></textarea>
+                <span class="form-error" id="notes-error"
+                  >Please describe a little about your enquiry so we can assist
+                  better</span
+                >
+              </div>
+
               <!-- ── SAP MODULE TRAINING SUB-PANEL ── -->
               <div id="sub-training" style="display: none" class="sub-panel">
                 <div class="sub-panel-step" id="stp-mod">
@@ -3906,11 +3921,13 @@
           "grp-qual",
           "grp-status",
           "grp-desc",
+          "grp-notes",
         ].forEach(function (id) {
           document.getElementById(id).classList.remove("has-error");
         });
         document.getElementById("status-error").style.display = "none";
         document.getElementById("cert-error").style.display = "none";
+        document.getElementById("notes-error").style.display = "none";
 
         if (!name.value.trim()) {
           document.getElementById("grp-name").classList.add("has-error");
@@ -3954,6 +3971,20 @@
             document.getElementById("cert-error").style.display = "block";
             valid = false;
           }
+        }
+        var NOPAY_TYPES = [
+          "Job Support",
+          "Freelancer Requirement",
+          "IT Resource Staffing",
+          "SAP Certification Assist",
+        ];
+        if (
+          NOPAY_TYPES.indexOf(desc.value) !== -1 &&
+          !document.getElementById("f-notes").value.trim()
+        ) {
+          document.getElementById("grp-notes").classList.add("has-error");
+          document.getElementById("notes-error").style.display = "block";
+          valid = false;
         }
         return valid;
       }
@@ -4045,6 +4076,8 @@
           enqType = "SAP Certification Assist – " + certPick.value;
         }
 
+        var notes = document.getElementById("f-notes").value.trim();
+
         await sendToSheet({
           name: name,
           email: email,
@@ -4054,6 +4087,7 @@
           interest: document.getElementById("f-interest").value,
           enquiryType: enqType,
           certification: certPick ? certPick.value : "",
+          notes: notes,
           stage: "Enquiry",
         });
 
@@ -4291,6 +4325,19 @@
           });
         document.getElementById("cert-error").style.display = "none";
 
+        // reset the "tell us more" notes field
+        document.getElementById("grp-notes").style.display = "none";
+        document.getElementById("grp-notes").classList.remove("has-error");
+        document.getElementById("notes-error").style.display = "none";
+        document.getElementById("f-notes").value = "";
+
+        var NOPAY_TYPES_NEEDING_NOTES = [
+          "Job Support",
+          "Freelancer Requirement",
+          "IT Resource Staffing",
+          "SAP Certification Assist",
+        ];
+
         if (v === "Other") {
           document.getElementById("grp-other").style.display = "flex";
         } else if (v === "SAP Module Training") {
@@ -4301,6 +4348,10 @@
           document.getElementById("sub-cert").style.display = "block";
         } else if (v === "Mock Interview \u2013 SAP Modules") {
           document.getElementById("sub-interview").style.display = "block";
+        }
+
+        if (NOPAY_TYPES_NEEDING_NOTES.indexOf(v) !== -1) {
+          document.getElementById("grp-notes").style.display = "flex";
         }
 
         // Update Next/Submit button and reset payment locks
