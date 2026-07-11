@@ -373,6 +373,50 @@
         -webkit-text-fill-color: transparent;
         background-clip: text;
         filter: drop-shadow(0 4px 24px rgba(255, 46, 63, 0.35));
+        background-size: 220% auto;
+        animation: heroSheen 6s linear infinite;
+      }
+      @keyframes heroSheen {
+        0% {
+          background-position: 0% 50%;
+        }
+        100% {
+          background-position: 220% 50%;
+        }
+      }
+
+      /* ── HERO ROTATING WORD ── */
+      .hero-rotator {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        align-items: baseline;
+        flex-wrap: wrap;
+        margin: -12px auto 30px;
+        opacity: 0;
+        animation: fadeUp 0.8s ease 0.55s forwards;
+      }
+      .rot-pre {
+        color: var(--muted);
+        font-size: 13px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+      }
+      .rot-word {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: clamp(22px, 4vw, 34px);
+        letter-spacing: 2px;
+        background: linear-gradient(135deg, var(--gold), var(--accent) 70%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        transition:
+          opacity 0.35s ease,
+          transform 0.35s ease;
+      }
+      .rot-word.swap {
+        opacity: 0;
+        transform: translateY(8px);
       }
 
       .hero-sub {
@@ -516,6 +560,25 @@
         background-clip: text;
         line-height: 1;
         margin-bottom: 12px;
+        position: relative;
+        display: inline-block;
+      }
+      /* Underline that draws itself when the section reveals */
+      .services-title::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -8px;
+        height: 3px;
+        width: 100%;
+        background: linear-gradient(90deg, var(--green), var(--accent));
+        border-radius: 3px;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.7s cubic-bezier(0.65, 0, 0.35, 1) 0.2s;
+      }
+      .services-section.visible .services-title::after {
+        transform: scaleX(1);
       }
 
       .services-sub {
@@ -613,6 +676,30 @@
       }
       .service-card::before {
         background: var(--sg);
+      }
+
+      /* Cursor-follow spotlight (driven by --mx/--my in JS) */
+      .service-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: radial-gradient(
+          340px circle at var(--mx, 50%) var(--my, 50%),
+          rgba(255, 255, 255, 0.07),
+          transparent 60%
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+        z-index: 0;
+      }
+      .service-card:hover::after {
+        opacity: 1;
+      }
+      .service-card > * {
+        position: relative;
+        z-index: 1;
       }
 
       .service-icon-wrap {
@@ -3129,7 +3216,10 @@
         .learn-section,
         .enquiry-wrapper,
         .payment-wrapper,
-        .orb {
+        .orb,
+        .line2,
+        .hero-rotator,
+        .module-marquee .marquee-track {
           animation: none !important;
         }
       }
@@ -3153,6 +3243,473 @@
         .cursor,
         .cursor-ring {
           display: none !important;
+        }
+      }
+
+      /* ══ LIVE PRICING CALCULATOR ══ */
+      .calc-section {
+        max-width: 720px;
+        margin: 0 auto 60px;
+      }
+      .calc-card {
+        background: linear-gradient(145deg, var(--card), var(--surface));
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 32px 30px;
+        position: relative;
+        overflow: hidden;
+      }
+      .calc-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--gold), var(--accent), var(--green));
+      }
+      .calc-title {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: clamp(26px, 5vw, 40px);
+        letter-spacing: 2px;
+        text-align: center;
+        background: linear-gradient(135deg, #fff 30%, var(--gold) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .calc-sub {
+        text-align: center;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 300;
+        margin: 6px auto 26px;
+        max-width: 420px;
+        line-height: 1.6;
+      }
+      .calc-field-label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 10px;
+        display: block;
+      }
+      .calc-mod-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 24px;
+      }
+      .calc-chip {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 13px;
+        font-family: "DM Sans", sans-serif;
+        padding: 8px 14px;
+        border-radius: 30px;
+        cursor: pointer;
+        transition:
+          border-color 0.25s ease,
+          color 0.25s ease,
+          background 0.25s ease,
+          transform 0.15s ease;
+      }
+      .calc-chip:hover {
+        transform: translateY(-2px);
+      }
+      .calc-chip.active {
+        border-color: var(--accent);
+        color: var(--text);
+        background: rgba(255, 46, 63, 0.12);
+      }
+      .calc-slider-wrap {
+        margin-bottom: 8px;
+      }
+      .calc-slider-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 12px;
+      }
+      .calc-days {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 40px;
+        letter-spacing: 2px;
+        color: var(--text);
+      }
+      .calc-days small {
+        font-family: "DM Sans", sans-serif;
+        font-size: 13px;
+        color: var(--muted);
+        letter-spacing: 0;
+        margin-left: 6px;
+      }
+      .calc-disc-badge {
+        background: rgba(0, 229, 160, 0.1);
+        border: 1px solid rgba(0, 229, 160, 0.3);
+        color: var(--green);
+        font-size: 12px;
+        font-weight: 700;
+        padding: 5px 12px;
+        border-radius: 20px;
+      }
+      input[type="range"].calc-range {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 100%;
+        height: 6px;
+        border-radius: 6px;
+        background: var(--border);
+        outline: none;
+        margin: 8px 0 4px;
+      }
+      input[type="range"].calc-range::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--accent), var(--gold));
+        cursor: pointer;
+        box-shadow: 0 0 0 5px rgba(255, 46, 63, 0.15);
+        transition: box-shadow 0.2s ease;
+      }
+      input[type="range"].calc-range::-webkit-slider-thumb:hover {
+        box-shadow: 0 0 0 8px rgba(255, 46, 63, 0.22);
+      }
+      input[type="range"].calc-range::-moz-range-thumb {
+        width: 22px;
+        height: 22px;
+        border: none;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--accent), var(--gold));
+        cursor: pointer;
+      }
+      .calc-range-ticks {
+        display: flex;
+        justify-content: space-between;
+        font-size: 10px;
+        color: var(--muted);
+        font-family: "JetBrains Mono", monospace;
+        margin-bottom: 24px;
+      }
+      .calc-breakdown {
+        background: rgba(0, 0, 0, 0.25);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 20px 22px;
+        margin-bottom: 22px;
+      }
+      .calc-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 7px 0;
+        font-size: 14px;
+      }
+      .calc-row .cl {
+        color: var(--muted);
+      }
+      .calc-row .cv {
+        color: var(--text);
+        font-weight: 500;
+      }
+      .calc-row .cv.strike {
+        text-decoration: line-through;
+        color: var(--muted);
+        font-weight: 400;
+      }
+      .calc-row .cv.green {
+        color: var(--green);
+      }
+      .calc-total {
+        border-top: 1px dashed var(--border);
+        margin-top: 6px;
+        padding-top: 14px;
+      }
+      .calc-total .cl {
+        color: var(--text);
+        font-weight: 600;
+      }
+      .calc-total .cv {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 30px;
+        letter-spacing: 1px;
+        background: linear-gradient(135deg, var(--gold), var(--accent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .calc-advance {
+        text-align: center;
+        font-size: 13px;
+        color: var(--muted);
+        margin-bottom: 20px;
+      }
+      .calc-advance strong {
+        color: var(--gold);
+      }
+      .calc-cta {
+        width: 100%;
+        border: none;
+        border-radius: 14px;
+        padding: 16px;
+        font-family: "DM Sans", sans-serif;
+        font-size: 15px;
+        font-weight: 700;
+        color: #fff;
+        background: linear-gradient(135deg, #b3121f, #ff2e3f);
+        cursor: pointer;
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+      .calc-cta:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 34px rgba(255, 46, 63, 0.3);
+      }
+
+      /* ══ MODULE MARQUEE ══ */
+      .module-marquee {
+        overflow: hidden;
+        margin: 0 auto 60px;
+        max-width: 1100px;
+        -webkit-mask-image: linear-gradient(
+          90deg,
+          transparent,
+          #000 8%,
+          #000 92%,
+          transparent
+        );
+        mask-image: linear-gradient(
+          90deg,
+          transparent,
+          #000 8%,
+          #000 92%,
+          transparent
+        );
+      }
+      .marquee-track {
+        display: flex;
+        gap: 14px;
+        width: max-content;
+        animation: marquee 32s linear infinite;
+      }
+      .module-marquee:hover .marquee-track {
+        animation-play-state: paused;
+      }
+      @keyframes marquee {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
+      }
+      .marquee-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        white-space: nowrap;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 40px;
+        padding: 10px 20px;
+        font-size: 14px;
+        color: var(--text);
+        font-family: "JetBrains Mono", monospace;
+        letter-spacing: 0.5px;
+      }
+      .marquee-chip span:first-child {
+        font-size: 18px;
+      }
+
+      /* ══ TESTIMONIALS ══ */
+      .testi-section {
+        max-width: 720px;
+        margin: 0 auto 60px;
+        text-align: center;
+      }
+      .testi-viewport {
+        position: relative;
+        overflow: hidden;
+        border-radius: 22px;
+      }
+      .testi-track {
+        display: flex;
+        transition: transform 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+      }
+      .testi-slide {
+        min-width: 100%;
+        padding: 34px 34px 30px;
+        background: linear-gradient(145deg, var(--card), var(--surface));
+        border: 1px solid var(--border);
+        border-radius: 22px;
+      }
+      .testi-quote {
+        font-size: 16px;
+        line-height: 1.75;
+        color: var(--text);
+        font-weight: 300;
+        font-style: italic;
+      }
+      .testi-quote::before {
+        content: "“";
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 46px;
+        color: var(--accent);
+        line-height: 0;
+        vertical-align: -0.35em;
+        margin-right: 4px;
+      }
+      .testi-stars {
+        color: var(--gold);
+        letter-spacing: 3px;
+        margin: 16px 0 10px;
+        font-size: 15px;
+      }
+      .testi-name {
+        font-weight: 700;
+        color: var(--text);
+        font-size: 14px;
+      }
+      .testi-role {
+        color: var(--muted);
+        font-size: 12px;
+        margin-top: 2px;
+      }
+      .testi-dots {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        margin-top: 20px;
+      }
+      .testi-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        border: none;
+        background: var(--border);
+        cursor: pointer;
+        transition:
+          background 0.25s ease,
+          transform 0.25s ease;
+      }
+      .testi-dot.active {
+        background: var(--accent);
+        transform: scale(1.3);
+      }
+
+      /* ══ FAQ ACCORDION ══ */
+      .faq-section {
+        max-width: 720px;
+        margin: 0 auto 60px;
+      }
+      .faq-item {
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        margin-bottom: 12px;
+        background: rgba(255, 255, 255, 0.02);
+        overflow: hidden;
+      }
+      .faq-q {
+        width: 100%;
+        text-align: left;
+        background: none;
+        border: none;
+        color: var(--text);
+        font-family: "DM Sans", sans-serif;
+        font-size: 15px;
+        font-weight: 500;
+        padding: 18px 22px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+      }
+      .faq-q .faq-icon {
+        color: var(--accent);
+        font-size: 20px;
+        transition: transform 0.3s ease;
+        flex-shrink: 0;
+      }
+      .faq-item.open .faq-q .faq-icon {
+        transform: rotate(45deg);
+      }
+      .faq-a {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.35s ease;
+      }
+      .faq-a-inner {
+        padding: 0 22px 18px;
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 300;
+        line-height: 1.7;
+      }
+
+      /* ══ WHATSAPP FLOAT ══ */
+      .wa-float {
+        position: fixed;
+        right: 20px;
+        bottom: 22px;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #25d366, #128c7e);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        text-decoration: none;
+        z-index: 900;
+        box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
+        animation: waPulse 2.4s ease-in-out infinite;
+        transition: transform 0.2s ease;
+      }
+      .wa-float:hover {
+        transform: scale(1.1);
+      }
+      @keyframes waPulse {
+        0%,
+        100% {
+          box-shadow:
+            0 8px 24px rgba(37, 211, 102, 0.4),
+            0 0 0 0 rgba(37, 211, 102, 0.45);
+        }
+        50% {
+          box-shadow:
+            0 8px 24px rgba(37, 211, 102, 0.4),
+            0 0 0 14px rgba(37, 211, 102, 0);
+        }
+      }
+      @media (max-width: 580px) {
+        .wa-float {
+          width: 50px;
+          height: 50px;
+          font-size: 25px;
+        }
+      }
+
+      /* ══ CONFETTI ══ */
+      #confettiCanvas {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 9997;
+        display: none;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .wa-float {
+          animation: none !important;
         }
       }
     </style>
@@ -3179,8 +3736,8 @@
       <div class="nav-dot" data-section="skills" title="Skills"></div>
       <div class="nav-dot" data-section="learn" title="What You Get"></div>
       <div class="nav-dot" data-section="how" title="How It Works"></div>
+      <div class="nav-dot" data-section="calc" title="Fee Estimator"></div>
       <div class="nav-dot" data-section="enquiry" title="Enquiry"></div>
-      <div class="nav-dot" data-section="payment" title="Payment"></div>
       <div class="nav-dot" data-section="contact" title="Contact"></div>
     </nav>
 
@@ -3188,6 +3745,17 @@
     <div class="floating-cta" id="floatingCta">
       <a href="tel:+918871644954">📞 Connect Now</a>
     </div>
+
+    <a
+      class="wa-float"
+      href="https://wa.me/918871644954?text=Hi%20Naresh!%20I'd%20like%20to%20know%20more%20about%20SAP%20training."
+      target="_blank"
+      rel="noopener"
+      aria-label="Chat on WhatsApp"
+      >💬</a
+    >
+
+    <canvas id="confettiCanvas"></canvas>
 
     <div class="page">
       <!-- HERO -->
@@ -3199,6 +3767,10 @@
         <div class="hero-title">
           <span class="line1">Learn SAP.</span>
           <span class="line2">Master It.</span>
+        </div>
+        <div class="hero-rotator">
+          <span class="rot-pre">Specialize in</span>
+          <span class="rot-word" id="rotWord">SAP Datasphere</span>
         </div>
         <p class="hero-sub">
           Get hands-on guidance from a certified SAP Senior Consultant across
@@ -3341,6 +3913,21 @@
           </div>
         </div>
       </section>
+
+      <!-- MODULE MARQUEE -->
+      <div class="module-marquee" aria-hidden="true">
+        <div class="marquee-track" id="marqueeTrack">
+          <span class="marquee-chip"><span>📊</span> SAP Analytics Cloud</span>
+          <span class="marquee-chip"><span>🌐</span> SAP Datasphere</span>
+          <span class="marquee-chip"><span>📋</span> SAP BPC</span>
+          <span class="marquee-chip"><span>🏗️</span> SAP BW/4HANA</span>
+          <span class="marquee-chip"><span>⚡</span> SAP S/4HANA</span>
+          <span class="marquee-chip"><span>🔗</span> SAP BDC</span>
+          <span class="marquee-chip"><span>📦</span> SAP MM</span>
+          <span class="marquee-chip"><span>🧠</span> SAP HANA</span>
+          <span class="marquee-chip"><span>🤖</span> AI · Joule</span>
+        </div>
+      </div>
 
       <div class="divider"><span>// modules you can learn</span></div>
       <!-- SKILLS -->
@@ -3548,6 +4135,198 @@
           </a>
         </div>
       </section>
+
+      <div class="divider"><span>// estimate your fee</span></div>
+
+      <!-- LIVE PRICING CALCULATOR -->
+      <section id="calc" class="calc-section reveal">
+        <div class="calc-card">
+          <div class="calc-title">Training Fee Estimator</div>
+          <p class="calc-sub">
+            Pick a module and slide the duration — see your fee update live.
+            Only 25% advance confirms your slot.
+          </p>
+
+          <span class="calc-field-label">1 · Choose a module</span>
+          <div class="calc-mod-chips" id="calcChips">
+            <button type="button" class="calc-chip active">📊 SAP Analytics Cloud</button>
+            <button type="button" class="calc-chip">📋 SAP BPC</button>
+            <button type="button" class="calc-chip">🌐 SAP Datasphere</button>
+            <button type="button" class="calc-chip">🔗 SAP BDC</button>
+            <button type="button" class="calc-chip">🏗️ SAP BW/BW4HANA</button>
+            <button type="button" class="calc-chip">⚡ SAP S/4HANA</button>
+            <button type="button" class="calc-chip">📦 SAP MM</button>
+          </div>
+
+          <span class="calc-field-label">2 · Training duration</span>
+          <div class="calc-slider-wrap">
+            <div class="calc-slider-top">
+              <span class="calc-days"
+                ><span id="calcDaysNum">30</span
+                ><small>days</small></span
+              >
+              <span class="calc-disc-badge" id="calcDiscBadge">10% OFF</span>
+            </div>
+            <input
+              type="range"
+              class="calc-range"
+              id="calcRange"
+              min="15"
+              max="45"
+              step="15"
+              value="30"
+              aria-label="Training duration in days"
+            />
+            <div class="calc-range-ticks">
+              <span>15 days</span><span>30 days</span><span>45 days</span>
+            </div>
+          </div>
+
+          <div class="calc-breakdown">
+            <div class="calc-row">
+              <span class="cl">Base (₹1,500/day)</span>
+              <span class="cv strike" id="calcBase">₹45,000</span>
+            </div>
+            <div class="calc-row">
+              <span class="cl" id="calcDiscLbl">Discount (10%)</span>
+              <span class="cv green" id="calcDisc">−₹4,500</span>
+            </div>
+            <div class="calc-row calc-total">
+              <span class="cl">Total fee</span>
+              <span class="cv" id="calcTotal">₹40,500</span>
+            </div>
+          </div>
+
+          <p class="calc-advance">
+            Pay only <strong id="calcAdvance">₹10,125</strong> now (25%) to
+            confirm — balance later.
+          </p>
+
+          <button type="button" class="calc-cta" id="calcCta">
+            🎓 Book This Plan →
+          </button>
+        </div>
+      </section>
+
+      <div class="divider"><span>// what learners say</span></div>
+
+      <!-- TESTIMONIALS -->
+      <section class="testi-section reveal">
+        <div class="sec-label" style="justify-content: center">
+          // Learner Stories
+        </div>
+        <div class="testi-viewport">
+          <div class="testi-track" id="testiTrack">
+            <div class="testi-slide">
+              <p class="testi-quote">
+                The 1:1 Datasphere sessions were exactly what I needed — real
+                project scenarios, not just theory. Cleared my C_BW4H exam and
+                landed a role within two months.
+              </p>
+              <div class="testi-stars">★★★★★</div>
+              <div class="testi-name">Priya R.</div>
+              <div class="testi-role">Data Analyst → SAP Consultant</div>
+            </div>
+            <div class="testi-slide">
+              <p class="testi-quote">
+                As a working professional I needed flexible timings and job
+                support on a live S/4HANA rollout. Got both. Genuinely felt like
+                having a senior on call.
+              </p>
+              <div class="testi-stars">★★★★★</div>
+              <div class="testi-name">Arjun M.</div>
+              <div class="testi-role">SAP FICO, Bengaluru</div>
+            </div>
+            <div class="testi-slide">
+              <p class="testi-quote">
+                The mock interview for SAC was brutally honest and incredibly
+                useful. Fixed my weak spots and walked into the real one with
+                confidence.
+              </p>
+              <div class="testi-stars">★★★★★</div>
+              <div class="testi-name">Sneha K.</div>
+              <div class="testi-role">Fresher → SAC Associate</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-dots" id="testiDots"></div>
+      </section>
+
+      <div class="divider"><span>// common questions</span></div>
+
+      <!-- FAQ -->
+      <section class="faq-section reveal">
+        <div class="sec-label">// Frequently Asked</div>
+        <div id="faqList">
+          <div class="faq-item">
+            <button type="button" class="faq-q">
+              Are the sessions 1:1 or group?
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                Both are available. Most learners choose 1:1 for a fully
+                personalised pace and project-focused mentoring; small-group
+                batches are offered for select modules on request.
+              </div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button type="button" class="faq-q">
+              How is the fee calculated?
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                Training is ₹1,500 per day, with 5–15% off for longer plans (15,
+                30 or 45 days). Use the Fee Estimator above to see your exact
+                total. Only 25% is needed upfront to confirm your slot.
+              </div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button type="button" class="faq-q">
+              Do you help with certification prep?
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                Yes — targeted prep for exams like C_SAC_2302, C_BW4H_214,
+                C_HANAIMP_18 and more, covering topic-wise revision, practice
+                questions and exam strategy. No advance needed; just submit the
+                enquiry form.
+              </div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button type="button" class="faq-q">
+              Which payment methods do you accept?
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                Payments are via UPI — scan the QR or tap to pay from any UPI
+                app. After paying the advance, share the screenshot on WhatsApp
+                and we'll confirm your slot instantly.
+              </div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button type="button" class="faq-q">
+              I'm a complete fresher — is this for me?
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                Absolutely. Programs are designed for freshers, career switchers
+                and working professionals alike. We start from fundamentals and
+                build up to real project scenarios.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <div class="divider"><span>// enquire now</span></div>
 
       <!-- ENQUIRY FORM -->
@@ -4327,28 +5106,19 @@
       });
 
       // ── NAV DOTS ──
-      const sections = [
-        "hero",
-        "skills",
-        "learn",
-        "how",
-        "enquiry",
-        "payment",
-        "contact",
-      ];
-      const dots = document.querySelectorAll(".nav-dot");
+      const dots = Array.from(document.querySelectorAll(".nav-dot"));
       function updateDots() {
-        let current = 0;
-        sections.forEach((id, i) => {
-          const el = document.getElementById(id);
-          if (el && window.scrollY >= el.offsetTop - 200) current = i;
+        let currentIdx = 0;
+        dots.forEach((dot, i) => {
+          const el = document.getElementById(dot.dataset.section);
+          if (el && window.scrollY >= el.offsetTop - 200) currentIdx = i;
         });
-        dots.forEach((d, i) => d.classList.toggle("active", i === current));
+        dots.forEach((d, i) => d.classList.toggle("active", i === currentIdx));
       }
       window.addEventListener("scroll", updateDots);
-      dots.forEach((dot, i) => {
+      dots.forEach((dot) => {
         dot.addEventListener("click", () => {
-          const el = document.getElementById(sections[i]);
+          const el = document.getElementById(dot.dataset.section);
           if (el) el.scrollIntoView({ behavior: "smooth" });
         });
       });
@@ -4410,6 +5180,39 @@
         });
       });
 
+      // ── SERVICE CARD CURSOR SPOTLIGHT ──
+      serviceCards.forEach((card) => {
+        card.addEventListener("mousemove", (e) => {
+          const rect = card.getBoundingClientRect();
+          card.style.setProperty("--mx", e.clientX - rect.left + "px");
+          card.style.setProperty("--my", e.clientY - rect.top + "px");
+        });
+      });
+
+      // ── MAGNETIC BUTTONS ──
+      (function magneticButtons() {
+        if (!window.matchMedia("(pointer: fine)").matches) return;
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+          return;
+        const mags = document.querySelectorAll(
+          ".book-session-btn, .service-cta, .floating-cta a",
+        );
+        mags.forEach((btn) => {
+          btn.style.transition =
+            "transform 0.2s cubic-bezier(0.34,1.4,0.64,1)";
+          btn.addEventListener("mousemove", (e) => {
+            const r = btn.getBoundingClientRect();
+            const dx = e.clientX - r.left - r.width / 2;
+            const dy = e.clientY - r.top - r.height / 2;
+            btn.style.transform =
+              "translate(" + dx * 0.25 + "px," + dy * 0.35 + "px)";
+          });
+          btn.addEventListener("mouseleave", () => {
+            btn.style.transform = "translate(0,0)";
+          });
+        });
+      })();
+
       // ── COUNTER ANIMATION ──
       const counters = document.querySelectorAll("[data-count]");
       const counterIO = new IntersectionObserver(
@@ -4431,6 +5234,222 @@
         { threshold: 0.5 },
       );
       counters.forEach((c) => counterIO.observe(c));
+
+      // ── MODULE MARQUEE (duplicate content for seamless -50% loop) ──
+      (function marquee() {
+        const track = document.getElementById("marqueeTrack");
+        if (!track) return;
+        track.innerHTML += track.innerHTML;
+      })();
+
+      // ── TESTIMONIALS CAROUSEL ──
+      (function testimonials() {
+        const track = document.getElementById("testiTrack");
+        const dotsWrap = document.getElementById("testiDots");
+        if (!track || !dotsWrap) return;
+        const slides = track.children.length;
+        let idx = 0;
+        for (let i = 0; i < slides; i++) {
+          const d = document.createElement("button");
+          d.className = "testi-dot" + (i === 0 ? " active" : "");
+          d.setAttribute("aria-label", "Testimonial " + (i + 1));
+          d.addEventListener("click", () => go(i, true));
+          dotsWrap.appendChild(d);
+        }
+        const dots = Array.from(dotsWrap.children);
+        function go(n, manual) {
+          idx = (n + slides) % slides;
+          track.style.transform = "translateX(-" + idx * 100 + "%)";
+          dots.forEach((d, i) => d.classList.toggle("active", i === idx));
+          if (manual) restart();
+        }
+        let timer;
+        const reduce = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        ).matches;
+        function restart() {
+          clearInterval(timer);
+          if (!reduce) timer = setInterval(() => go(idx + 1), 5000);
+        }
+        restart();
+      })();
+
+      // ── FAQ ACCORDION ──
+      (function faq() {
+        document.querySelectorAll("#faqList .faq-item").forEach((item) => {
+          const q = item.querySelector(".faq-q");
+          const a = item.querySelector(".faq-a");
+          q.addEventListener("click", () => {
+            const isOpen = item.classList.contains("open");
+            // close all
+            document.querySelectorAll("#faqList .faq-item").forEach((it) => {
+              it.classList.remove("open");
+              it.querySelector(".faq-a").style.maxHeight = null;
+            });
+            if (!isOpen) {
+              item.classList.add("open");
+              a.style.maxHeight = a.scrollHeight + "px";
+            }
+          });
+        });
+      })();
+
+      // ── ORB PARALLAX ──
+      (function orbParallax() {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+          return;
+        const orbs = Array.from(document.querySelectorAll(".orb"));
+        if (!orbs.length) return;
+        let ticking = false;
+        window.addEventListener("scroll", () => {
+          if (ticking) return;
+          ticking = true;
+          requestAnimationFrame(() => {
+            const y = window.scrollY;
+            orbs.forEach((orb, i) => {
+              const depth = (i + 1) * 0.06;
+              orb.style.transform = "translateY(" + y * depth + "px)";
+            });
+            ticking = false;
+          });
+        });
+      })();
+
+      // ── CONFETTI BURST ──
+      function fireConfetti() {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+          return;
+        const cv = document.getElementById("confettiCanvas");
+        if (!cv) return;
+        const cx = cv.getContext("2d");
+        cv.style.display = "block";
+        cv.width = window.innerWidth;
+        cv.height = window.innerHeight;
+        const colors = ["#ff2e3f", "#ffd166", "#00e5a0", "#b3121f", "#ffffff"];
+        const pieces = [];
+        for (let i = 0; i < 140; i++) {
+          pieces.push({
+            x: cv.width / 2 + (Math.random() - 0.5) * 120,
+            y: cv.height / 3,
+            vx: (Math.random() - 0.5) * 11,
+            vy: Math.random() * -13 - 4,
+            g: 0.32 + Math.random() * 0.12,
+            size: 5 + Math.random() * 6,
+            color: colors[i % colors.length],
+            rot: Math.random() * Math.PI,
+            vr: (Math.random() - 0.5) * 0.3,
+            life: 0,
+          });
+        }
+        let frame = 0;
+        (function draw() {
+          cx.clearRect(0, 0, cv.width, cv.height);
+          frame++;
+          let alive = false;
+          pieces.forEach((p) => {
+            p.vy += p.g;
+            p.x += p.vx;
+            p.y += p.vy;
+            p.rot += p.vr;
+            p.life++;
+            if (p.y < cv.height + 20) alive = true;
+            cx.save();
+            cx.translate(p.x, p.y);
+            cx.rotate(p.rot);
+            cx.globalAlpha = Math.max(0, 1 - frame / 160);
+            cx.fillStyle = p.color;
+            cx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+            cx.restore();
+          });
+          if (alive && frame < 160) {
+            requestAnimationFrame(draw);
+          } else {
+            cx.clearRect(0, 0, cv.width, cv.height);
+            cv.style.display = "none";
+          }
+        })();
+      }
+
+      // ── LIVE PRICING CALCULATOR ──
+      (function pricingCalc() {
+        const range = document.getElementById("calcRange");
+        if (!range) return;
+        const RATE = 1500; // ₹/day base, matches the booking form
+        const DISC = { 15: 5, 30: 10, 45: 15 }; // days → % off
+        const ADV = 0.25; // 25% advance
+        const chips = Array.from(document.querySelectorAll("#calcChips .calc-chip"));
+        let module = "SAP Analytics Cloud";
+
+        const inr = (n) => "₹" + Math.round(n).toLocaleString("en-IN");
+
+        function render() {
+          const days = parseInt(range.value, 10);
+          const pct = DISC[days] || 0;
+          const base = RATE * days;
+          const disc = (base * pct) / 100;
+          const total = base - disc;
+          const advance = Math.round(total * ADV);
+          document.getElementById("calcDaysNum").textContent = days;
+          document.getElementById("calcDiscBadge").textContent = pct + "% OFF";
+          document.getElementById("calcBase").textContent = inr(base);
+          document.getElementById("calcDiscLbl").textContent =
+            "Discount (" + pct + "%)";
+          document.getElementById("calcDisc").textContent = "−" + inr(disc);
+          document.getElementById("calcTotal").textContent = inr(total);
+          document.getElementById("calcAdvance").textContent = inr(advance);
+        }
+
+        range.addEventListener("input", render);
+        chips.forEach((chip) => {
+          chip.addEventListener("click", () => {
+            chips.forEach((c) => c.classList.remove("active"));
+            chip.classList.add("active");
+            // strip the leading emoji to get the module name
+            module = chip.textContent.trim().replace(/^\S+\s/, "");
+          });
+        });
+
+        document.getElementById("calcCta").addEventListener("click", () => {
+          track("select_item", { item_name: "Estimator – " + module });
+          scrollToEnquiryWith("SAP Module Training");
+          // pre-select the module in the booking sub-panel if present
+          setTimeout(() => {
+            const btns = document.querySelectorAll(
+              "#sub-training .sub-mod-btn",
+            );
+            btns.forEach((b) => {
+              if (b.textContent.indexOf(module) !== -1) b.click();
+            });
+          }, 500);
+        });
+
+        render();
+      })();
+
+      // ── HERO ROTATING WORD ──
+      (function heroRotator() {
+        const el = document.getElementById("rotWord");
+        if (!el) return;
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+          return;
+        const words = [
+          "SAP Datasphere",
+          "SAP Analytics Cloud",
+          "SAP BW/4HANA",
+          "SAP BPC",
+          "SAP S/4HANA",
+          "SAP BDC",
+        ];
+        let i = 0;
+        setInterval(() => {
+          el.classList.add("swap");
+          setTimeout(() => {
+            i = (i + 1) % words.length;
+            el.textContent = words[i];
+            el.classList.remove("swap");
+          }, 350);
+        }, 2200);
+      })();
 
       // ── SAP BTP / BDC DATA-FABRIC BACKGROUND ──
       const canvas = document.getElementById("bg-canvas");
@@ -4941,6 +5960,7 @@
 
         document.getElementById("enquiryForm").style.display = "none";
         document.getElementById("formSuccess").classList.add("show");
+        fireConfetti();
       }
       // ── UPI PAYMENT ──
       function formatINR(n) {
@@ -6582,6 +7602,7 @@
           var ps = document.getElementById("paySuccess");
           ps.style.display = "flex";
           ps.classList.add("show");
+          fireConfetti();
         }, 1800);
       }
 
@@ -6668,6 +7689,7 @@
           var ps = document.getElementById("paySuccess");
           ps.style.display = "flex";
           ps.classList.add("show");
+          fireConfetti();
         }, 1800);
       }
     </script>
