@@ -18,6 +18,46 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Learn SAP – Connect with an Expert</title>
+
+    <!-- ── SEO ── -->
+    <meta
+      name="description"
+      content="Learn SAP the practical way — 1-on-1 training, mock interviews, certification prep and job support in SAP Datasphere, SAC, BW/4HANA, BPC, S/4HANA and BDC. Connect directly with a working SAP expert."
+    />
+    <meta
+      name="keywords"
+      content="SAP training, SAP Datasphere, SAP Analytics Cloud, SAC, BW/4HANA, SAP BPC, S/4HANA, SAP BDC, SAP certification, SAP mock interview, SAP job support"
+    />
+    <meta name="author" content="Naresh Kabra" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#0a0506" />
+    <link rel="canonical" href="https://saplearninghub.github.io/Courses/" />
+
+    <!-- ── Open Graph ── -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Learn SAP" />
+    <meta property="og:title" content="Learn SAP – Connect with an Expert" />
+    <meta
+      property="og:description"
+      content="1-on-1 SAP training, mock interviews, certification prep and job support across Datasphere, SAC, BW/4HANA, BPC, S/4HANA and BDC."
+    />
+    <meta property="og:url" content="https://saplearninghub.github.io/Courses/" />
+    <meta property="og:locale" content="en_IN" />
+
+    <!-- ── Twitter Card ── -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Learn SAP – Connect with an Expert" />
+    <meta
+      name="twitter:description"
+      content="1-on-1 SAP training, mock interviews, certification prep and job support across Datasphere, SAC, BW/4HANA, BPC, S/4HANA and BDC."
+    />
+
+    <!-- ── Favicon (inline SVG, no extra file) ── -->
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0506'/%3E%3Ctext x='50%25' y='52%25' font-family='Arial,sans-serif' font-size='30' font-weight='bold' fill='%23ff2e3f' text-anchor='middle' dominant-baseline='middle'%3ES%3C/text%3E%3C/svg%3E"
+    />
+
     <link
       href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700&family=JetBrains+Mono:wght@400;700&display=swap"
       rel="stylesheet"
@@ -3093,6 +3133,28 @@
           animation: none !important;
         }
       }
+
+      /* Honeypot — off-screen, never focusable/visible to real users. */
+      .hp-field {
+        position: absolute !important;
+        left: -9999px !important;
+        top: auto;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+      }
+
+      /* The custom cursor only makes sense with a fine pointer (mouse/trackpad).
+         On touch / coarse pointers, restore the native cursor and hide the dot. */
+      @media (hover: none), (pointer: coarse) {
+        body {
+          cursor: auto;
+        }
+        .cursor,
+        .cursor-ring {
+          display: none !important;
+        }
+      }
     </style>
   </head>
   <body>
@@ -3504,6 +3566,17 @@
 
           <div class="enquiry-body">
             <div id="enquiryForm">
+              <!-- Honeypot: real users never see or fill this; bots do. -->
+              <div class="hp-field" aria-hidden="true">
+                <label for="f-company">Company (leave blank)</label>
+                <input
+                  id="f-company"
+                  name="company"
+                  type="text"
+                  tabindex="-1"
+                  autocomplete="off"
+                />
+              </div>
               <div class="form-grid">
                 <div class="form-group" id="grp-name">
                   <label class="form-label">Full Name</label>
@@ -4217,23 +4290,26 @@
       // ── CUSTOM CURSOR ──
       const cursor = document.getElementById("cursor");
       const ring = document.getElementById("cursorRing");
+      const finePointer = window.matchMedia("(pointer: fine)").matches;
       let mx = 0,
         my = 0,
         rx = 0,
         ry = 0;
-      document.addEventListener("mousemove", (e) => {
-        mx = e.clientX;
-        my = e.clientY;
-        cursor.style.left = mx + "px";
-        cursor.style.top = my + "px";
-      });
-      (function animRing() {
-        rx += (mx - rx) * 0.13;
-        ry += (my - ry) * 0.13;
-        ring.style.left = rx + "px";
-        ring.style.top = ry + "px";
-        requestAnimationFrame(animRing);
-      })();
+      if (finePointer) {
+        document.addEventListener("mousemove", (e) => {
+          mx = e.clientX;
+          my = e.clientY;
+          cursor.style.left = mx + "px";
+          cursor.style.top = my + "px";
+        });
+        (function animRing() {
+          rx += (mx - rx) * 0.13;
+          ry += (my - ry) * 0.13;
+          ring.style.left = rx + "px";
+          ring.style.top = ry + "px";
+          requestAnimationFrame(animRing);
+        })();
+      }
 
       // ── SCROLL PROGRESS ──
       const bar = document.getElementById("progressBar");
@@ -4561,11 +4637,29 @@
           ctx.fillText(n.label, n.x, n.y - R - 9);
         }
 
-        requestAnimationFrame(step);
+        if (!reduceMotion && !document.hidden) {
+          rafId = requestAnimationFrame(step);
+        }
       }
 
+      var reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+      var rafId = null;
       initScene();
+      // Always paint one frame; only keep the loop running when motion is
+      // allowed and the tab is visible (saves battery on mobile/background tabs).
       step();
+      if (!reduceMotion) {
+        document.addEventListener("visibilitychange", function () {
+          if (document.hidden) {
+            if (rafId) cancelAnimationFrame(rafId);
+            rafId = null;
+          } else if (!rafId) {
+            step();
+          }
+        });
+      }
       // ── ENQUIRY FORM SUBMIT ──
       var SHEET_URL =
         "https://script.google.com/macros/s/AKfycbwhqIuyKY3UQ3Xef5AEz7lFEZuUbCj-cLa2ycaQvdO-LJGvjx2QbdDj2oJB2NpNkYgi/exec";
@@ -4740,8 +4834,22 @@
         }
       }
 
+      // Fire a Google Analytics event if gtag is available (no-op otherwise).
+      function track(name, params) {
+        if (typeof gtag === "function") {
+          gtag("event", name, params || {});
+        }
+      }
+
       // Main button handler — "Next" for payment types, "Submit" for others
       async function handleFormAction() {
+        // Honeypot: if filled, it's a bot — feign success and drop silently.
+        var hp = document.getElementById("f-company");
+        if (hp && hp.value.trim()) {
+          document.getElementById("enquiryForm").style.display = "none";
+          document.getElementById("formSuccess").classList.add("show");
+          return;
+        }
         if (!validateFormFields()) return;
         if (isPaymentType()) {
           await handleNext();
@@ -4828,6 +4936,8 @@
           notes: notes,
           stage: "Enquiry",
         });
+
+        track("generate_lead", { enquiry_type: enqType });
 
         document.getElementById("enquiryForm").style.display = "none";
         document.getElementById("formSuccess").classList.add("show");
@@ -6286,6 +6396,16 @@
           "https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=" +
           encodeURIComponent(upiUri);
         qrWrap.classList.add("show");
+        track("begin_checkout", {
+          currency: "INR",
+          value: advance,
+          items: [
+            {
+              item_name: "SAP Training – " + bkState.module,
+              quantity: bkState.days,
+            },
+          ],
+        });
         // deep link on mobile
         window.location.href = upiUri;
       }
@@ -6428,6 +6548,16 @@
           paymentNote: "Training Advance (" + fState.days + " days)",
           stage: "Payment Initiated",
         });
+        track("begin_checkout", {
+          currency: "INR",
+          value: advance,
+          items: [
+            {
+              item_name: "SAP Training – " + fState.module,
+              quantity: fState.days,
+            },
+          ],
+        });
         // Show payment success screen after short delay (let UPI app open first)
         setTimeout(function () {
           var waMsg = encodeURIComponent(
@@ -6508,6 +6638,11 @@
           amountPaid: amt,
           paymentNote: "Mock Interview Full Payment (" + mins + " min)",
           stage: "Payment Initiated",
+        });
+        track("begin_checkout", {
+          currency: "INR",
+          value: amt,
+          items: [{ item_name: "Mock Interview – " + fIntModule }],
         });
         // Show payment success screen after short delay (let UPI app open first)
         setTimeout(function () {
