@@ -3363,6 +3363,91 @@
         transform: scale(1.3);
       }
 
+      /* ══ LEARNER FEEDBACK FORM ══ */
+      .feedback-section {
+        max-width: 920px;
+        margin: 0 auto 60px;
+      }
+      .feedback-wrapper {
+        background: linear-gradient(145deg, var(--card), var(--surface));
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        overflow: hidden;
+        position: relative;
+      }
+      .feedback-header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 28px 32px 20px;
+        border-bottom: 1px solid var(--border);
+      }
+      .feedback-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 14px;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 209, 102, 0.16),
+          rgba(255, 209, 102, 0.05)
+        );
+        border: 1px solid rgba(255, 209, 102, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        flex-shrink: 0;
+      }
+      .feedback-title {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 28px;
+        letter-spacing: 2px;
+        color: var(--gold);
+        line-height: 1;
+      }
+      .feedback-sub {
+        font-size: 12.5px;
+        color: var(--muted);
+        font-weight: 300;
+        margin-top: 5px;
+        line-height: 1.5;
+      }
+      .feedback-body {
+        padding: 26px 32px 30px;
+      }
+      @media (max-width: 500px) {
+        .feedback-header {
+          padding: 22px 20px 18px;
+        }
+        .feedback-body {
+          padding: 22px 20px 26px;
+        }
+      }
+      .fb-stars {
+        display: flex;
+        gap: 6px;
+        margin-bottom: 20px;
+      }
+      .fb-star {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 32px;
+        line-height: 1;
+        color: var(--border);
+        padding: 0 2px;
+        transition:
+          color 0.15s ease,
+          transform 0.15s ease;
+      }
+      .fb-star:hover {
+        transform: scale(1.15);
+      }
+      .fb-star.on {
+        color: var(--gold);
+        text-shadow: 0 0 12px rgba(255, 209, 102, 0.5);
+      }
+
       /* ══ FAQ ACCORDION ══ */
       .faq-section {
         max-width: 920px;
@@ -3903,40 +3988,90 @@
           // Learner Stories
         </div>
         <div class="testi-viewport">
-          <div class="testi-track" id="testiTrack">
-            <div class="testi-slide">
-              <p class="testi-quote">
-                The 1:1 Datasphere sessions were exactly what I needed — real
-                project scenarios, not just theory. Cleared my C_BW4H exam and
-                landed a role within two months.
-              </p>
-              <div class="testi-stars">★★★★★</div>
-              <div class="testi-name">Priya R.</div>
-              <div class="testi-role">Data Analyst → SAP Consultant</div>
-            </div>
-            <div class="testi-slide">
-              <p class="testi-quote">
-                As a working professional I needed flexible timings and job
-                support on a live S/4HANA rollout. Got both. Genuinely felt like
-                having a senior on call.
-              </p>
-              <div class="testi-stars">★★★★★</div>
-              <div class="testi-name">Arjun M.</div>
-              <div class="testi-role">SAP FICO, Bengaluru</div>
-            </div>
-            <div class="testi-slide">
-              <p class="testi-quote">
-                The mock interview for SAC was brutally honest and incredibly
-                useful. Fixed my weak spots and walked into the real one with
-                confidence.
-              </p>
-              <div class="testi-stars">★★★★★</div>
-              <div class="testi-name">Sneha K.</div>
-              <div class="testi-role">Fresher → SAC Associate</div>
-            </div>
-          </div>
+          <!-- Slides are rendered by JS: newest learner feedback first, capped at 3 -->
+          <div class="testi-track" id="testiTrack"></div>
         </div>
         <div class="testi-dots" id="testiDots"></div>
+      </section>
+
+      <div class="divider"><span>// share your experience</span></div>
+
+      <section id="feedback" class="feedback-section reveal">
+        <div class="sec-label">// Share Your Feedback</div>
+        <div class="feedback-wrapper">
+          <div class="feedback-header">
+            <div class="feedback-icon">⭐</div>
+            <div>
+              <div class="feedback-title">Share Your Experience</div>
+              <div class="feedback-sub">
+                Learned with us? Rate it and tell others — your review appears in
+                the stories above.
+              </div>
+            </div>
+          </div>
+          <div class="feedback-body" id="feedbackForm">
+            <div
+              class="fb-stars"
+              id="fbStars"
+              role="radiogroup"
+              aria-label="Your rating out of 5"
+            >
+              <button type="button" class="fb-star" data-val="1" aria-label="1 star">★</button>
+              <button type="button" class="fb-star" data-val="2" aria-label="2 stars">★</button>
+              <button type="button" class="fb-star" data-val="3" aria-label="3 stars">★</button>
+              <button type="button" class="fb-star" data-val="4" aria-label="4 stars">★</button>
+              <button type="button" class="fb-star" data-val="5" aria-label="5 stars">★</button>
+            </div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label">Your Name</label>
+                <input
+                  class="form-input"
+                  id="fb-name"
+                  type="text"
+                  placeholder="e.g. Rahul S."
+                  autocomplete="name"
+                  maxlength="40"
+                />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Role / Module</label>
+                <input
+                  class="form-input"
+                  id="fb-role"
+                  type="text"
+                  placeholder="e.g. SAC Learner"
+                  maxlength="50"
+                />
+              </div>
+            </div>
+            <div class="form-group full">
+              <label class="form-label">Your Feedback</label>
+              <textarea
+                class="form-input"
+                id="fb-msg"
+                rows="3"
+                maxlength="320"
+                placeholder="What did you learn and how did it help? A line or two is perfect..."
+                style="resize: vertical; min-height: 90px; line-height: 1.6"
+              ></textarea>
+              <span class="form-error" id="fb-error"
+                >Please pick a rating, add your name and a short message</span
+              >
+            </div>
+            <button class="submit-btn" id="fbSubmit" onclick="submitFeedback()">
+              Post Feedback →
+            </button>
+          </div>
+          <div class="form-success" id="fbSuccess">
+            <span class="success-icon">🙌</span>
+            <div class="success-title">Thanks for sharing!</div>
+            <p class="success-msg">
+              Your review is now live in the stories above.<br />We really
+              appreciate you taking the time.
+            </p>
+          </div>
+        </div>
       </section>
 
       <div class="divider"><span>// common questions</span></div>
@@ -4947,37 +5082,200 @@
         track.innerHTML += track.innerHTML;
       })();
 
-      // ── TESTIMONIALS CAROUSEL ──
+      // ── LEARNER REVIEWS (data-driven) + FEEDBACK ──
       (function testimonials() {
-        const track = document.getElementById("testiTrack");
-        const dotsWrap = document.getElementById("testiDots");
+        var track = document.getElementById("testiTrack");
+        var dotsWrap = document.getElementById("testiDots");
         if (!track || !dotsWrap) return;
-        const slides = track.children.length;
-        let idx = 0;
-        for (let i = 0; i < slides; i++) {
-          const d = document.createElement("button");
-          d.className = "testi-dot" + (i === 0 ? " active" : "");
-          d.setAttribute("aria-label", "Testimonial " + (i + 1));
-          d.addEventListener("click", () => go(i, true));
-          dotsWrap.appendChild(d);
+
+        // Owner-curated seed reviews. To make a learner's submitted feedback
+        // permanent for EVERY visitor, add it here as a new entry.
+        var seed = [
+          {
+            quote:
+              "The 1:1 Datasphere sessions were exactly what I needed — real project scenarios, not just theory. Cleared my C_BW4H exam and landed a role within two months.",
+            stars: 5,
+            name: "Priya R.",
+            role: "Data Analyst → SAP Consultant",
+          },
+          {
+            quote:
+              "As a working professional I needed flexible timings and job support on a live S/4HANA rollout. Got both. Genuinely felt like having a senior on call.",
+            stars: 5,
+            name: "Arjun M.",
+            role: "SAP FICO, Bengaluru",
+          },
+          {
+            quote:
+              "The mock interview for SAC was brutally honest and incredibly useful. Fixed my weak spots and walked into the real one with confidence.",
+            stars: 5,
+            name: "Sneha K.",
+            role: "Fresher → SAC Associate",
+          },
+        ];
+        var LS_KEY = "sap_learner_feedback";
+
+        function loadLocal() {
+          try {
+            return JSON.parse(localStorage.getItem(LS_KEY)) || [];
+          } catch (e) {
+            return [];
+          }
         }
-        const dots = Array.from(dotsWrap.children);
-        function go(n, manual) {
-          idx = (n + slides) % slides;
-          track.style.transform = "translateX(-" + idx * 100 + "%)";
-          dots.forEach((d, i) => d.classList.toggle("active", i === idx));
-          if (manual) restart();
+        function saveLocal(list) {
+          try {
+            localStorage.setItem(LS_KEY, JSON.stringify(list.slice(0, 10)));
+          } catch (e) {}
         }
-        let timer;
-        const reduce = window.matchMedia(
+        function esc(s) {
+          return String(s).replace(/[&<>"']/g, function (c) {
+            return {
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            }[c];
+          });
+        }
+        function starStr(n) {
+          n = Math.max(1, Math.min(5, n | 0));
+          return "★★★★★".slice(0, n) + "☆☆☆☆☆".slice(0, 5 - n);
+        }
+
+        var idx = 0,
+          count = 0,
+          timer = null;
+        var reduce = window.matchMedia(
           "(prefers-reduced-motion: reduce)",
         ).matches;
+
+        function go(n, manual) {
+          if (!count) return;
+          idx = (n + count) % count;
+          track.style.transform = "translateX(-" + idx * 100 + "%)";
+          Array.from(dotsWrap.children).forEach(function (d, i) {
+            d.classList.toggle("active", i === idx);
+          });
+          if (manual) restart();
+        }
         function restart() {
           clearInterval(timer);
-          if (!reduce) timer = setInterval(() => go(idx + 1), 5000);
+          if (!reduce && count > 1)
+            timer = setInterval(function () {
+              go(idx + 1);
+            }, 5000);
         }
-        restart();
+
+        function build() {
+          // newest learner feedback first, then curated seed — show just three
+          var items = loadLocal().concat(seed).slice(0, 3);
+          count = items.length;
+          track.innerHTML = items
+            .map(function (t) {
+              return (
+                '<div class="testi-slide">' +
+                '<p class="testi-quote">' +
+                esc(t.quote) +
+                "</p>" +
+                '<div class="testi-stars">' +
+                starStr(t.stars) +
+                "</div>" +
+                '<div class="testi-name">' +
+                esc(t.name) +
+                "</div>" +
+                '<div class="testi-role">' +
+                esc(t.role || "SAP Learner") +
+                "</div>" +
+                "</div>"
+              );
+            })
+            .join("");
+          dotsWrap.innerHTML = "";
+          for (var i = 0; i < count; i++) {
+            var d = document.createElement("button");
+            d.className = "testi-dot" + (i === 0 ? " active" : "");
+            d.setAttribute("aria-label", "Review " + (i + 1));
+            (function (n) {
+              d.addEventListener("click", function () {
+                go(n, true);
+              });
+            })(i);
+            dotsWrap.appendChild(d);
+          }
+          idx = 0;
+          track.style.transform = "translateX(0)";
+          restart();
+        }
+
+        // Exposed for the feedback form: prepend the new review, re-render,
+        // and jump to it so the learner immediately sees their words.
+        window.addLearnerFeedback = function (entry) {
+          var list = loadLocal();
+          list.unshift(entry);
+          saveLocal(list);
+          build();
+          go(0);
+        };
+
+        build();
       })();
+
+      // ── FEEDBACK FORM: star rating + submit ──
+      var fbRating = 0;
+      (function initFeedbackStars() {
+        var wrap = document.getElementById("fbStars");
+        if (!wrap) return;
+        var stars = Array.from(wrap.querySelectorAll(".fb-star"));
+        function paint(v) {
+          stars.forEach(function (s) {
+            s.classList.toggle("on", parseInt(s.dataset.val, 10) <= v);
+          });
+        }
+        stars.forEach(function (b) {
+          b.addEventListener("click", function () {
+            fbRating = parseInt(b.dataset.val, 10);
+            paint(fbRating);
+          });
+          b.addEventListener("mouseenter", function () {
+            paint(parseInt(b.dataset.val, 10));
+          });
+        });
+        wrap.addEventListener("mouseleave", function () {
+          paint(fbRating);
+        });
+      })();
+
+      function submitFeedback() {
+        var name = document.getElementById("fb-name").value.trim();
+        var role = document.getElementById("fb-role").value.trim();
+        var msg = document.getElementById("fb-msg").value.trim();
+        var err = document.getElementById("fb-error");
+        if (!name || !msg || !fbRating) {
+          err.style.display = "block";
+          return;
+        }
+        err.style.display = "none";
+        var entry = {
+          quote: msg,
+          stars: fbRating,
+          name: name,
+          role: role || "SAP Learner",
+        };
+        // Send to the same Google Sheet as enquiries so the owner receives it.
+        sendToSheet({
+          name: name,
+          role: entry.role,
+          rating: fbRating,
+          feedback: msg,
+          enquiryType: "Learner Feedback",
+          stage: "Feedback",
+        });
+        track("submit_feedback", { rating: fbRating });
+        if (window.addLearnerFeedback) window.addLearnerFeedback(entry);
+        document.getElementById("feedbackForm").style.display = "none";
+        document.getElementById("fbSuccess").classList.add("show");
+      }
 
       // ── FAQ ACCORDION ──
       (function faq() {
