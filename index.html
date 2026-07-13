@@ -3500,27 +3500,114 @@
         line-height: 1.7;
       }
 
-      /* ══ WHATSAPP FLOAT ══ */
-      .wa-float {
+      /* ══ FLOATING CONTACT FAB (Call + WhatsApp) ══ */
+      .fab-stack {
         position: fixed;
-        right: 20px;
-        bottom: 22px;
-        width: 56px;
-        height: 56px;
+        right: 24px;
+        bottom: 24px;
+        z-index: 900;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 14px;
+        opacity: 0;
+        transform: translateY(20px);
+        pointer-events: none;
+        transition:
+          opacity 0.4s ease,
+          transform 0.4s ease;
+      }
+      .fab-stack.show {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+      .fab-actions {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 12px;
+      }
+      .fab-action {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        opacity: 0;
+        transform: translateY(14px) scale(0.9);
+        pointer-events: none;
+        transition:
+          opacity 0.25s ease,
+          transform 0.25s ease;
+      }
+      .fab-stack.open .fab-action {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        pointer-events: auto;
+      }
+      .fab-stack.open .fab-action:nth-child(1) {
+        transition-delay: 0.06s;
+      }
+      .fab-action-label {
+        background: rgba(15, 16, 22, 0.92);
+        color: #fff;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        padding: 8px 14px;
+        border-radius: 8px;
+        white-space: nowrap;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+      }
+      .fab-action-bubble {
+        width: 48px;
+        height: 48px;
         border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        flex-shrink: 0;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      }
+      .fab-call {
+        background: linear-gradient(135deg, var(--accent2), var(--accent));
+      }
+      .fab-wa {
+        background: linear-gradient(135deg, #25d366, #128c7e);
+      }
+      .fab-main {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
         background: linear-gradient(135deg, #25d366, #128c7e);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 28px;
-        text-decoration: none;
-        z-index: 900;
-        box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
+        font-size: 30px;
+        color: #fff;
+        box-shadow: 0 8px 24px rgba(37, 211, 102, 0.45);
         animation: waPulse 2.4s ease-in-out infinite;
-        transition: transform 0.2s ease;
+        transition:
+          transform 0.25s ease,
+          background 0.3s ease;
       }
-      .wa-float:hover {
-        transform: scale(1.1);
+      .fab-main:hover {
+        transform: scale(1.08);
+      }
+      .fab-main-icon {
+        line-height: 1;
+        transition: transform 0.3s ease;
+      }
+      .fab-stack.open .fab-main {
+        background: linear-gradient(135deg, var(--accent2), var(--accent));
+        animation: none;
+      }
+      .fab-stack.open .fab-main-icon {
+        transform: rotate(90deg);
       }
       @keyframes waPulse {
         0%,
@@ -3536,10 +3623,19 @@
         }
       }
       @media (max-width: 580px) {
-        .wa-float {
-          width: 50px;
-          height: 50px;
-          font-size: 25px;
+        .fab-stack {
+          right: 16px;
+          bottom: 16px;
+        }
+        .fab-main {
+          width: 54px;
+          height: 54px;
+          font-size: 27px;
+        }
+        .fab-action-bubble {
+          width: 44px;
+          height: 44px;
+          font-size: 20px;
         }
       }
 
@@ -3555,7 +3651,7 @@
       }
 
       @media (prefers-reduced-motion: reduce) {
-        .wa-float {
+        .fab-main {
           animation: none !important;
         }
         .skill-card {
@@ -3594,19 +3690,33 @@
       <div class="nav-dot" data-section="contact" title="Contact"></div>
     </nav>
 
-    <!-- Floating CTA -->
-    <div class="floating-cta" id="floatingCta">
-      <a href="tel:+918871644954">📞 Connect Now</a>
+    <!-- Floating contact FAB (merged Call + WhatsApp) -->
+    <div class="fab-stack" id="floatingCta">
+      <div class="fab-actions" id="fabActions">
+        <a class="fab-action" href="tel:+918871644954">
+          <span class="fab-action-label">Call Now</span>
+          <span class="fab-action-bubble fab-call">📞</span>
+        </a>
+        <a
+          class="fab-action"
+          href="https://wa.me/918871644954?text=Hi%20Naresh!%20I'd%20like%20to%20know%20more%20about%20SAP%20training."
+          target="_blank"
+          rel="noopener"
+        >
+          <span class="fab-action-label">WhatsApp</span>
+          <span class="fab-action-bubble fab-wa">💬</span>
+        </a>
+      </div>
+      <button
+        class="fab-main"
+        id="fabMain"
+        type="button"
+        aria-label="Contact options"
+        aria-expanded="false"
+      >
+        <span class="fab-main-icon">💬</span>
+      </button>
     </div>
-
-    <a
-      class="wa-float"
-      href="https://wa.me/918871644954?text=Hi%20Naresh!%20I'd%20like%20to%20know%20more%20about%20SAP%20training."
-      target="_blank"
-      rel="noopener"
-      aria-label="Chat on WhatsApp"
-      >💬</a
-    >
 
     <canvas id="confettiCanvas"></canvas>
 
@@ -5165,6 +5275,67 @@
         ];
         var LS_KEY = "sap_learner_feedback";
 
+        // Google Apps Script /exec endpoint — same one used for enquiries.
+        // The doGet(?action=feedback) returns every learner review from the
+        // "LEADS" sheet so all visitors see everyone's feedback, one by one.
+        var FB_URL =
+          "https://script.google.com/macros/s/AKfycbwhqIuyKY3UQ3Xef5AEz7lFEZuUbCj-cLa2ycaQvdO-LJGvjx2QbdDj2oJB2NpNkYgi/exec";
+        var remoteReviews = null; // filled once the sheet responds
+
+        // Map a raw sheet row {name,role,rating,feedback,linkedin} to a slide.
+        function mapRow(r) {
+          return {
+            quote: r.feedback || r.quote || "",
+            stars: parseInt(r.rating || r.stars || 5, 10) || 5,
+            name: r.name || "SAP Learner",
+            role: r.role || "SAP Learner",
+            linkedin: r.linkedin || "",
+          };
+        }
+
+        // Drop duplicate reviews (same name + text) so a learner's own local
+        // copy doesn't show twice once it comes back from the sheet.
+        function dedupeReviews(list) {
+          var seen = {};
+          return list.filter(function (t) {
+            if (!t || !t.quote) return false;
+            var k = (t.name || "") + "|" + t.quote;
+            if (seen[k]) return false;
+            seen[k] = 1;
+            return true;
+          });
+        }
+
+        // Pull all feedback from the sheet via JSONP (avoids CORS on GET).
+        function fetchRemote() {
+          var cb = "__fbCb_" + Date.now();
+          var s = document.createElement("script");
+          var done = false;
+          var to = setTimeout(cleanup, 7000);
+          function cleanup() {
+            if (done) return;
+            done = true;
+            clearTimeout(to);
+            try {
+              delete window[cb];
+            } catch (e) {}
+            if (s.parentNode) s.parentNode.removeChild(s);
+          }
+          window[cb] = function (data) {
+            var arr = (data && data.feedback) || data || [];
+            if (Array.isArray(arr) && arr.length) {
+              remoteReviews = arr.map(mapRow).filter(function (x) {
+                return x.quote;
+              });
+              build();
+            }
+            cleanup();
+          };
+          s.onerror = cleanup;
+          s.src = FB_URL + "?action=feedback&callback=" + cb;
+          document.head.appendChild(s);
+        }
+
         function loadLocal() {
           try {
             return JSON.parse(localStorage.getItem(LS_KEY)) || [];
@@ -5218,8 +5389,14 @@
         }
 
         function build() {
-          // newest learner feedback first, then curated seed — show just three
-          var items = loadLocal().concat(seed).slice(0, 3);
+          // Prefer reviews from the sheet (visible to everyone). Until they
+          // load, fall back to this device's own submissions. Curated seed
+          // reviews always tail the list. Show them all, one by one.
+          var source =
+            remoteReviews && remoteReviews.length
+              ? remoteReviews.concat(seed)
+              : loadLocal().concat(seed);
+          var items = dedupeReviews(source).slice(0, 24);
           count = items.length;
           track.innerHTML = items
             .map(function (t) {
@@ -5275,6 +5452,34 @@
         };
 
         build();
+        fetchRemote(); // then swap in everyone's feedback from the sheet
+      })();
+
+      // ── FLOATING CONTACT FAB (expand to Call + WhatsApp) ──
+      (function fabToggle() {
+        var stack = document.getElementById("floatingCta");
+        var main = document.getElementById("fabMain");
+        if (!stack || !main) return;
+        var icon = main.querySelector(".fab-main-icon");
+        function setOpen(open) {
+          stack.classList.toggle("open", open);
+          main.setAttribute("aria-expanded", open ? "true" : "false");
+          if (icon) icon.textContent = open ? "✕" : "💬";
+        }
+        main.addEventListener("click", function (e) {
+          e.stopPropagation();
+          setOpen(!stack.classList.contains("open"));
+        });
+        // Close when tapping outside or after picking an action
+        document.addEventListener("click", function (e) {
+          if (stack.classList.contains("open") && !stack.contains(e.target))
+            setOpen(false);
+        });
+        stack.querySelectorAll(".fab-action").forEach(function (a) {
+          a.addEventListener("click", function () {
+            setOpen(false);
+          });
+        });
       })();
 
       // ── FEEDBACK FORM: star rating + submit ──
