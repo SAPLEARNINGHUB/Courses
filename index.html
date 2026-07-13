@@ -4637,6 +4637,13 @@
                     <div class="sub-qr-wrap" id="fQrWrap">
                       <img id="fQrImg" src="" alt="UPI QR" />
                       <div class="sub-qr-hint">Scan with any UPI app</div>
+                      <button
+                        type="button"
+                        class="sub-qr-refresh"
+                        onclick="fConfirmPayment()"
+                      >
+                        🔄 I've Paid — Refresh Status
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -4840,6 +4847,13 @@
                       <div class="sub-qr-hint">
                         Scan with any UPI app · or tap button above
                       </div>
+                      <button
+                        type="button"
+                        class="sub-qr-refresh"
+                        onclick="intConfirmPayment()"
+                      >
+                        🔄 I've Paid — Refresh Status
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -6702,6 +6716,29 @@
         font-family: "JetBrains Mono", monospace;
         letter-spacing: 1px;
       }
+      .sub-qr-refresh {
+        margin-top: 12px;
+        width: 100%;
+        padding: 11px 14px;
+        border: 1px solid rgba(0, 229, 160, 0.5);
+        border-radius: 10px;
+        background: rgba(0, 229, 160, 0.12);
+        color: var(--accent, #00e5a0);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        cursor: pointer;
+        transition:
+          background 0.2s ease,
+          transform 0.1s ease;
+      }
+      .sub-qr-refresh:hover {
+        background: rgba(0, 229, 160, 0.22);
+      }
+      .sub-qr-refresh:active {
+        transform: scale(0.98);
+      }
       .sub-cert-grid {
         display: flex;
         flex-direction: column;
@@ -7754,6 +7791,26 @@
         document.getElementById("stp-pay").style.display = "block";
       }
 
+      // ── UPI "refresh" confirmation (replaces the old 1.8s auto-return) ──
+      var _fPayWA = "";
+      var _intPayWA = "";
+      function showPaySuccess(waMsg) {
+        if (!waMsg) return;
+        document.getElementById("paySuccessWA").href =
+          "https://wa.me/918871644954?text=" + waMsg;
+        document.getElementById("enquiryForm").style.display = "none";
+        var ps = document.getElementById("paySuccess");
+        ps.style.display = "flex";
+        ps.classList.add("show");
+        fireConfetti();
+      }
+      function fConfirmPayment() {
+        showPaySuccess(_fPayWA);
+      }
+      function intConfirmPayment() {
+        showPaySuccess(_intPayWA);
+      }
+
       function fInitiatePayment() {
         var advance = parseInt(
           document.getElementById("fPayBtn").dataset.amt,
@@ -7802,32 +7859,24 @@
             },
           ],
         });
-        // Show payment success screen after short delay (let UPI app open first)
-        setTimeout(function () {
-          var waMsg = encodeURIComponent(
-            "Hi Naresh! I just initiated payment of \u20b9" +
-              advance.toLocaleString("en-IN") +
-              " for SAP " +
-              fState.module +
-              " Training (" +
-              fState.days +
-              " days).\n" +
-              "Name: " +
-              name +
-              "\nEmail: " +
-              email +
-              "\nMobile: " +
-              mobile +
-              "\nPlease confirm my slot. [attaching payment screenshot]",
-          );
-          document.getElementById("paySuccessWA").href =
-            "https://wa.me/918871644954?text=" + waMsg;
-          document.getElementById("enquiryForm").style.display = "none";
-          var ps = document.getElementById("paySuccess");
-          ps.style.display = "flex";
-          ps.classList.add("show");
-          fireConfetti();
-        }, 1800);
+        // Store WhatsApp message; success screen shows when user taps
+        // the "I've Paid \u2014 Refresh Status" button below the QR.
+        _fPayWA = encodeURIComponent(
+          "Hi Naresh! I just initiated payment of \u20b9" +
+            advance.toLocaleString("en-IN") +
+            " for SAP " +
+            fState.module +
+            " Training (" +
+            fState.days +
+            " days).\n" +
+            "Name: " +
+            name +
+            "\nEmail: " +
+            email +
+            "\nMobile: " +
+            mobile +
+            "\nPlease confirm my slot. [attaching payment screenshot]",
+        );
       }
 
       // ── INTERVIEW SUB-PANEL ──
@@ -7889,32 +7938,24 @@
           value: amt,
           items: [{ item_name: "Mock Interview – " + fIntModule }],
         });
-        // Show payment success screen after short delay (let UPI app open first)
-        setTimeout(function () {
-          var waMsg = encodeURIComponent(
-            "Hi Naresh! I just initiated payment of \u20b9" +
-              amt +
-              " for Mock Interview (" +
-              fIntModule +
-              ", " +
-              mins +
-              " min).\n" +
-              "Name: " +
-              name +
-              "\nEmail: " +
-              email +
-              "\nMobile: " +
-              mobile +
-              "\nPlease confirm my slot. [attaching payment screenshot]",
-          );
-          document.getElementById("paySuccessWA").href =
-            "https://wa.me/918871644954?text=" + waMsg;
-          document.getElementById("enquiryForm").style.display = "none";
-          var ps = document.getElementById("paySuccess");
-          ps.style.display = "flex";
-          ps.classList.add("show");
-          fireConfetti();
-        }, 1800);
+        // Store WhatsApp message; success screen shows when user taps
+        // the "I've Paid \u2014 Refresh Status" button below the QR.
+        _intPayWA = encodeURIComponent(
+          "Hi Naresh! I just initiated payment of \u20b9" +
+            amt +
+            " for Mock Interview (" +
+            fIntModule +
+            ", " +
+            mins +
+            " min).\n" +
+            "Name: " +
+            name +
+            "\nEmail: " +
+            email +
+            "\nMobile: " +
+            mobile +
+            "\nPlease confirm my slot. [attaching payment screenshot]",
+        );
       }
     </script>
   </body>
