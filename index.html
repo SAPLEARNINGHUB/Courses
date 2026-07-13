@@ -948,14 +948,16 @@
           box-shadow 0.3s ease;
         cursor: default;
         opacity: 0;
-        transform: translateY(30px);
+        transform: translate(var(--sx, 0px), var(--sy, 44px))
+          rotate(var(--sr, -7deg)) scale(0.82);
+        will-change: transform, opacity;
       }
       .skill-card.visible {
         opacity: 1;
-        transform: translateY(0);
+        transform: translate(0, 0) rotate(0deg) scale(1);
         transition:
-          opacity 0.5s ease,
-          transform 0.5s cubic-bezier(0.34, 1.2, 0.64, 1),
+          opacity 0.45s ease,
+          transform 0.7s cubic-bezier(0.22, 1.35, 0.4, 1),
           border-color 0.3s ease,
           box-shadow 0.3s ease;
       }
@@ -3556,6 +3558,13 @@
         .wa-float {
           animation: none !important;
         }
+        .skill-card {
+          transform: translateY(16px) !important;
+        }
+        .skill-card.visible {
+          transform: none !important;
+          transition: opacity 0.4s ease !important;
+        }
       }
     </style>
   </head>
@@ -3609,7 +3618,7 @@
           Expert Mentoring · Available Now
         </div>
         <div class="hero-title">
-          <span class="line1">Learn SAP.</span>
+          <span class="line1">Learn Tech Tools.</span>
           <span class="line2">Master It.</span>
         </div>
         <div class="hero-rotator">
@@ -4007,6 +4016,17 @@
                 Learned with us? Rate it and tell others — your review appears in
                 the stories above.
               </div>
+              <div class="feedback-sub" style="margin-top: 6px">
+                Instructor:
+                <a
+                  href="https://www.linkedin.com/in/sanskar-sharma-05372b211"
+                  target="_blank"
+                  rel="noopener"
+                  style="color: var(--accent); text-decoration: none; font-weight: 500"
+                  >Sanskar Sharma
+                  <span style="opacity: 0.7">· LinkedIn ↗</span></a
+                >
+              </div>
             </div>
           </div>
           <div class="feedback-body" id="feedbackForm">
@@ -4044,6 +4064,18 @@
                   maxlength="50"
                 />
               </div>
+            </div>
+            <div class="form-group full">
+              <label class="form-label">LinkedIn Profile <span style="opacity:.6;font-weight:400">(optional)</span></label>
+              <input
+                class="form-input"
+                id="fb-linkedin"
+                type="url"
+                inputmode="url"
+                placeholder="e.g. linkedin.com/in/your-name"
+                autocomplete="url"
+                maxlength="120"
+              />
             </div>
             <div class="form-group full">
               <label class="form-label">Your Feedback</label>
@@ -4979,18 +5011,36 @@
       );
       revealEls.forEach((el) => io.observe(el));
 
+      // Give each card a random "scattered" start so the reveal reads as a
+      // deck being shuffled/dealt. Randomised once per page load.
+      skillCards.forEach((card) => {
+        const sx = (Math.random() * 120 - 60).toFixed(0); // -60..60px
+        const sy = (Math.random() * 40 + 30).toFixed(0); //  30..70px
+        const sr = (Math.random() * 24 - 12).toFixed(1); // -12..12deg
+        card.style.setProperty("--sx", sx + "px");
+        card.style.setProperty("--sy", sy + "px");
+        card.style.setProperty("--sr", sr + "deg");
+      });
+
+      // Wait until ALL six cards are on screen (i.e. the last card in reading
+      // order is in view), THEN deal them in as one staggered shuffle.
+      // Fires only once per refresh.
+      let cardsDealt = false;
+      const lastCard = skillCards[skillCards.length - 1];
       const cardIO = new IntersectionObserver(
         (entries) => {
-          entries.forEach((e, idx) => {
-            if (e.isIntersecting) {
-              setTimeout(() => e.target.classList.add("visible"), idx * 80);
-              cardIO.unobserve(e.target);
-            }
+          if (cardsDealt) return;
+          const trigger = entries.find((e) => e.isIntersecting);
+          if (!trigger) return;
+          cardsDealt = true;
+          cardIO.disconnect(); // never re-fires
+          skillCards.forEach((card, i) => {
+            setTimeout(() => card.classList.add("visible"), i * 100);
           });
         },
-        { threshold: 0.1 },
+        { threshold: 0.55 },
       );
-      skillCards.forEach((c) => cardIO.observe(c));
+      cardIO.observe(lastCard);
       // ── SERVICE CARDS REVEAL ──
       const serviceCards = document.querySelectorAll(".service-card");
       const serviceIO = new IntersectionObserver(
@@ -5182,7 +5232,13 @@
                 starStr(t.stars) +
                 "</div>" +
                 '<div class="testi-name">' +
-                esc(t.name) +
+                (t.linkedin
+                  ? '<a href="' +
+                    esc(t.linkedin) +
+                    '" target="_blank" rel="noopener nofollow" style="color:inherit;text-decoration:none;border-bottom:1px solid var(--accent)">' +
+                    esc(t.name) +
+                    ' <span style="opacity:.7;font-size:.8em">in↗</span></a>'
+                  : esc(t.name)) +
                 "</div>" +
                 '<div class="testi-role">' +
                 esc(t.role || "SAP Learner") +
@@ -5246,10 +5302,23 @@
         });
       })();
 
+      // Turn "linkedin.com/in/foo" or "www.linkedin.com/in/foo" into a full,
+      // safe https URL. Returns "" if it isn't a plausible LinkedIn link.
+      function normalizeLinkedIn(raw) {
+        var v = String(raw || "").trim();
+        if (!v) return "";
+        v = v.replace(/^https?:\/\//i, "").replace(/^www\./i, "");
+        if (!/^([a-z]{2,3}\.)?linkedin\.com\/[^\s]+$/i.test(v)) return "";
+        return "https://www." + v;
+      }
+
       function submitFeedback() {
         var name = document.getElementById("fb-name").value.trim();
         var role = document.getElementById("fb-role").value.trim();
         var msg = document.getElementById("fb-msg").value.trim();
+        var linkedin = normalizeLinkedIn(
+          document.getElementById("fb-linkedin").value,
+        );
         var err = document.getElementById("fb-error");
         if (!name || !msg || !fbRating) {
           err.style.display = "block";
@@ -5261,6 +5330,7 @@
           stars: fbRating,
           name: name,
           role: role || "SAP Learner",
+          linkedin: linkedin,
         };
         // Send to the same Google Sheet as enquiries so the owner receives it.
         sendToSheet({
@@ -5268,6 +5338,7 @@
           role: entry.role,
           rating: fbRating,
           feedback: msg,
+          linkedin: linkedin,
           enquiryType: "Learner Feedback",
           stage: "Feedback",
         });
