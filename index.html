@@ -62,6 +62,23 @@
       href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700&family=JetBrains+Mono:wght@400;700&display=swap"
       rel="stylesheet"
     />
+    <script>
+      // ── DEVICE CAPABILITY DETECTOR ──
+      // Classifies the device once, before first paint, so CSS + JS can
+      // adapt. `low-power` → phones / weak hardware: heavy blurs, canvas
+      // animation and decorative motion are toned down or skipped.
+      (function () {
+        var coarse = window.matchMedia("(pointer: coarse)").matches;
+        var smallScreen = window.matchMedia("(max-width: 768px)").matches;
+        var weakCpu =
+          navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4;
+        var lowMem = navigator.deviceMemory && navigator.deviceMemory <= 4;
+        var lowPower = coarse || smallScreen || weakCpu || lowMem;
+        var cls = document.documentElement.classList;
+        cls.toggle("low-power", !!lowPower);
+        cls.toggle("fine-pointer", !coarse);
+      })();
+    </script>
     <style>
       :root {
         --bg: #0a0506;
@@ -89,6 +106,21 @@
       }
 
       body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "DM Sans", sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+      /* Fixed gradient wash lives on a pseudo-element instead of
+         background-attachment: fixed (which forces a full repaint on
+         every scroll frame — a major source of mobile scroll jank). */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
         background:
           radial-gradient(
             ellipse 80% 60% at 50% -10%,
@@ -99,59 +131,7 @@
             ellipse 70% 50% at 100% 110%,
             rgba(255, 46, 63, 0.1),
             transparent 55%
-          ),
-          var(--bg);
-        background-attachment: fixed;
-        color: var(--text);
-        font-family: "DM Sans", sans-serif;
-        min-height: 100vh;
-        overflow-x: hidden;
-        cursor: none;
-      }
-
-      /* ── CUSTOM CURSOR ── */
-      .cursor {
-        width: 12px;
-        height: 12px;
-        background: var(--accent);
-        border-radius: 50%;
-        position: fixed;
-        pointer-events: none;
-        z-index: 9999;
-        transform: translate(-50%, -50%);
-        transition:
-          transform 0.1s ease,
-          width 0.3s ease,
-          height 0.3s ease,
-          background 0.3s ease;
-        mix-blend-mode: screen;
-      }
-      .cursor-ring {
-        width: 36px;
-        height: 36px;
-        border: 1.5px solid rgba(255, 46, 63, 0.5);
-        border-radius: 50%;
-        position: fixed;
-        pointer-events: none;
-        z-index: 9998;
-        transform: translate(-50%, -50%);
-        transition:
-          left 0.12s ease,
-          top 0.12s ease,
-          width 0.3s ease,
-          height 0.3s ease;
-      }
-      body:has(a:hover) .cursor,
-      body:has(button:hover) .cursor {
-        width: 20px;
-        height: 20px;
-        background: var(--green);
-      }
-      body:has(a:hover) .cursor-ring,
-      body:has(button:hover) .cursor-ring {
-        width: 54px;
-        height: 54px;
-        border-color: var(--green);
+          );
       }
 
       /* ── CANVAS BACKGROUND ── */
@@ -3212,6 +3192,58 @@
         }
       }
 
+      /* ── Low-power devices (phones / weak hardware) ──
+         html.low-power is set before first paint by the capability
+         detector in <head>. Heavy compositing effects are the main
+         mobile jank sources, so: no backdrop blurs, no giant orb blur
+         filters, no infinite decorative animations. */
+      .low-power .orb {
+        filter: none;
+        will-change: auto;
+        animation: none !important;
+      }
+      .low-power .learn-section,
+      .low-power .enquiry-wrapper,
+      .low-power .payment-wrapper,
+      .low-power .modal-overlay,
+      .low-power .bk-overlay,
+      .low-power .topnav,
+      .low-power .topnav-links {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+      }
+      /* solid-enough fallbacks where the blur was doing visual work */
+      .low-power .topnav {
+        background: rgba(10, 5, 6, 0.94);
+      }
+      .low-power .modal-overlay,
+      .low-power .bk-overlay {
+        background: rgba(10, 5, 6, 0.94);
+      }
+      .low-power .noise {
+        display: none;
+      }
+      .low-power .hero-title .line2 {
+        animation: none !important;
+      }
+      .low-power .hero::before {
+        animation: none !important;
+        filter: none;
+      }
+      /* animated box-shadow repaints every frame — skip on weak devices */
+      .low-power .fab-main {
+        animation: none !important;
+      }
+
+      /* Applied by an IntersectionObserver when a looping decorative
+         element scrolls out of view — no point animating off-screen. */
+      .anim-offscreen,
+      .anim-offscreen *,
+      .anim-offscreen::before,
+      .anim-offscreen::after {
+        animation-play-state: paused !important;
+      }
+
       /* Honeypot — off-screen, never focusable/visible to real users. */
       .hp-field {
         position: absolute !important;
@@ -3220,18 +3252,6 @@
         width: 1px;
         height: 1px;
         overflow: hidden;
-      }
-
-      /* The custom cursor only makes sense with a fine pointer (mouse/trackpad).
-         On touch / coarse pointers, restore the native cursor and hide the dot. */
-      @media (hover: none), (pointer: coarse) {
-        body {
-          cursor: auto;
-        }
-        .cursor,
-        .cursor-ring {
-          display: none !important;
-        }
       }
 
       /* ══ MODULE MARQUEE ══ */
@@ -3666,8 +3686,6 @@
   </head>
   <body>
     <!-- Cursor -->
-    <div class="cursor" id="cursor"></div>
-    <div class="cursor-ring" id="cursorRing"></div>
 
     <!-- Progress Bar -->
     <div class="progress-bar" id="progressBar"></div>
@@ -5044,30 +5062,6 @@
       </div>
     </div>
     <script>
-      // ── CUSTOM CURSOR ──
-      const cursor = document.getElementById("cursor");
-      const ring = document.getElementById("cursorRing");
-      const finePointer = window.matchMedia("(pointer: fine)").matches;
-      let mx = 0,
-        my = 0,
-        rx = 0,
-        ry = 0;
-      if (finePointer) {
-        document.addEventListener("mousemove", (e) => {
-          mx = e.clientX;
-          my = e.clientY;
-          cursor.style.left = mx + "px";
-          cursor.style.top = my + "px";
-        });
-        (function animRing() {
-          rx += (mx - rx) * 0.13;
-          ry += (my - ry) * 0.13;
-          ring.style.left = rx + "px";
-          ring.style.top = ry + "px";
-          requestAnimationFrame(animRing);
-        })();
-      }
-
       // ── CONSOLIDATED SCROLL HANDLER (single passive + rAF-throttled) ──
       // One listener drives the progress bar, floating CTA, nav-dot highlight
       // and orb parallax, so scrolling triggers at most one layout pass/frame.
@@ -5075,9 +5069,11 @@
       const cta = document.getElementById("floatingCta");
       const dots = Array.from(document.querySelectorAll(".nav-dot"));
       const orbEls = Array.from(document.querySelectorAll(".orb"));
-      const allowOrbMotion = !window.matchMedia(
-        "(prefers-reduced-motion: reduce)",
-      ).matches;
+      const lowPower =
+        document.documentElement.classList.contains("low-power");
+      const allowOrbMotion =
+        !lowPower &&
+        !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
       dots.forEach((dot) => {
         dot.addEventListener("click", () => {
@@ -5179,33 +5175,82 @@
         { threshold: 0.1 },
       );
       serviceCards.forEach((c) => serviceIO.observe(c));
-      // ── SKILL CARD MOUSE GLOW ──
-      skillCards.forEach((card) => {
-        card.addEventListener("mousemove", (e) => {
-          const rect = card.getBoundingClientRect();
-          card.style.setProperty(
-            "--mx",
-            ((e.clientX - rect.left) / rect.width) * 100 + "%",
-          );
-          card.style.setProperty(
-            "--my",
-            ((e.clientY - rect.top) / rect.height) * 100 + "%",
-          );
-        });
-      });
 
-      // ── SERVICE CARD CURSOR SPOTLIGHT ──
-      serviceCards.forEach((card) => {
-        card.addEventListener("mousemove", (e) => {
-          const rect = card.getBoundingClientRect();
-          card.style.setProperty("--mx", e.clientX - rect.left + "px");
-          card.style.setProperty("--my", e.clientY - rect.top + "px");
+      // ── PAUSE LOOPING ANIMATIONS WHEN OFF-SCREEN ──
+      // The marquee, BTP flow diagram, hero sheen/aura and WhatsApp FAB
+      // pulse run infinite animations. Off-screen they still consume
+      // main-thread/compositor time, so pause them until visible.
+      (function pauseOffscreenAnims() {
+        const loopers = document.querySelectorAll(
+          ".module-marquee, .btp-flow, .hero, .fab-stack",
+        );
+        if (!loopers.length || !("IntersectionObserver" in window)) return;
+        const animIO = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              e.target.classList.toggle("anim-offscreen", !e.isIntersecting);
+            });
+          },
+          { threshold: 0 },
+        );
+        loopers.forEach((el) => animIO.observe(el));
+      })();
+      // ── SKILL / SERVICE CARD HOVER EFFECTS ──
+      // Only wired up on fine pointers (mouse/trackpad) — on touch the
+      // handlers would never produce a visible effect but still run on
+      // every touch-drag. Style writes are rAF-throttled so a 120Hz+
+      // mouse can't force more than one style pass per frame.
+      const finePointer = window.matchMedia("(pointer: fine)").matches;
+
+      function rafThrottle(fn) {
+        let pending = false;
+        let lastEvt = null;
+        return function (e) {
+          lastEvt = e;
+          if (pending) return;
+          pending = true;
+          requestAnimationFrame(() => {
+            pending = false;
+            fn(lastEvt);
+          });
+        };
+      }
+
+      // ── SKILL CARD MOUSE GLOW ──
+      if (finePointer) {
+        skillCards.forEach((card) => {
+          card.addEventListener(
+            "mousemove",
+            rafThrottle((e) => {
+              const rect = card.getBoundingClientRect();
+              card.style.setProperty(
+                "--mx",
+                ((e.clientX - rect.left) / rect.width) * 100 + "%",
+              );
+              card.style.setProperty(
+                "--my",
+                ((e.clientY - rect.top) / rect.height) * 100 + "%",
+              );
+            }),
+          );
         });
-      });
+
+        // ── SERVICE CARD CURSOR SPOTLIGHT ──
+        serviceCards.forEach((card) => {
+          card.addEventListener(
+            "mousemove",
+            rafThrottle((e) => {
+              const rect = card.getBoundingClientRect();
+              card.style.setProperty("--mx", e.clientX - rect.left + "px");
+              card.style.setProperty("--my", e.clientY - rect.top + "px");
+            }),
+          );
+        });
+      }
 
       // ── MAGNETIC BUTTONS ──
       (function magneticButtons() {
-        if (!window.matchMedia("(pointer: fine)").matches) return;
+        if (!finePointer) return;
         if (window.matchMedia("(prefers-reduced-motion: reduce)").matches)
           return;
         const mags = document.querySelectorAll(
@@ -5214,13 +5259,16 @@
         mags.forEach((btn) => {
           btn.style.transition =
             "transform 0.2s cubic-bezier(0.34,1.4,0.64,1)";
-          btn.addEventListener("mousemove", (e) => {
-            const r = btn.getBoundingClientRect();
-            const dx = e.clientX - r.left - r.width / 2;
-            const dy = e.clientY - r.top - r.height / 2;
-            btn.style.transform =
-              "translate(" + dx * 0.25 + "px," + dy * 0.35 + "px)";
-          });
+          btn.addEventListener(
+            "mousemove",
+            rafThrottle((e) => {
+              const r = btn.getBoundingClientRect();
+              const dx = e.clientX - r.left - r.width / 2;
+              const dy = e.clientY - r.top - r.height / 2;
+              btn.style.transform =
+                "translate(" + dx * 0.25 + "px," + dy * 0.35 + "px)";
+            }),
+          );
           btn.addEventListener("mouseleave", () => {
             btn.style.transform = "translate(0,0)";
           });
@@ -5601,7 +5649,11 @@
         cv.height = window.innerHeight;
         const colors = ["#ff2e3f", "#ffd166", "#00e5a0", "#b3121f", "#ffffff"];
         const pieces = [];
-        for (let i = 0; i < 140; i++) {
+        // fewer pieces on low-power devices — same celebratory feel
+        const PIECES = document.documentElement.classList.contains("low-power")
+          ? 70
+          : 140;
+        for (let i = 0; i < PIECES; i++) {
           pieces.push({
             x: cv.width / 2 + (Math.random() - 0.5) * 120,
             y: cv.height / 3,
@@ -5659,7 +5711,17 @@
           "SAP BDC",
         ];
         let i = 0;
+        // skip the swap while the tab is hidden or the hero is scrolled
+        // away — no point forcing style/paint work nobody can see
+        let heroVisible = true;
+        const hero = document.getElementById("hero");
+        if (hero && "IntersectionObserver" in window) {
+          new IntersectionObserver((entries) => {
+            heroVisible = entries[0].isIntersecting;
+          }).observe(hero);
+        }
         setInterval(() => {
+          if (document.hidden || !heroVisible) return;
           el.classList.add("swap");
           setTimeout(() => {
             i = (i + 1) % words.length;
@@ -5672,6 +5734,8 @@
       // ── SAP BTP / BDC DATA-FABRIC BACKGROUND ──
       const canvas = document.getElementById("bg-canvas");
       const ctx = canvas.getContext("2d");
+      const bgLowPower =
+        document.documentElement.classList.contains("low-power");
       let W,
         H,
         DPR,
@@ -5700,7 +5764,9 @@
       }
 
       function resize() {
-        DPR = Math.min(window.devicePixelRatio || 1, 2);
+        // Budget phones struggle with a full-screen canvas at DPR 2 —
+        // 1.5 is visually indistinguishable for this soft background.
+        DPR = Math.min(window.devicePixelRatio || 1, bgLowPower ? 1.5 : 2);
         W = window.innerWidth;
         H = window.innerHeight;
         canvas.width = W * DPR;
@@ -5725,10 +5791,12 @@
       }
 
       function initScene() {
-        // faint particle dust — lighter on small/coarse-pointer screens
+        // faint particle dust — much lighter on low-power devices
         particles = [];
-        const coarse = window.matchMedia("(pointer: coarse)").matches;
-        const NUM = Math.min(coarse ? 26 : 46, Math.floor((W * H) / 24000));
+        const NUM = Math.min(
+          bgLowPower ? 18 : 46,
+          Math.floor((W * H) / 24000),
+        );
         for (let i = 0; i < NUM; i++) {
           particles.push({
             x: Math.random() * W,
@@ -5756,15 +5824,23 @@
             hub: HUBS.indexOf(label) !== -1,
           });
         }
-        // flowing data packets
+        // flowing data packets — fewer on low-power devices
         pulses = [];
-        const pc = Math.min(16, count * 2);
+        const pc = Math.min(bgLowPower ? 8 : 16, count * 2);
         for (let i = 0; i < pc; i++) pulses.push(newPulse());
       }
 
+      // Re-init on resize / orientation change, debounced so mobile
+      // browsers (which fire resize continuously while the URL bar
+      // collapses) don't rebuild the scene dozens of times.
+      var _resizeTimer = null;
       window.addEventListener("resize", function () {
-        resize();
-        initScene();
+        clearTimeout(_resizeTimer);
+        _resizeTimer = setTimeout(function () {
+          resize();
+          initScene();
+          step(); // repaint immediately even if the loop is paused
+        }, 150);
       });
 
       function step() {
@@ -5799,13 +5875,18 @@
             const d = Math.hypot(a.x - b.x, a.y - b.y);
             if (d < MAXD) {
               const al = (1 - d / MAXD) * 0.5;
-              const grad = ctx.createLinearGradient(a.x, a.y, b.x, b.y);
-              grad.addColorStop(0, `rgba(255,46,63,${al})`);
-              grad.addColorStop(1, `rgba(179,18,31,${al})`);
               ctx.beginPath();
               ctx.moveTo(a.x, a.y);
               ctx.lineTo(b.x, b.y);
-              ctx.strokeStyle = grad;
+              if (bgLowPower) {
+                // flat stroke — per-link gradients are too costly on phones
+                ctx.strokeStyle = `rgba(224,32,47,${al})`;
+              } else {
+                const grad = ctx.createLinearGradient(a.x, a.y, b.x, b.y);
+                grad.addColorStop(0, `rgba(255,46,63,${al})`);
+                grad.addColorStop(1, `rgba(179,18,31,${al})`);
+                ctx.strokeStyle = grad;
+              }
               ctx.lineWidth = 0.8;
               ctx.stroke();
             }
@@ -5828,13 +5909,21 @@
           const x = a.x + (b.x - a.x) * pu.t;
           const y = a.y + (b.y - a.y) * pu.t;
           const col = pu.gold ? "255,209,102" : "255,80,95";
-          const g = ctx.createRadialGradient(x, y, 0, x, y, 7);
-          g.addColorStop(0, `rgba(${col},0.9)`);
-          g.addColorStop(1, `rgba(${col},0)`);
-          ctx.beginPath();
-          ctx.arc(x, y, 7, 0, Math.PI * 2);
-          ctx.fillStyle = g;
-          ctx.fill();
+          if (bgLowPower) {
+            // cheap halo: translucent flat disc instead of a radial gradient
+            ctx.beginPath();
+            ctx.arc(x, y, 5, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${col},0.25)`;
+            ctx.fill();
+          } else {
+            const g = ctx.createRadialGradient(x, y, 0, x, y, 7);
+            g.addColorStop(0, `rgba(${col},0.9)`);
+            g.addColorStop(1, `rgba(${col},0)`);
+            ctx.beginPath();
+            ctx.arc(x, y, 7, 0, Math.PI * 2);
+            ctx.fillStyle = g;
+            ctx.fill();
+          }
           ctx.beginPath();
           ctx.arc(x, y, 1.7, 0, Math.PI * 2);
           ctx.fillStyle = "rgba(255,255,255,0.95)";
@@ -5847,14 +5936,16 @@
         for (const n of nodes) {
           const pl = (Math.sin(n.phase) + 1) / 2;
           const R = n.r + (n.hub ? 2 : 0);
-          const glowR = 26 + (n.hub ? 12 : 0);
-          const gg = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, glowR);
-          gg.addColorStop(0, `rgba(255,46,63,${0.16 + pl * 0.12})`);
-          gg.addColorStop(1, "rgba(255,46,63,0)");
-          ctx.beginPath();
-          ctx.arc(n.x, n.y, glowR, 0, Math.PI * 2);
-          ctx.fillStyle = gg;
-          ctx.fill();
+          if (!bgLowPower) {
+            const glowR = 26 + (n.hub ? 12 : 0);
+            const gg = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, glowR);
+            gg.addColorStop(0, `rgba(255,46,63,${0.16 + pl * 0.12})`);
+            gg.addColorStop(1, "rgba(255,46,63,0)");
+            ctx.beginPath();
+            ctx.arc(n.x, n.y, glowR, 0, Math.PI * 2);
+            ctx.fillStyle = gg;
+            ctx.fill();
+          }
           // pulsing ring
           ctx.beginPath();
           ctx.arc(n.x, n.y, R + 4 + pl * 2, 0, Math.PI * 2);
@@ -5882,7 +5973,9 @@
       var rafId = null;
       var bgPaused = false;
       var _bgLast = 0;
-      var BG_FRAME_MS = 1000 / 30; // cap the fabric to ~30fps — halves its CPU cost
+      // ~30fps halves the fabric's CPU cost on laptops; ~20fps on
+      // low-power devices — imperceptible for a soft drift animation.
+      var BG_FRAME_MS = bgLowPower ? 1000 / 20 : 1000 / 30;
 
       // Pause the background animation whenever a modal is open (or the tab is
       // hidden). This is the key fix for scroll jank inside an open card: the
