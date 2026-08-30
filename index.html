@@ -41,7 +41,10 @@
       property="og:description"
       content="1-on-1 SAP training, mock interviews, certification prep and job support across Datasphere, SAC, BW/4HANA, BPC, S/4HANA and BDC."
     />
-    <meta property="og:url" content="https://saplearninghub.github.io/Courses/" />
+    <meta
+      property="og:url"
+      content="https://saplearninghub.github.io/Courses/"
+    />
     <meta property="og:locale" content="en_IN" />
 
     <!-- ── Twitter Card ── -->
@@ -2767,7 +2770,11 @@
       .topnav-cta:hover {
         transform: translateY(-2px);
         box-shadow: 0 10px 28px rgba(255, 46, 63, 0.5);
-        background: linear-gradient(135deg, var(--accent2), var(--accent)) !important;
+        background: linear-gradient(
+          135deg,
+          var(--accent2),
+          var(--accent)
+        ) !important;
       }
       .topnav-burger {
         display: none;
@@ -3759,6 +3766,72 @@
           or upskilling — let's build your expertise together.
         </p>
 
+        <div class="hero-cta-flow">
+          <button class="hero-cta-btn primary" onclick="scrollToEnquiry()">
+            Start Your Journey
+          </button>
+          <button class="hero-cta-btn secondary" onclick="openDemoPopup()">
+            🎯 Join Live Demo
+          </button>
+        </div>
+
+        <style>
+          .hero-cta-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 36px;
+            margin-bottom: 48px;
+            flex-wrap: wrap;
+          }
+          .hero-cta-btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 10px;
+            font-family: "Bebas Neue", sans-serif;
+            font-size: 16px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.25s;
+            white-space: nowrap;
+          }
+          .hero-cta-btn.primary {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+          }
+          .hero-cta-btn.primary:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 46, 63, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 46, 63, 0.25);
+          }
+          .hero-cta-btn.secondary {
+            background: linear-gradient(135deg, #00b37a, #00e5a0);
+            color: #02160f;
+            box-shadow: 0 4px 16px rgba(0, 229, 160, 0.3);
+          }
+          .hero-cta-btn.secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 28px rgba(0, 229, 160, 0.45);
+          }
+          @media (max-width: 580px) {
+            .hero-cta-flow {
+              flex-direction: column;
+              gap: 14px;
+              margin-bottom: 40px;
+            }
+            .hero-cta-btn {
+              width: 100%;
+              max-width: 280px;
+              font-size: 14px;
+              padding: 12px 24px;
+            }
+          }
+        </style>
+
         <div class="btp-flow" aria-hidden="true">
           <div class="btp-node"><span>📊</span>SAC</div>
           <div class="btp-link"></div>
@@ -4141,8 +4214,8 @@
             <div>
               <div class="feedback-title">Share Your Experience</div>
               <div class="feedback-sub">
-                Learned with us? Rate it and tell others — your review appears in
-                the stories above.
+                Learned with us? Rate it and tell others — your review appears
+                in the stories above.
               </div>
               <div class="feedback-sub" style="margin-top: 6px">
                 Instructor:
@@ -4150,7 +4223,11 @@
                   href="https://www.linkedin.com/in/sanskar-sharma-05372b211"
                   target="_blank"
                   rel="noopener"
-                  style="color: var(--accent); text-decoration: none; font-weight: 500"
+                  style="
+                    color: var(--accent);
+                    text-decoration: none;
+                    font-weight: 500;
+                  "
                   >Sanskar Sharma
                   <span style="opacity: 0.7">· LinkedIn ↗</span></a
                 >
@@ -4164,11 +4241,46 @@
               role="radiogroup"
               aria-label="Your rating out of 5"
             >
-              <button type="button" class="fb-star" data-val="1" aria-label="1 star">★</button>
-              <button type="button" class="fb-star" data-val="2" aria-label="2 stars">★</button>
-              <button type="button" class="fb-star" data-val="3" aria-label="3 stars">★</button>
-              <button type="button" class="fb-star" data-val="4" aria-label="4 stars">★</button>
-              <button type="button" class="fb-star" data-val="5" aria-label="5 stars">★</button>
+              <button
+                type="button"
+                class="fb-star"
+                data-val="1"
+                aria-label="1 star"
+              >
+                ★
+              </button>
+              <button
+                type="button"
+                class="fb-star"
+                data-val="2"
+                aria-label="2 stars"
+              >
+                ★
+              </button>
+              <button
+                type="button"
+                class="fb-star"
+                data-val="3"
+                aria-label="3 stars"
+              >
+                ★
+              </button>
+              <button
+                type="button"
+                class="fb-star"
+                data-val="4"
+                aria-label="4 stars"
+              >
+                ★
+              </button>
+              <button
+                type="button"
+                class="fb-star"
+                data-val="5"
+                aria-label="5 stars"
+              >
+                ★
+              </button>
             </div>
             <div class="form-grid">
               <div class="form-group">
@@ -4194,7 +4306,12 @@
               </div>
             </div>
             <div class="form-group full">
-              <label class="form-label">LinkedIn Profile <span style="opacity:.6;font-weight:400">(optional)</span></label>
+              <label class="form-label"
+                >LinkedIn Profile
+                <span style="opacity: 0.6; font-weight: 400"
+                  >(optional)</span
+                ></label
+              >
               <input
                 class="form-input"
                 id="fb-linkedin"
@@ -4261,8 +4378,9 @@
             <div class="faq-a">
               <div class="faq-a-inner">
                 Training is ₹1,500 per day, with 5–15% off for longer plans (15,
-                30 or 45 days). Just submit the enquiry form and we'll share your
-                exact total. Only 25% is needed upfront to confirm your slot.
+                30 or 45 days). Just submit the enquiry form and we'll share
+                your exact total. Only 25% is needed upfront to confirm your
+                slot.
               </div>
             </div>
           </div>
@@ -4572,32 +4690,22 @@
                     <button
                       type="button"
                       class="sub-dur-btn"
-                      onclick="fSelectDuration(15, 5)"
-                    >
-                      <div class="sub-dur-days">15</div>
-                      <div class="sub-dur-lbl">Days</div>
-                      <div class="sub-dur-disc">5% OFF</div>
-                      <div class="sub-dur-rate">₹1,425/day</div>
-                    </button>
-                    <button
-                      type="button"
-                      class="sub-dur-btn"
-                      onclick="fSelectDuration(30, 10)"
-                    >
-                      <div class="sub-dur-days">30</div>
-                      <div class="sub-dur-lbl">Days</div>
-                      <div class="sub-dur-disc">10% OFF</div>
-                      <div class="sub-dur-rate">₹1,350/day</div>
-                    </button>
-                    <button
-                      type="button"
-                      class="sub-dur-btn"
-                      onclick="fSelectDuration(45, 15)"
+                      onclick="fSelectDuration(45, 45000)"
                     >
                       <div class="sub-dur-days">45</div>
                       <div class="sub-dur-lbl">Days</div>
-                      <div class="sub-dur-disc">15% OFF</div>
-                      <div class="sub-dur-rate">₹1,275/day</div>
+                      <div class="sub-dur-disc">Complete Course</div>
+                      <div class="sub-dur-rate">₹45,000 total</div>
+                    </button>
+                    <button
+                      type="button"
+                      class="sub-dur-btn"
+                      onclick="fSelectDuration(60, 48000)"
+                    >
+                      <div class="sub-dur-days">60</div>
+                      <div class="sub-dur-lbl">Days</div>
+                      <div class="sub-dur-disc">Complete Course</div>
+                      <div class="sub-dur-rate">₹40,000 total</div>
                     </button>
                   </div>
                 </div>
@@ -4624,15 +4732,7 @@
                         ><span class="spv" id="sp-days">—</span>
                       </div>
                       <div class="sub-price-row">
-                        <span class="spl">Base (₹1,500/day)</span
-                        ><span class="spv strike" id="sp-base">—</span>
-                      </div>
-                      <div class="sub-price-row">
-                        <span class="spl" id="sp-disc-lbl">Discount</span
-                        ><span class="spv green" id="sp-disc">—</span>
-                      </div>
-                      <div class="sub-price-row">
-                        <span class="spl">Total Fee</span
+                        <span class="spl">Course Fee</span
                         ><span class="spv" id="sp-total">—</span>
                       </div>
                       <div class="sub-price-row total">
@@ -5069,8 +5169,7 @@
       const cta = document.getElementById("floatingCta");
       const dots = Array.from(document.querySelectorAll(".nav-dot"));
       const orbEls = Array.from(document.querySelectorAll(".orb"));
-      const lowPower =
-        document.documentElement.classList.contains("low-power");
+      const lowPower = document.documentElement.classList.contains("low-power");
       const allowOrbMotion =
         !lowPower &&
         !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -5257,8 +5356,7 @@
           ".book-session-btn, .service-cta, .floating-cta a",
         );
         mags.forEach((btn) => {
-          btn.style.transition =
-            "transform 0.2s cubic-bezier(0.34,1.4,0.64,1)";
+          btn.style.transition = "transform 0.2s cubic-bezier(0.34,1.4,0.64,1)";
           btn.addEventListener(
             "mousemove",
             rafThrottle((e) => {
@@ -5793,10 +5891,7 @@
       function initScene() {
         // faint particle dust — much lighter on low-power devices
         particles = [];
-        const NUM = Math.min(
-          bgLowPower ? 18 : 46,
-          Math.floor((W * H) / 24000),
-        );
+        const NUM = Math.min(bgLowPower ? 18 : 46, Math.floor((W * H) / 24000));
         for (let i = 0; i < NUM; i++) {
           particles.push({
             x: Math.random() * W,
@@ -6282,6 +6377,13 @@
 
         track("generate_lead", { enquiry_type: enqType });
 
+        // Show roadmap for SAP Module Training
+        if (desc === "SAP Module Training" && fState.module) {
+          setTimeout(function () {
+            showRoadmap(fState.module);
+          }, 1500);
+        }
+
         document.getElementById("enquiryForm").style.display = "none";
         document.getElementById("formSuccess").classList.add("show");
         fireConfetti();
@@ -6647,7 +6749,7 @@
       }
       .sub-dur-grid {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
         gap: 10px;
         margin-bottom: 6px;
       }
@@ -7145,7 +7247,7 @@
 
       .bk-dur-group {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
         gap: 12px;
         margin-bottom: 20px;
       }
@@ -7524,33 +7626,23 @@
             <div class="bk-dur-group">
               <button
                 class="bk-dur-btn"
-                onclick="bkSelectDuration(15, 5)"
-                id="dur-15"
-              >
-                <div class="bk-dur-days">15</div>
-                <div class="bk-dur-label">Days</div>
-                <div class="bk-dur-disc">5% OFF</div>
-                <div class="bk-dur-price">₹1,425/day</div>
-              </button>
-              <button
-                class="bk-dur-btn"
-                onclick="bkSelectDuration(30, 10)"
-                id="dur-30"
-              >
-                <div class="bk-dur-days">30</div>
-                <div class="bk-dur-label">Days</div>
-                <div class="bk-dur-disc">10% OFF</div>
-                <div class="bk-dur-price">₹1,350/day</div>
-              </button>
-              <button
-                class="bk-dur-btn"
-                onclick="bkSelectDuration(45, 15)"
+                onclick="bkSelectDuration(45, 45000)"
                 id="dur-45"
               >
                 <div class="bk-dur-days">45</div>
                 <div class="bk-dur-label">Days</div>
-                <div class="bk-dur-disc">15% OFF</div>
-                <div class="bk-dur-price">₹1,275/day</div>
+                <div class="bk-dur-disc">Complete Course</div>
+                <div class="bk-dur-price">₹45,000 total</div>
+              </button>
+              <button
+                class="bk-dur-btn"
+                onclick="bkSelectDuration(60, 48000)"
+                id="dur-60"
+              >
+                <div class="bk-dur-days">60</div>
+                <div class="bk-dur-label">Days</div>
+                <div class="bk-dur-disc">Complete Course</div>
+                <div class="bk-dur-price">₹40,000 total</div>
               </button>
             </div>
           </div>
@@ -7582,17 +7674,7 @@
                 <span class="val" id="bk-sum-days">—</span>
               </div>
               <div class="bk-price-row">
-                <span class="lbl">Rate (₹1,500/day)</span>
-                <span class="val strike" id="bk-sum-base">—</span>
-              </div>
-              <div class="bk-price-row">
-                <span class="lbl" id="bk-disc-lbl">Discount</span>
-                <span class="val" id="bk-sum-disc" style="color: var(--green)"
-                  >—</span
-                >
-              </div>
-              <div class="bk-price-row">
-                <span class="lbl">Total Course Fee</span>
+                <span class="lbl">Course Fee</span>
                 <span class="val" id="bk-sum-total">—</span>
               </div>
               <div class="bk-price-row total">
@@ -7659,12 +7741,11 @@
       /* ══════════════════════════════════════
          BOOKING MODAL STATE & LOGIC
       ══════════════════════════════════════ */
-      var bkState = { module: "", days: 0, discPct: 0 };
+      var bkState = { module: "", days: 0, totalFee: 0 };
       var BK_UPI = "shera.sharma7@ybl";
-      var BK_RATE = 1500;
 
       function openModuleBooking() {
-        bkState = { module: "", days: 0, discPct: 0 };
+        bkState = { module: "", days: 0, totalFee: 0 };
         bkShowSection("step1");
         document.getElementById("bkOverlay").classList.add("open");
         document.body.style.overflow = "hidden";
@@ -7698,7 +7779,7 @@
           icon + "  " + name + " Training";
         bkShowSection("step2");
         // clear duration selection
-        ["dur-15", "dur-30", "dur-45"].forEach(function (id) {
+        ["dur-45", "dur-60"].forEach(function (id) {
           document.getElementById(id).classList.remove("selected");
         });
       }
@@ -7707,30 +7788,21 @@
         bkShowSection("others");
       }
 
-      function bkSelectDuration(days, discPct) {
+      function bkSelectDuration(days, totalFee) {
         bkState.days = days;
-        bkState.discPct = discPct;
-        ["dur-15", "dur-30", "dur-45"].forEach(function (id) {
+        bkState.totalFee = totalFee;
+        ["dur-45", "dur-60"].forEach(function (id) {
           document.getElementById(id).classList.remove("selected");
         });
         document.getElementById("dur-" + days).classList.add("selected");
-        // calc
-        var base = BK_RATE * days; // e.g. 1500 * 15 = 22500
-        var discAmt = (base * discPct) / 100;
-        var afterDisc = base - discAmt;
-        var advance = Math.round(afterDisc * 0.25);
+
+        var advance = Math.round(totalFee * 0.25);
 
         // populate summary
         document.getElementById("bk-sum-module").textContent = bkState.module;
         document.getElementById("bk-sum-days").textContent = days + " days";
-        document.getElementById("bk-sum-base").textContent =
-          "₹" + base.toLocaleString("en-IN");
-        document.getElementById("bk-disc-lbl").textContent =
-          "Discount (" + discPct + "%)";
-        document.getElementById("bk-sum-disc").textContent =
-          "−₹" + discAmt.toLocaleString("en-IN");
         document.getElementById("bk-sum-total").textContent =
-          "₹" + afterDisc.toLocaleString("en-IN");
+          "₹" + totalFee.toLocaleString("en-IN");
         document.getElementById("bk-sum-advance").textContent =
           "₹" + advance.toLocaleString("en-IN");
         document.getElementById("bk-note-amt").textContent =
@@ -7788,11 +7860,11 @@
          ENQUIRY FORM SUB-PANEL LOGIC
       ══════════════════════════════════════ */
       var BK_UPI2 = "shera.sharma7@ybl";
-      var fState = { module: "", days: 0, discPct: 0 };
+      var fState = { module: "", days: 0, totalFee: 0 };
       var fIntModule = "";
 
       function fTrainingReset() {
-        fState = { module: "", days: 0, discPct: 0 };
+        fState = { module: "", days: 0, totalFee: 0 };
         document
           .querySelectorAll("#sub-training .sub-mod-btn")
           .forEach(function (b) {
@@ -7844,9 +7916,9 @@
         document.getElementById("fQrWrap").style.display = "none";
       }
 
-      function fSelectDuration(days, discPct) {
+      function fSelectDuration(days, totalFee) {
         fState.days = days;
-        fState.discPct = discPct;
+        fState.totalFee = totalFee;
         document
           .querySelectorAll("#stp-dur .sub-dur-btn")
           .forEach(function (b) {
@@ -7854,21 +7926,12 @@
           });
         event.currentTarget.classList.add("active");
 
-        var base = 1500 * days;
-        var discAmt = (base * discPct) / 100;
-        var afterDisc = base - discAmt;
-        var advance = Math.round(afterDisc * 0.25);
+        var advance = Math.round(totalFee * 0.25);
 
         document.getElementById("sp-mod").textContent = fState.module;
         document.getElementById("sp-days").textContent = days + " days";
-        document.getElementById("sp-base").textContent =
-          "\u20b9" + base.toLocaleString("en-IN");
-        document.getElementById("sp-disc-lbl").textContent =
-          "Discount (" + discPct + "%)";
-        document.getElementById("sp-disc").textContent =
-          "\u2212\u20b9" + discAmt.toLocaleString("en-IN");
         document.getElementById("sp-total").textContent =
-          "\u20b9" + afterDisc.toLocaleString("en-IN");
+          "\u20b9" + totalFee.toLocaleString("en-IN");
         document.getElementById("sp-advance").textContent =
           "\u20b9" + advance.toLocaleString("en-IN");
         document.getElementById("sp-note-amt").textContent =
@@ -7937,7 +8000,7 @@
           mobile: mobile,
           enquiryType: "SAP Module Training – " + fState.module,
           trainingDays: fState.days,
-          discountPct: fState.discPct,
+          totalFee: fState.totalFee,
           amountPaid: advance,
           paymentNote: "Training Advance (" + fState.days + " days)",
           stage: "Payment Initiated",
@@ -8050,6 +8113,597 @@
             "\nPlease confirm my slot. [attaching payment screenshot]",
         );
       }
+
+      /* ══════════════════════════════════════
+         DEMO REGISTRATION SYSTEM
+      ══════════════════════════════════════ */
+
+      // ═══ DEMO CONFIG - UPDATE THIS SECTION ONLY ═══
+      var DEMOS = [
+        {
+          date: "2026-09-05",
+          time: "18:00 IST",
+          module: "SAP Datasphere",
+          courseLink: "downloads/BDC_DSP_Roadmap.pdf",
+          meetingLink: "https://meet.google.com/xxx-yyyy-zzz",
+          status: "past", // Change to 'past' to hide
+        },
+        {
+          date: "2026-09-07",
+          time: "19:00 IST",
+          module: "SAP Analytics Cloud",
+          courseLink: "downloads/SAC_Roadmap.pdf",
+          meetingLink: "https://meet.google.com/abc-defg-hij",
+          status: "past",
+        },
+        {
+          date: "2026-09-07",
+          time: "19:00 IST",
+          module: "SAP Business Data Cloud",
+          courseLink: "downloads/SAC_Roadmap.pdf",
+          meetingLink: "https://meet.google.com/abc-defg-hij",
+          status: "past",
+        },
+        {
+          module: "No live demos currently",
+          status: "live",
+        },
+        // Add more demos here...
+      ];
+      // ═══ END DEMO CONFIG ═══
+
+      function initDemoPopup() {
+        // Auto-open popup on page load (always show if there are live demos)
+        setTimeout(function () {
+          openDemoPopup();
+        }, 500);
+      }
+
+      function openDemoPopup() {
+        var liveDemos = DEMOS.filter(function (d) {
+          return d.status === "live";
+        });
+        if (liveDemos.length === 0) {
+          console.log("No live demos available");
+          return;
+        }
+
+        var demoList = document.getElementById("demoList");
+        demoList.innerHTML = "";
+
+        // Check if it's a placeholder "No live demos" entry
+        var isPlaceholder =
+          liveDemos.length === 1 &&
+          (!liveDemos[0].date ||
+            !liveDemos[0].time ||
+            liveDemos[0].module.toLowerCase().includes("no live demo"));
+
+        if (isPlaceholder) {
+          // Show message without registration button
+          var placeholderCard = document.createElement("div");
+          placeholderCard.className = "demo-card";
+          placeholderCard.style.textAlign = "center";
+          placeholderCard.innerHTML =
+            '<div class="demo-module" style="font-size: 18px; margin-bottom: 16px;">📅 No Live Demos Currently</div>' +
+            '<p style="color: #b08a8f; line-height: 1.6;">We don\'t have any scheduled demos at the moment. Check back soon or reach out to us directly!</p>' +
+            '<a href="#enquiry" onclick="closeDemoPopup(); scrollToEnquiry();" style="display: inline-block; margin-top: 16px; color: #ff2e3f; text-decoration: none; font-weight: 500;">Contact Us →</a>';
+          demoList.appendChild(placeholderCard);
+        } else {
+          // Show regular demo cards with registration buttons
+          liveDemos.forEach(function (demo, idx) {
+            var demoCard = document.createElement("div");
+            demoCard.className = "demo-card";
+            demoCard.innerHTML =
+              '<div class="demo-date">' +
+              demo.date +
+              " at " +
+              demo.time +
+              "</div>" +
+              '<div class="demo-module">' +
+              demo.module +
+              "</div>" +
+              '<a href="' +
+              demo.courseLink +
+              '" target="_blank" class="demo-link">View Course Details →</a>' +
+              '<button class="demo-register-btn" onclick="selectDemo(' +
+              idx +
+              ')">Register for This Demo</button>';
+            demoList.appendChild(demoCard);
+          });
+        }
+
+        document.getElementById("demoOverlay").classList.add("open");
+        document.body.style.overflow = "hidden";
+        pauseBg();
+      }
+
+      function closeDemoPopup() {
+        document.getElementById("demoOverlay").classList.remove("open");
+        document.body.style.overflow = "";
+        resumeBg();
+      }
+
+      var selectedDemoIndex = -1;
+      function selectDemo(idx) {
+        selectedDemoIndex = idx;
+        document.getElementById("demoListView").style.display = "none";
+        document.getElementById("demoFormView").style.display = "block";
+
+        var demo = DEMOS.filter(function (d) {
+          return d.status === "live";
+        })[idx];
+        document.getElementById("selectedDemoInfo").textContent =
+          demo.module + " - " + demo.date + " at " + demo.time;
+      }
+
+      function backToDemoList() {
+        document.getElementById("demoListView").style.display = "block";
+        document.getElementById("demoFormView").style.display = "none";
+        selectedDemoIndex = -1;
+      }
+
+      async function submitDemoRegistration() {
+        var name = document.getElementById("demo-name").value.trim();
+        var email = document.getElementById("demo-email").value.trim();
+        var mobile = document.getElementById("demo-mobile").value.trim();
+
+        if (!name || !email || !mobile) {
+          alert("Please fill all fields");
+          return;
+        }
+
+        var emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailReg.test(email)) {
+          alert("Please enter a valid email");
+          return;
+        }
+
+        var btn = document.getElementById("demoSubmitBtn");
+        btn.disabled = true;
+        btn.textContent = "Registering...";
+
+        var liveDemos = DEMOS.filter(function (d) {
+          return d.status === "live";
+        });
+        var demo = liveDemos[selectedDemoIndex];
+
+        await sendToSheet({
+          name: name,
+          email: email,
+          mobile: mobile,
+          enquiryType: "Demo Registration",
+          demoModule: demo.module,
+          demoDate: demo.date,
+          demoTime: demo.time,
+          demoMeetingLink: demo.meetingLink,
+          stage: "Demo Registered",
+        });
+
+        track("demo_registration", { module: demo.module });
+
+        document.getElementById("demoFormView").style.display = "none";
+        document.getElementById("demoSuccessView").style.display = "block";
+        fireConfetti();
+      }
+
+      function closeDemoSuccess() {
+        closeDemoPopup();
+        document.getElementById("demoListView").style.display = "block";
+        document.getElementById("demoFormView").style.display = "none";
+        document.getElementById("demoSuccessView").style.display = "none";
+        document.getElementById("demo-name").value = "";
+        document.getElementById("demo-email").value = "";
+        document.getElementById("demo-mobile").value = "";
+      }
+
+      /* ══════════════════════════════════════
+         ROADMAP VIEWER
+      ══════════════════════════════════════ */
+      function showRoadmap(module) {
+        var roadmapFile = "";
+        if (module.includes("BDC") || module.includes("Datasphere")) {
+          roadmapFile = "downloads/BDC_DSP_Roadmap.pdf";
+        } else if (
+          module.includes("SAC") ||
+          module.includes("Analytics Cloud")
+        ) {
+          roadmapFile = "downloads/SAC_Roadmap.pdf";
+        }
+
+        if (!roadmapFile) return;
+
+        var viewerUrl =
+          "https://docs.google.com/viewer?url=" +
+          encodeURIComponent(
+            window.location.origin +
+              window.location.pathname.replace("index.html", "") +
+              roadmapFile,
+          ) +
+          "&embedded=true";
+
+        document.getElementById("roadmapIframe").src = viewerUrl;
+        document.getElementById("roadmapOverlay").classList.add("open");
+        document.body.style.overflow = "hidden";
+        pauseBg();
+      }
+
+      function closeRoadmap() {
+        document.getElementById("roadmapOverlay").classList.remove("open");
+        document.getElementById("roadmapIframe").src = "";
+        document.body.style.overflow = "";
+        resumeBg();
+      }
+
+      // Initialize demo popup on page load
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", function () {
+          console.log("Demo init: DOMContentLoaded");
+          initDemoPopup();
+        });
+      } else {
+        // DOM already loaded, run immediately
+        console.log("Demo init: DOM already ready");
+        initDemoPopup();
+      }
+    </script>
+
+    <!-- DEMO REGISTRATION POPUP -->
+    <style>
+      .demo-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(10, 5, 6, 0.92);
+        backdrop-filter: blur(8px);
+        z-index: 10001;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        animation: fadeIn 0.3s ease;
+      }
+      .demo-overlay.open {
+        display: flex;
+      }
+      .demo-modal {
+        background: linear-gradient(145deg, #1a0b0e, #120809);
+        border: 1px solid rgba(255, 46, 63, 0.2);
+        border-radius: 24px;
+        width: 100%;
+        max-width: 700px;
+        max-height: 85vh;
+        overflow-y: auto;
+        position: relative;
+        box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+      }
+      .demo-close {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: var(--muted);
+        font-size: 18px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+        z-index: 2;
+      }
+      .demo-close:hover {
+        background: rgba(255, 87, 87, 0.15);
+        color: #ff6b6b;
+      }
+      .demo-header {
+        padding: 32px 32px 24px;
+        border-bottom: 1px solid var(--border);
+        text-align: center;
+      }
+      .demo-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(0, 229, 160, 0.07);
+        border: 1px solid rgba(0, 229, 160, 0.18);
+        color: var(--green);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        padding: 6px 18px;
+        border-radius: 40px;
+        margin-bottom: 16px;
+      }
+      .demo-title {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 32px;
+        letter-spacing: 2px;
+        color: #fff;
+        margin-bottom: 8px;
+      }
+      .demo-subtitle {
+        font-size: 14px;
+        color: var(--muted);
+        font-weight: 300;
+      }
+      .demo-body {
+        padding: 28px 32px 32px;
+      }
+      .demo-list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .demo-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 20px;
+        transition: all 0.3s ease;
+      }
+      .demo-card:hover {
+        border-color: rgba(0, 229, 160, 0.3);
+        background: rgba(0, 229, 160, 0.04);
+        transform: translateY(-2px);
+      }
+      .demo-date {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 1px;
+        color: var(--green);
+        margin-bottom: 8px;
+      }
+      .demo-module {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 22px;
+        letter-spacing: 1.5px;
+        color: #fff;
+        margin-bottom: 12px;
+      }
+      .demo-link {
+        display: inline-block;
+        font-size: 12px;
+        color: var(--accent);
+        text-decoration: none;
+        margin-bottom: 12px;
+      }
+      .demo-register-btn {
+        width: 100%;
+        padding: 12px;
+        background: linear-gradient(135deg, #00b37a, var(--green));
+        border: none;
+        border-radius: 10px;
+        color: #02160f;
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 16px;
+        letter-spacing: 2px;
+        cursor: pointer;
+        transition: all 0.25s;
+      }
+      .demo-register-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(0, 229, 160, 0.3);
+      }
+      .demo-form-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        margin-top: 20px;
+      }
+      .demo-selected-info {
+        background: rgba(0, 229, 160, 0.08);
+        border: 1px solid rgba(0, 229, 160, 0.2);
+        border-radius: 12px;
+        padding: 14px 18px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        color: var(--green);
+        margin-bottom: 18px;
+      }
+      .demo-back-btn {
+        background: none;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 8px 16px;
+        color: var(--muted);
+        cursor: pointer;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        margin-bottom: 16px;
+        transition: all 0.2s;
+      }
+      .demo-back-btn:hover {
+        border-color: rgba(255, 46, 63, 0.3);
+        color: var(--text);
+      }
+      .demo-success-icon {
+        font-size: 64px;
+        text-align: center;
+        margin-bottom: 16px;
+      }
+      .demo-success-title {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 28px;
+        letter-spacing: 2px;
+        color: var(--green);
+        text-align: center;
+        margin-bottom: 12px;
+      }
+      .demo-success-msg {
+        font-size: 14px;
+        color: var(--muted);
+        text-align: center;
+        line-height: 1.7;
+      }
+      @media (max-width: 500px) {
+        .demo-header,
+        .demo-body {
+          padding: 24px 20px;
+        }
+      }
+
+      /* ROADMAP VIEWER */
+      .roadmap-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(10, 5, 6, 0.95);
+        z-index: 10002;
+        animation: fadeIn 0.3s ease;
+      }
+      .roadmap-overlay.open {
+        display: block;
+      }
+      .roadmap-close {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(255, 46, 63, 0.9);
+        color: #fff;
+        font-size: 24px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10003;
+        border: none;
+        transition: all 0.2s;
+      }
+      .roadmap-close:hover {
+        background: #ff2e3f;
+        transform: scale(1.1);
+      }
+      .roadmap-iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+    </style>
+
+    <div
+      class="demo-overlay"
+      id="demoOverlay"
+      onclick="if (event.target === this) closeDemoPopup();"
+    >
+      <div class="demo-modal">
+        <button class="demo-close" onclick="closeDemoPopup()">✕</button>
+
+        <!-- Demo List View -->
+        <div id="demoListView">
+          <div class="demo-header">
+            <div class="demo-badge"><span class="pulse"></span> Live Demos</div>
+            <div class="demo-title">Join Our Live SAP Demos</div>
+            <div class="demo-subtitle">
+              Free hands-on sessions — register now to secure your spot
+            </div>
+          </div>
+          <div class="demo-body">
+            <div class="demo-list" id="demoList">
+              <!-- Demo cards populated by JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Demo Registration Form -->
+        <div id="demoFormView" style="display: none">
+          <div class="demo-header">
+            <div class="demo-badge">Register for Demo</div>
+            <div class="demo-title">Complete Your Registration</div>
+          </div>
+          <div class="demo-body">
+            <button class="demo-back-btn" onclick="backToDemoList()">
+              ← Back to Demo List
+            </button>
+            <div class="demo-selected-info" id="selectedDemoInfo"></div>
+            <div class="demo-form-grid">
+              <div class="form-group">
+                <label class="form-label">Full Name</label>
+                <input
+                  class="form-input"
+                  id="demo-name"
+                  type="text"
+                  placeholder="Your name"
+                  autocomplete="name"
+                />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input
+                  class="form-input"
+                  id="demo-email"
+                  type="email"
+                  placeholder="you@email.com"
+                  autocomplete="email"
+                />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Mobile Number</label>
+                <input
+                  class="form-input"
+                  id="demo-mobile"
+                  type="tel"
+                  placeholder="+91 98765 43210"
+                  autocomplete="tel"
+                />
+              </div>
+              <button
+                class="submit-btn"
+                id="demoSubmitBtn"
+                onclick="submitDemoRegistration()"
+              >
+                Register for Demo →
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Success View -->
+        <div id="demoSuccessView" style="display: none">
+          <div class="demo-body" style="padding: 50px 32px">
+            <div class="demo-success-icon">🎉</div>
+            <div class="demo-success-title">You're Registered!</div>
+            <p class="demo-success-msg">
+              Thank you for registering. You'll receive a confirmation email
+              with the meeting link shortly.<br /><br />
+              Check your inbox and mark your calendar!
+            </p>
+            <button
+              class="submit-btn"
+              onclick="closeDemoSuccess()"
+              style="margin-top: 24px"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROADMAP VIEWER -->
+    <div class="roadmap-overlay" id="roadmapOverlay">
+      <button class="roadmap-close" onclick="closeRoadmap()">✕</button>
+      <iframe class="roadmap-iframe" id="roadmapIframe"></iframe>
+    </div>
+
+    <!-- Demo popup auto-trigger -->
+    <script>
+      // Final fallback - run after all HTML is parsed
+      setTimeout(function () {
+        console.log("Demo init: Fallback trigger after 100ms");
+        if (typeof initDemoPopup === "function") {
+          initDemoPopup();
+        } else {
+          console.error("initDemoPopup function not found!");
+        }
+      }, 100);
     </script>
   </body>
 </html>
