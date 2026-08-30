@@ -8126,7 +8126,7 @@
           module: "SAP Datasphere",
           courseLink: "downloads/BDC_DSP_Roadmap.pdf",
           meetingLink: "https://meet.google.com/xxx-yyyy-zzz",
-          status: "live", // Change to 'past' to hide
+          status: "past", // Change to 'past' to hide
         },
         {
           date: "2026-09-07",
@@ -8134,6 +8134,18 @@
           module: "SAP Analytics Cloud",
           courseLink: "downloads/SAC_Roadmap.pdf",
           meetingLink: "https://meet.google.com/abc-defg-hij",
+          status: "past",
+        },
+        {
+          date: "2026-09-07",
+          time: "19:00 IST",
+          module: "SAP Business Data Cloud",
+          courseLink: "downloads/SAC_Roadmap.pdf",
+          meetingLink: "https://meet.google.com/abc-defg-hij",
+          status: "past",
+        },
+        {
+          module: "No live demos currently",
           status: "live",
         },
         // Add more demos here...
@@ -8159,26 +8171,46 @@
         var demoList = document.getElementById("demoList");
         demoList.innerHTML = "";
 
-        liveDemos.forEach(function (demo, idx) {
-          var demoCard = document.createElement("div");
-          demoCard.className = "demo-card";
-          demoCard.innerHTML =
-            '<div class="demo-date">' +
-            demo.date +
-            " at " +
-            demo.time +
-            "</div>" +
-            '<div class="demo-module">' +
-            demo.module +
-            "</div>" +
-            '<a href="' +
-            demo.courseLink +
-            '" target="_blank" class="demo-link">View Course Details →</a>' +
-            '<button class="demo-register-btn" onclick="selectDemo(' +
-            idx +
-            ')">Register for This Demo</button>';
-          demoList.appendChild(demoCard);
-        });
+        // Check if it's a placeholder "No live demos" entry
+        var isPlaceholder =
+          liveDemos.length === 1 &&
+          (!liveDemos[0].date ||
+            !liveDemos[0].time ||
+            liveDemos[0].module.toLowerCase().includes("no live demo"));
+
+        if (isPlaceholder) {
+          // Show message without registration button
+          var placeholderCard = document.createElement("div");
+          placeholderCard.className = "demo-card";
+          placeholderCard.style.textAlign = "center";
+          placeholderCard.innerHTML =
+            '<div class="demo-module" style="font-size: 18px; margin-bottom: 16px;">📅 No Live Demos Currently</div>' +
+            '<p style="color: #b08a8f; line-height: 1.6;">We don\'t have any scheduled demos at the moment. Check back soon or reach out to us directly!</p>' +
+            '<a href="#enquiry" onclick="closeDemoPopup(); scrollToEnquiry();" style="display: inline-block; margin-top: 16px; color: #ff2e3f; text-decoration: none; font-weight: 500;">Contact Us →</a>';
+          demoList.appendChild(placeholderCard);
+        } else {
+          // Show regular demo cards with registration buttons
+          liveDemos.forEach(function (demo, idx) {
+            var demoCard = document.createElement("div");
+            demoCard.className = "demo-card";
+            demoCard.innerHTML =
+              '<div class="demo-date">' +
+              demo.date +
+              " at " +
+              demo.time +
+              "</div>" +
+              '<div class="demo-module">' +
+              demo.module +
+              "</div>" +
+              '<a href="' +
+              demo.courseLink +
+              '" target="_blank" class="demo-link">View Course Details →</a>' +
+              '<button class="demo-register-btn" onclick="selectDemo(' +
+              idx +
+              ')">Register for This Demo</button>';
+            demoList.appendChild(demoCard);
+          });
+        }
 
         document.getElementById("demoOverlay").classList.add("open");
         document.body.style.overflow = "hidden";
