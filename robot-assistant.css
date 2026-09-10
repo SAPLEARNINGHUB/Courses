@@ -1,0 +1,278 @@
+/* ═══════════════════════════════════════════════════════════════
+   ANIMATED ROBOT ASSISTANT
+   ═══════════════════════════════════════════════════════════════ */
+
+.robot-assistant {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.robot-container {
+  position: relative;
+  animation: robotFloat 3s ease-in-out infinite;
+}
+
+@keyframes robotFloat {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-10px) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-5px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-10px) rotate(2deg);
+  }
+}
+
+.robot-emoji {
+  font-size: 64px;
+  display: block;
+  filter: drop-shadow(0 4px 12px rgba(255, 46, 63, 0.3));
+  animation: robotWave 2s ease-in-out infinite;
+  transform-origin: bottom center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.robot-emoji:hover {
+  transform: scale(1.1);
+}
+
+@keyframes robotWave {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  10%, 30% {
+    transform: rotate(14deg);
+  }
+  20% {
+    transform: rotate(-8deg);
+  }
+  40%, 100% {
+    transform: rotate(0deg);
+  }
+}
+
+.robot-speech-bubble {
+  position: absolute;
+  bottom: 80px;
+  left: 10px;
+  background: linear-gradient(135deg, var(--card), var(--surface));
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 12px 16px;
+  min-width: 200px;
+  max-width: 280px;
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.4),
+    0 0 40px rgba(255, 46, 63, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  transform: translateY(10px) scale(0.9);
+  animation: bubbleAppear 0.5s ease forwards 0.5s;
+  pointer-events: auto;
+}
+
+@keyframes bubbleAppear {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.robot-speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 20px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid var(--border);
+}
+
+.robot-speech-bubble::before {
+  content: '';
+  position: absolute;
+  bottom: -7px;
+  left: 21px;
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 7px solid var(--card);
+  z-index: 1;
+}
+
+.robot-text {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.robot-greeting {
+  display: block;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 2px;
+  animation: textGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes textGlow {
+  from {
+    text-shadow: 0 0 8px rgba(255, 46, 63, 0.4);
+  }
+  to {
+    text-shadow: 0 0 16px rgba(255, 46, 63, 0.6);
+  }
+}
+
+.robot-message {
+  display: block;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.robot-sparkle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: sparkle 2s ease-in-out infinite;
+  box-shadow: 0 0 10px var(--accent);
+}
+
+.sparkle-1 {
+  top: 10px;
+  right: -10px;
+  animation-delay: 0s;
+}
+
+.sparkle-2 {
+  top: 30px;
+  right: -15px;
+  animation-delay: 0.7s;
+}
+
+.sparkle-3 {
+  top: 50px;
+  right: -8px;
+  animation-delay: 1.4s;
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    transform: scale(0) rotate(0deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1) rotate(180deg);
+    opacity: 1;
+  }
+}
+
+/* Glow ring around robot */
+.robot-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  transform: translate(-50%, -50%);
+  animation: glowPulse 2s ease-in-out infinite;
+  opacity: 0.3;
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0.1;
+  }
+}
+
+/* Close button for bubble */
+.robot-close {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 20px;
+  height: 20px;
+  background: rgba(255, 46, 63, 0.1);
+  border: 1px solid rgba(255, 46, 63, 0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 10px;
+  color: var(--accent);
+  transition: all 0.2s ease;
+  pointer-events: auto;
+}
+
+.robot-close:hover {
+  background: var(--accent);
+  color: white;
+  transform: rotate(90deg);
+}
+
+/* Hide on mobile if needed */
+@media (max-width: 640px) {
+  .robot-assistant {
+    bottom: 80px; /* Above mobile nav if any */
+  }
+
+  .robot-emoji {
+    font-size: 40px;
+  }
+
+  .robot-speech-bubble {
+    min-width: 150px;
+    padding: 10px 12px;
+  }
+
+  .robot-text {
+    font-size: 12px;
+  }
+}
+
+/* Low power mode - reduce animations */
+.low-power .robot-container {
+  animation: none;
+}
+
+.low-power .robot-emoji {
+  animation: none;
+}
+
+.low-power .robot-sparkle {
+  display: none;
+}
+
+.low-power .robot-glow {
+  animation: none;
+}
+
+/* Fade out when scrolled down far */
+.robot-assistant.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
