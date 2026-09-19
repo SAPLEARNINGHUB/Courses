@@ -3865,6 +3865,7 @@
           <span>scroll to explore</span>
         </div>
       </section>
+
       <!-- SERVICES -->
       <section id="services" class="services-section reveal">
         <div class="services-header">
@@ -4379,20 +4380,6 @@
           </div>
           <div class="faq-item">
             <button type="button" class="faq-q">
-              How is the fee calculated?
-              <span class="faq-icon">+</span>
-            </button>
-            <div class="faq-a">
-              <div class="faq-a-inner">
-                Training is ₹1,500 per day, with 5–15% off for longer plans (15,
-                30 or 45 days). Just submit the enquiry form and we'll share
-                your exact total. Only 25% is needed upfront to confirm your
-                slot.
-              </div>
-            </div>
-          </div>
-          <div class="faq-item">
-            <button type="button" class="faq-q">
               Do you help with certification prep?
               <span class="faq-icon">+</span>
             </button>
@@ -4402,19 +4389,6 @@
                 C_HANAIMP_18 and more, covering topic-wise revision, practice
                 questions and exam strategy. No advance needed; just submit the
                 enquiry form.
-              </div>
-            </div>
-          </div>
-          <div class="faq-item">
-            <button type="button" class="faq-q">
-              Which payment methods do you accept?
-              <span class="faq-icon">+</span>
-            </button>
-            <div class="faq-a">
-              <div class="faq-a-inner">
-                Payments are via UPI — scan the QR or tap to pay from any UPI
-                app. After paying the advance, share the screenshot on WhatsApp
-                and we'll confirm your slot instantly.
               </div>
             </div>
           </div>
@@ -4569,6 +4543,9 @@
                   <option value="Mock Interview – SAP Modules">
                     🎯 Mock Interview
                   </option>
+                  <option value="Consultation – SAP Modules / Resume / Roadmap">
+                    📋 Consultation – SAP Modules / Resume / Roadmap
+                  </option>
                   <option value="Job Support">
                     💼 Job Support – Live Project Assistance
                   </option>
@@ -4702,7 +4679,7 @@
                       <div class="sub-dur-days">45</div>
                       <div class="sub-dur-lbl">Days</div>
                       <div class="sub-dur-disc">Complete Course</div>
-                      <div class="sub-dur-rate">₹37,000 total</div>
+                      <div class="sub-dur-rate">Get in Touch for Pricing</div>
                     </button>
                     <button
                       type="button"
@@ -4712,7 +4689,7 @@
                       <div class="sub-dur-days">60</div>
                       <div class="sub-dur-lbl">Days</div>
                       <div class="sub-dur-disc">Complete Course</div>
-                      <div class="sub-dur-rate">₹42,000 total</div>
+                      <div class="sub-dur-rate">Get in Touch for Pricing</div>
                     </button>
                   </div>
                 </div>
@@ -4720,56 +4697,9 @@
                   <button type="button" class="sub-back" onclick="fDurReset()">
                     ← Change Duration
                   </button>
-                  <div class="pay-lock-notice" id="train-lock-notice">
-                    <span class="lock-icon">🔒</span> Fill all details above and
-                    click <strong>&nbsp;Next&nbsp;</strong> to unlock payment
-                  </div>
                   <div class="pay-unlocked-badge" id="train-unlock-badge">
-                    <span>✅</span> Details saved! Complete your payment below
-                    to confirm the slot.
-                  </div>
-                  <div class="pay-section-locked" id="train-pay-body">
-                    <div class="sub-price-card">
-                      <div class="sub-price-row">
-                        <span class="spl">Module</span
-                        ><span class="spv" id="sp-mod">—</span>
-                      </div>
-                      <div class="sub-price-row">
-                        <span class="spl">Duration</span
-                        ><span class="spv" id="sp-days">—</span>
-                      </div>
-                      <div class="sub-price-row">
-                        <span class="spl">Course Fee</span
-                        ><span class="spv" id="sp-total">—</span>
-                      </div>
-                      <div class="sub-price-row total">
-                        <span class="spl">Advance (25%)</span
-                        ><span class="spv big" id="sp-advance">—</span>
-                      </div>
-                    </div>
-                    <p class="sub-pay-note">
-                      Pay <strong id="sp-note-amt">₹0</strong> now to confirm
-                      your slot. Remaining 75% due on completion.
-                    </p>
-                    <button
-                      type="button"
-                      class="sub-pay-btn"
-                      id="fPayBtn"
-                      onclick="fInitiatePayment()"
-                    >
-                      💳 Pay Advance via UPI →
-                    </button>
-                    <div class="sub-qr-wrap" id="fQrWrap">
-                      <img id="fQrImg" src="" alt="UPI QR" />
-                      <div class="sub-qr-hint">Scan with any UPI app</div>
-                      <button
-                        type="button"
-                        class="sub-qr-refresh"
-                        onclick="fConfirmPayment()"
-                      >
-                        🔄 I've Paid — Refresh Status
-                      </button>
-                    </div>
+                    <span>✅</span> Details saved! Submit the form and we'll
+                    share pricing tailored to your plan.
                   </div>
                 </div>
                 <!-- Others: no payment -->
@@ -4924,13 +4854,9 @@
                   <div class="sub-label" id="int-dur-title">
                     ⏱ Session Duration
                   </div>
-                  <div class="pay-lock-notice" id="int-lock-notice">
-                    <span class="lock-icon">🔒</span> Fill all details above and
-                    click <strong>&nbsp;Next&nbsp;</strong> to unlock payment
-                  </div>
                   <div class="pay-unlocked-badge" id="int-unlock-badge">
-                    <span>✅</span> Details saved! Choose duration and pay to
-                    confirm.
+                    <span>✅</span> Details saved! Choose your session duration
+                    and we'll confirm pricing on contact.
                   </div>
                   <div class="pay-section-locked" id="int-pay-body">
                     <div class="sub-int-dur-grid">
@@ -4944,9 +4870,9 @@
                           30 min
                         </div>
                         <div class="sub-dur-disc" style="margin-top: 6px">
-                          ₹500
+                          Price shared on enquiry
                         </div>
-                        <div class="sub-dur-rate">Full payment upfront</div>
+                        <div class="sub-dur-rate">Select to continue</div>
                       </button>
                       <button
                         type="button"
@@ -4958,9 +4884,9 @@
                           1 hour
                         </div>
                         <div class="sub-dur-disc" style="margin-top: 6px">
-                          ₹750
+                          Price shared on enquiry
                         </div>
-                        <div class="sub-dur-rate">Full payment upfront</div>
+                        <div class="sub-dur-rate">Select to continue</div>
                       </button>
                     </div>
                     <div
@@ -4984,6 +4910,54 @@
                 </div>
               </div>
 
+              <!-- ── CONSULTATION SUB-PANEL ── -->
+              <div id="sub-consult" style="display: none" class="sub-panel">
+                <div class="sub-label">📋 Choose your consultation type</div>
+                <div class="sub-cert-grid">
+                  <label class="sub-cert-opt"
+                    ><input
+                      type="radio"
+                      name="consult-pick"
+                      value="SAP Modules – 30 min"
+                    />
+                    <span>📚 SAP Modules Discussion – 30 min</span></label
+                  >
+                  <label class="sub-cert-opt"
+                    ><input
+                      type="radio"
+                      name="consult-pick"
+                      value="Resume Review – 30 min"
+                    />
+                    <span>📄 Resume Review – 30 min</span></label
+                  >
+                  <label class="sub-cert-opt"
+                    ><input
+                      type="radio"
+                      name="consult-pick"
+                      value="Career Roadmap – 30 min"
+                    />
+                    <span>🗺️ Career Roadmap – 30 min</span></label
+                  >
+                </div>
+                <span class="form-error" id="consult-error"
+                  >Please select a consultation type</span
+                >
+                <div
+                  class="consult-pay-section"
+                  id="consult-pay"
+                  style="display: none"
+                >
+                  <div class="sub-others-msg" style="margin-top: 16px">
+                    <div style="font-size: 36px; margin-bottom: 10px">🎯</div>
+                    <div class="sub-others-title">₹500 for 30 Minutes</div>
+                    <p class="sub-others-desc">
+                      Fill and submit this form — we'll share the payment link
+                      on WhatsApp to confirm your slot.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
               <button
                 class="submit-btn"
                 id="submitBtn"
@@ -4999,8 +4973,33 @@
               <p class="success-msg">
                 Thank you for reaching out.<br />We'll get back to you within
                 <strong style="color: var(--accent)">24 hours</strong
-                >.<br /><br />Meanwhile, feel free to WhatsApp or call directly.
+                >.<br /><br />You can also WhatsApp us directly for a faster
+                response.
               </p>
+              <a
+                id="formSuccessWA"
+                href="#"
+                target="_blank"
+                style="
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 8px;
+                  margin-top: 12px;
+                  background: linear-gradient(135deg, #25d366, #128c7e);
+                  color: #fff;
+                  text-decoration: none;
+                  padding: 11px 22px;
+                  border-radius: 50px;
+                  font-family: &quot;JetBrains Mono&quot;, monospace;
+                  font-size: 12px;
+                  letter-spacing: 1px;
+                  text-transform: uppercase;
+                  font-weight: 700;
+                  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35);
+                "
+              >
+                📲 WhatsApp Us Now
+              </a>
             </div>
 
             <div class="form-success" id="paySuccess" style="display: none">
@@ -5114,9 +5113,9 @@
             <div class="modal-pricing">
               <div class="modal-pricing-left">
                 <div class="modal-pricing-label">Session Pricing</div>
-                <div class="modal-pricing-range">₹750 – ₹1500</div>
+                <div class="modal-pricing-range">Pricing shared on enquiry</div>
                 <div class="modal-pricing-note">
-                  Per session · Final price decided on enquiry
+                  Contact us to get your personalized quote
                 </div>
               </div>
               <div style="display: flex; flex-direction: column; gap: 10px">
@@ -5140,7 +5139,7 @@
                   Mock Interview Available
                 </div>
                 <div class="modal-interview-price">
-                  ₹400 – ₹800 <span>/ 30 min session</span>
+                  Book via enquiry — price shared on contact
                 </div>
               </div>
             </div>
@@ -6108,78 +6107,38 @@
       // ── ENQUIRY FORM SUBMIT ──
       var SHEET_URL =
         "https://script.google.com/macros/s/AKfycbwhqIuyKY3UQ3Xef5AEz7lFEZuUbCj-cLa2ycaQvdO-LJGvjx2QbdDj2oJB2NpNkYgi/exec";
-      var formDetailsSubmitted = false;
 
       // Returns true if current enquiry type has a payment flow
       function isPaymentType() {
-        var v = document.getElementById("f-desc").value;
-        return (
-          v === "SAP Module Training" || v === "Mock Interview – SAP Modules"
-        );
+        return false;
       }
 
       // Update the submit/next button label based on enquiry type
       function updateSubmitBtn() {
         var btn = document.getElementById("submitBtn");
-        if (isPaymentType()) {
-          btn.textContent = "Next — Save Details →";
-        } else {
-          btn.textContent = "Submit Enquiry →";
-        }
+        btn.textContent = "Submit Enquiry →";
+        btn.style.background = "";
+        btn.style.cursor = "";
+        btn.disabled = false;
+        btn.onclick = function () {
+          handleFormAction();
+        };
         // Reset lock state whenever type changes
-        formDetailsSubmitted = false;
         lockPaymentSections();
       }
 
       function lockPaymentSections() {
-        // Training
-        var tp = document.getElementById("train-pay-body");
-        var tl = document.getElementById("train-lock-notice");
-        var tu = document.getElementById("train-unlock-badge");
-        if (tp) {
-          tp.classList.remove("unlocked");
-          tp.classList.add("pay-section-locked");
-        }
-        if (tl) tl.style.display = "flex";
-        if (tu) tu.classList.remove("show");
-        // Interview
-        var ip = document.getElementById("int-pay-body");
-        var il = document.getElementById("int-lock-notice");
-        var iu = document.getElementById("int-unlock-badge");
-        if (ip) {
-          ip.classList.remove("unlocked");
-          ip.classList.add("pay-section-locked");
-        }
-        if (il) il.style.display = "flex";
-        if (iu) iu.classList.remove("show");
         // Reset QRs
         var fq = document.getElementById("fQrWrap");
         if (fq) fq.style.display = "none";
         var iq = document.getElementById("intQrWrap");
         if (iq) iq.style.display = "none";
+        var cq = document.getElementById("consultQrWrap");
+        if (cq) cq.style.display = "none";
       }
 
       function unlockPaymentSections() {
-        // Training
-        var tp = document.getElementById("train-pay-body");
-        var tl = document.getElementById("train-lock-notice");
-        var tu = document.getElementById("train-unlock-badge");
-        if (tp) {
-          tp.classList.add("unlocked");
-          tp.classList.remove("pay-section-locked");
-        }
-        if (tl) tl.style.display = "none";
-        if (tu) tu.classList.add("show");
-        // Interview
-        var ip = document.getElementById("int-pay-body");
-        var il = document.getElementById("int-lock-notice");
-        var iu = document.getElementById("int-unlock-badge");
-        if (ip) {
-          ip.classList.add("unlocked");
-          ip.classList.remove("pay-section-locked");
-        }
-        if (il) il.style.display = "none";
-        if (iu) iu.classList.add("show");
+        // No-op — payment flow removed, kept for compatibility
       }
 
       function validateFormFields() {
@@ -6249,6 +6208,15 @@
             valid = false;
           }
         }
+        if (desc.value && desc.value.indexOf("Consultation") !== -1) {
+          var consultPick = document.querySelector(
+            'input[name="consult-pick"]:checked',
+          );
+          if (!consultPick) {
+            document.getElementById("consult-error").style.display = "block";
+            valid = false;
+          }
+        }
         var NOPAY_TYPES = [
           "Job Support",
           "Freelancer Requirement",
@@ -6286,7 +6254,7 @@
         }
       }
 
-      // Main button handler — "Next" for payment types, "Submit" for others
+      // Main button handler — all types submit directly
       async function handleFormAction() {
         // Honeypot: if filled, it's a bot — feign success and drop silently.
         var hp = document.getElementById("f-company");
@@ -6296,50 +6264,7 @@
           return;
         }
         if (!validateFormFields()) return;
-        if (isPaymentType()) {
-          await handleNext();
-        } else {
-          await submitEnquiry();
-        }
-      }
-
-      async function handleNext() {
-        var btn = document.getElementById("submitBtn");
-        btn.disabled = true;
-        btn.textContent = "Saving…";
-
-        var name = document.getElementById("f-name").value.trim();
-        var email = document.getElementById("f-email").value.trim();
-        var mobile = document.getElementById("f-mobile").value.trim();
-        var qual = document.getElementById("f-qual").value;
-        var status = document.querySelector(
-          'input[name="status"]:checked',
-        ).value;
-        var desc = document.getElementById("f-desc").value;
-        var enqType =
-          desc === "Other"
-            ? "Other: " + document.getElementById("f-other").value.trim()
-            : desc;
-
-        await sendToSheet({
-          name: name,
-          email: email,
-          mobile: mobile,
-          qualification: qual,
-          status: status,
-          interest: document.getElementById("f-interest").value,
-          enquiryType: enqType,
-          stage: "Enquiry",
-        });
-
-        formDetailsSubmitted = true;
-        unlockPaymentSections();
-
-        btn.disabled = false;
-        btn.textContent = "✅ Details Saved — Complete Payment Below";
-        btn.style.background = "linear-gradient(135deg,#b3121f,#ff2e3f)";
-        btn.style.cursor = "default";
-        btn.onclick = null; // disable further clicks
+        await submitEnquiry();
       }
 
       async function submitEnquiry() {
@@ -6367,6 +6292,13 @@
           enqType = "SAP Certification Assist – " + certPick.value;
         }
 
+        var consultPick = document.querySelector(
+          'input[name="consult-pick"]:checked',
+        );
+        if (desc.indexOf("Consultation") !== -1 && consultPick) {
+          enqType = "Consultation – " + consultPick.value;
+        }
+
         var notes = document.getElementById("f-notes").value.trim();
 
         await sendToSheet({
@@ -6384,12 +6316,33 @@
 
         track("generate_lead", { enquiry_type: enqType });
 
-        // Show roadmap for SAP Module Training
-        if (desc === "SAP Module Training" && fState.module) {
-          setTimeout(function () {
-            showRoadmap(fState.module);
-          }, 1500);
-        }
+        // Build WhatsApp message with enquiry details
+        var waMsg =
+          "Hi Naresh! I've just submitted an enquiry on your website.\n\n" +
+          "Name: " +
+          name +
+          "\n" +
+          "Email: " +
+          email +
+          "\n" +
+          "Mobile: " +
+          mobile +
+          "\n" +
+          "Qualification: " +
+          qual +
+          "\n" +
+          "Status: " +
+          status +
+          "\n" +
+          "Enquiry Type: " +
+          enqType +
+          "\n" +
+          (notes ? "Notes: " + notes + "\n" : "") +
+          "\nPlease get back to me at your earliest convenience. Thank you!";
+        var waUrl =
+          "https://wa.me/918871644954?text=" + encodeURIComponent(waMsg);
+        var waLink = document.getElementById("formSuccessWA");
+        if (waLink) waLink.href = waUrl;
 
         document.getElementById("enquiryForm").style.display = "none";
         document.getElementById("formSuccess").classList.add("show");
@@ -6621,6 +6574,7 @@
         document.getElementById("sub-training").style.display = "none";
         document.getElementById("sub-cert").style.display = "none";
         document.getElementById("sub-interview").style.display = "none";
+        document.getElementById("sub-consult").style.display = "none";
         document
           .querySelectorAll('input[name="cert-pick"]')
           .forEach(function (r) {
@@ -6651,6 +6605,8 @@
           document.getElementById("sub-cert").style.display = "block";
         } else if (v === "Mock Interview \u2013 SAP Modules") {
           document.getElementById("sub-interview").style.display = "block";
+        } else if (v.indexOf("Consultation") !== -1) {
+          document.getElementById("sub-consult").style.display = "block";
         }
 
         if (NOPAY_TYPES_NEEDING_NOTES.indexOf(v) !== -1) {
@@ -7639,7 +7595,7 @@
                 <div class="bk-dur-days">45</div>
                 <div class="bk-dur-label">Days</div>
                 <div class="bk-dur-disc">Complete Course</div>
-                <div class="bk-dur-price">₹37,000 total</div>
+                <div class="bk-dur-price">Get in Touch for Pricing</div>
               </button>
               <button
                 class="bk-dur-btn"
@@ -7649,21 +7605,22 @@
                 <div class="bk-dur-days">60</div>
                 <div class="bk-dur-label">Days</div>
                 <div class="bk-dur-disc">Complete Course</div>
-                <div class="bk-dur-price">₹42,000 total</div>
+                <div class="bk-dur-price">Get in Touch for Pricing</div>
               </button>
             </div>
           </div>
         </div>
 
-        <!-- STEP 3: Payment Summary -->
+        <!-- STEP 3: Confirm & Enquire -->
         <div id="bk-step3" style="display: none">
           <div class="bk-header">
             <div class="bk-step-badge">
               <span class="pulse"></span> Step 3 of 3
             </div>
-            <div class="bk-title">Pay Advance & Confirm</div>
-            <div class="bk-sub" id="bk-s3-sub">
-              Pay 25% now to lock your slot
+            <div class="bk-title">Ready to Start?</div>
+            <div class="bk-sub">
+              Submit the form below and we'll reach out with your personalized
+              plan.
             </div>
           </div>
           <div class="bk-body">
@@ -7671,45 +7628,25 @@
               ← Change duration
             </button>
 
-            <div class="bk-price-card">
-              <div class="bk-price-row">
-                <span class="lbl">Module</span>
-                <span class="val" id="bk-sum-module">—</span>
+            <div class="sub-others-msg" style="margin-top: 16px">
+              <div style="font-size: 36px; margin-bottom: 10px">📋</div>
+              <div class="sub-others-title" id="bk-s3-module-name">
+                Your Module
               </div>
-              <div class="bk-price-row">
-                <span class="lbl">Duration</span>
-                <span class="val" id="bk-sum-days">—</span>
-              </div>
-              <div class="bk-price-row">
-                <span class="lbl">Course Fee</span>
-                <span class="val" id="bk-sum-total">—</span>
-              </div>
-              <div class="bk-price-row total">
-                <span class="lbl">Advance Due (25%)</span>
-                <span class="val" id="bk-sum-advance">—</span>
-              </div>
-            </div>
-
-            <p class="bk-price-note">
-              Pay <strong id="bk-note-amt">₹0</strong> now as a booking
-              advance.<br />
-              The remaining 75% is settled on course completion — as agreed with
-              your mentor.
-            </p>
-
-            <button
-              class="bk-pay-btn"
-              id="bkPayBtn"
-              onclick="bkInitiatePayment()"
-            >
-              💳 Pay Advance via UPI →
-            </button>
-
-            <div class="bk-qr-wrap" id="bkQrWrap">
-              <img id="bkQrImg" src="" alt="UPI QR Code" />
-              <div class="bk-qr-hint">
-                Scan with any UPI app · or tap button above
-              </div>
+              <p class="sub-others-desc">
+                Fill in the enquiry form and we'll share your personalized
+                training plan and pricing within 24 hours.
+              </p>
+              <button
+                class="sub-pay-btn"
+                onclick="
+                  closeBookingModal();
+                  scrollToEnquiry();
+                "
+                style="margin-top: 16px"
+              >
+                📝 Go to Enquiry Form →
+              </button>
             </div>
           </div>
         </div>
@@ -7973,6 +7910,67 @@
       function intConfirmPayment() {
         showPaySuccess(_intPayWA);
       }
+      var _consultPayWA = "";
+
+      function consultInitiatePayment() {
+        var consultType = document.querySelector(
+          'input[name="consult-pick"]:checked',
+        );
+        if (!consultType) return;
+        var consultLabel = consultType.value;
+        var amt = 500;
+        var note = encodeURIComponent("Consultation: " + consultLabel);
+        var upiUri =
+          "upi://pay?pa=" +
+          BK_UPI2 +
+          "&pn=SAP+Training&am=" +
+          amt +
+          "&cu=INR&tn=" +
+          note;
+        var qrWrap = document.getElementById("consultQrWrap");
+        var qrImg = document.getElementById("consultQrImg");
+        qrImg.src =
+          "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" +
+          encodeURIComponent(upiUri);
+        qrWrap.style.display = "block";
+        window.location.href = upiUri;
+        var name = document.getElementById("f-name").value.trim();
+        var email = document.getElementById("f-email").value.trim();
+        var mobile = document.getElementById("f-mobile").value.trim();
+        sendToSheet({
+          name: name,
+          email: email,
+          mobile: mobile,
+          enquiryType: consultLabel,
+          sessionDuration: "30 min",
+          amountPaid: amt,
+          paymentNote: "Consultation Payment (30 min)",
+          stage: "Payment Initiated",
+        });
+        track("begin_checkout", {
+          currency: "INR",
+          value: amt,
+          items: [{ item_name: "Consultation – " + consultLabel }],
+        });
+        _consultPayWA = encodeURIComponent(
+          "Hi Naresh! I just initiated payment of ₹" +
+            amt +
+            " for Consultation (" +
+            consultLabel +
+            ").\n" +
+            "Name: " +
+            name +
+            "\nEmail: " +
+            email +
+            "\nMobile: " +
+            mobile +
+            "\nPlease confirm my slot. [attaching payment screenshot]",
+        );
+      }
+
+      function consultConfirmPayment() {
+        showPaySuccess(_consultPayWA);
+      }
 
       function fInitiatePayment() {
         var advance = parseInt(
@@ -8128,15 +8126,16 @@
       // ═══ DEMO CONFIG - UPDATE THIS SECTION ONLY ═══
       var DEMOS = [
         {
-          date: "2026-09-05",
-          time: "18:00 IST",
+          date: "2026-09-27",
+          time: "12:30 PM IST",
           module: "SAP Datasphere",
           courseLink: "downloads/BDC_DSP_Roadmap.pdf",
-          meetingLink: "https://meet.google.com/xxx-yyyy-zzz",
-          status: "past", // Change to 'past' to hide
+          meetingLink:
+            "https://us06web.zoom.us/j/85678679200?pwd=Rjm5GNubGXarrgloZYSA0LRgSpBF6C.1",
+          status: "live", // Change to 'past' to hide
         },
         {
-          date: "2026-09-13",
+          date: "2026-09-27",
           time: "11:00 AM IST",
           module: "SAP Analytics Cloud",
           courseLink: "downloads/SAC_Roadmap.pdf",
@@ -8347,11 +8346,28 @@
         document.addEventListener("DOMContentLoaded", function () {
           console.log("Demo init: DOMContentLoaded");
           initDemoPopup();
+          // Show consultation pay section when a consult type is selected
+          document
+            .querySelectorAll('input[name="consult-pick"]')
+            .forEach(function (r) {
+              r.addEventListener("change", function () {
+                document.getElementById("consult-error").style.display = "none";
+                document.getElementById("consult-pay").style.display = "block";
+              });
+            });
         });
       } else {
         // DOM already loaded, run immediately
         console.log("Demo init: DOM already ready");
         initDemoPopup();
+        document
+          .querySelectorAll('input[name="consult-pick"]')
+          .forEach(function (r) {
+            r.addEventListener("change", function () {
+              document.getElementById("consult-error").style.display = "none";
+              document.getElementById("consult-pay").style.display = "block";
+            });
+          });
       }
     </script>
 

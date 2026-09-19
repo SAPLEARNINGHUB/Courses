@@ -66,6 +66,12 @@
       { bot: "Companies are constantly looking for certified SAP professionals. With the right training, you can:" },
       { bot: "✨ Land high-paying jobs\n✨ Work with global companies\n✨ Build a stable career\n✨ Become an industry expert" },
       { bot: "Your learning journey starts here! 💪" }
+    ],
+
+    consultation: [
+      { bot: "Yes! We offer focused 1-on-1 consultation sessions at ₹500 for 30 minutes!" },
+      { bot: "Choose from:\n📚 SAP Modules Discussion\n📄 Resume Review\n🗺️ Career Roadmap Planning" },
+      { bot: "It's a great way to get personalized guidance before committing to full training. Book via the enquiry form! 💬" }
     ]
   };
 
@@ -261,6 +267,7 @@
         <button class="chat-option-btn" onclick="handleOption('duration')">⏱️ How long is the training?</button>
         <button class="chat-option-btn" onclick="handleOption('certification')">🏅 Do you provide certification?</button>
         <button class="chat-option-btn" onclick="handleOption('experience')">🎓 I'm a fresher, can I join?</button>
+        <button class="chat-option-btn" onclick="handleOption('consultation')">📋 Tell me about consultation</button>
         <button class="chat-option-btn" onclick="handleOption('demo')">🎥 Can I get a demo first?</button>
         <button class="chat-option-btn" onclick="handleOption('jobsupport')">💼 Do you provide job support?</button>
         <button class="chat-option-btn" onclick="handleOption('motivation')">🚀 Why should I learn SAP?</button>
